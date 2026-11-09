@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, Image, ScrollView } from '@tarojs/components'
+import { View, Text, Image, ScrollView, Swiper, SwiperItem } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { MauiIcon } from '@macle-community/taro-plugin-macle/components-react'
 
@@ -14,6 +14,8 @@ const EYE_OPEN_ICON =
 const EYE_CLOSE_ICON =
   'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMyYzJjMmMiIHN0cm9rZS13aWR0aD0iMS44IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0yIDEyQzQuNSA3LjUgOC41IDYuNSAxMiA2LjVDMTQuMiA2LjUgMTYuNSA3IDE4LjUgOC41TTIyIDEyQzIwLjUgMTQuOCAxNy4yIDE3LjUgMTIgMTcuNUM4LjUgMTcuNSA0LjUgMTYuNSAyIDEyIiAvPjxwYXRoIGQ9Ik0xMC41IDEwLjVBMi42IDIuNiAwIDAgMCAxMy41IDEzLjUiIC8+PGxpbmUgeDE9IjMiIHkxPSIyMCIgeDI9IjIxIiB5Mj0iNCIgLz48L3N2Zz4='
 import bannerFayda from '../../assets/images/banner_fayda.png'
+import bannerZemen from '../../assets/images/zemen_banner.png'
+import bannerFinancial from '../../assets/images/banner_airtime_micro.png'
 import sendMoneyIcon from '../../assets/images/home_send_money.png'
 import cashInOutIcon from '../../assets/images/home_cash_inout.png'
 import airtimeIcon from '../../assets/images/home_airtime.png'
@@ -51,6 +53,14 @@ export default function HomeView({
   const [showEndekise, setShowEndekise] = useState(false)
   const [showReward, setShowReward] = useState(false)
   const [showSendMoneyModal, setShowSendMoneyModal] = useState(false)
+  const [currentBanner, setCurrentBanner] = useState(0)
+
+  // Promotional Banner Slides
+  const banners = [
+    { id: 'fayda', image: bannerFayda, title: 'FAYDA National ID' },
+    { id: 'zemen', image: bannerZemen, title: 'Zemen GEBEYA' },
+    { id: 'financial', image: bannerFinancial, title: 'Financial Services' }
+  ]
 
   // Primary 8-grid services (top two rows)
   const topServices = [
@@ -322,20 +332,48 @@ export default function HomeView({
             </View>
           </View>
 
-          {/* 4. FAYDA Promotional Banner */}
+          {/* 4. Promotional Banner Slideshow (Auto scroll) */}
           <View className="w-full px-3 pt-3.5">
-            <View className="w-full rounded-2xl overflow-hidden shadow-xs bg-[#094668]">
-              <Image
-                src={bannerFayda}
-                mode="widthFix"
-                className="w-full block"
-              />
+            <View className="w-full rounded-2xl overflow-hidden shadow-xs">
+              <Swiper
+                className="w-full rounded-2xl overflow-hidden"
+                style={{ height: '112px' }}
+                autoplay
+                interval={3500}
+                duration={500}
+                circular
+                indicatorDots={false}
+                onChange={(e) => setCurrentBanner(e.detail.current)}
+              >
+                {banners.map((item) => (
+                  <SwiperItem key={item.id} className="w-full h-full">
+                    <View
+                      className="w-full h-full rounded-2xl overflow-hidden cursor-pointer"
+                      onClick={() => onQuickAction(item.title)}
+                    >
+                      <Image
+                        src={item.image}
+                        mode="aspectFill"
+                        className="w-full h-full block"
+                      />
+                    </View>
+                  </SwiperItem>
+                ))}
+              </Swiper>
             </View>
 
             {/* Carousel Pagination Dots */}
             <View className="w-full flex flex-row items-center justify-center space-x-1.5 pt-2">
-              <View className="w-3.5 h-1.5 rounded-full bg-[#76bc21]" />
-              <View className="w-1.5 h-1.5 rounded-full border border-gray-300 bg-transparent" />
+              {banners.map((item, idx) => (
+                <View
+                  key={item.id}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    idx === currentBanner
+                      ? 'w-3.5 bg-[#76bc21]'
+                      : 'w-1.5 border border-gray-300 bg-transparent'
+                  }`}
+                />
+              ))}
             </View>
           </View>
 
