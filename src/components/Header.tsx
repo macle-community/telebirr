@@ -133,7 +133,7 @@ export default function Header({
           style={{ backgroundColor: '#76bc21', height: '48px' }}
         >
           <View style={{ width: '24px' }} />
-          <Text className="text-white font-bold text-lg tracking-wide capitalize">
+          <Text className="text-white font-semibold text-base tracking-wide capitalize">
             {activeTab}
           </Text>
           <View onClick={onSearchClick} className="cursor-pointer flex items-center justify-center active:opacity-80">

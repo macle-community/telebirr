@@ -59,18 +59,18 @@ export default function AppsView({ onAppSelect }: AppsViewProps) {
     <View className="w-full px-3 py-3 pb-24">
       {/* Search Bar */}
       <View className="w-full mb-3 px-3 py-2 bg-white rounded-xl telebirr-card-shadow flex flex-row items-center space-x-2">
-        <IconSearch size={18} color="#9ca3af" />
+        <IconSearch size={16} color="#9ca3af" />
         <Input
           type="text"
           value={searchTerm}
           onInput={(e) => setSearchTerm(e.detail.value)}
           placeholder="Search mini programs and apps..."
-          className="flex-1 text-sm text-gray-800 bg-transparent"
+          className="flex-1 text-xs text-gray-800 bg-transparent"
         />
         {searchTerm && (
           <Text
             onClick={() => setSearchTerm('')}
-            className="text-xs text-gray-400 font-bold px-1.5 cursor-pointer"
+            className="text-[11px] text-gray-400 font-bold px-1.5 cursor-pointer"
           >
             ✕
           </Text>
@@ -83,19 +83,19 @@ export default function AppsView({ onAppSelect }: AppsViewProps) {
           <View
             key={app.id}
             onClick={() => onAppSelect(app.name.replace('\n', ' '))}
-            className="bg-white rounded-2xl p-3 flex flex-col items-center justify-center telebirr-card-shadow active:bg-gray-50 cursor-pointer min-h-[110px]"
+            className="bg-white rounded-2xl p-2.5 flex flex-col items-center justify-center telebirr-card-shadow active:bg-gray-50 cursor-pointer min-h-[96px]"
           >
             {/* App Icon Container */}
-            <View className="w-12 h-12 flex items-center justify-center mb-2">
+            <View className="w-11 h-11 flex items-center justify-center mb-1.5">
               <Image
                 src={app.icon}
                 mode="aspectFit"
-                style={{ width: '42px', height: '42px' }}
+                style={{ width: '38px', height: '38px' }}
               />
             </View>
 
             {/* App Name */}
-            <Text className="text-gray-800 text-sm font-semibold text-center leading-tight whitespace-pre-line">
+            <Text className="text-gray-700 text-[11px] font-normal text-center leading-tight whitespace-pre-line">
               {app.name}
             </Text>
           </View>

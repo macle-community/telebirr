@@ -129,21 +129,21 @@ export default function EngageView({ onStartEngaging }: EngageViewProps) {
       {/* 1. Center Hero Image & Text matching engage.jpg */}
       <View className="flex flex-col items-center justify-center my-auto">
         {/* Engage Logo Illustration */}
-        <View className="w-48 h-48 flex items-center justify-center mb-6">
+        <View className="w-40 h-40 flex items-center justify-center mb-5">
           <Image
             src={engageHero}
             mode="aspectFit"
-            style={{ width: '180px', height: '180px' }}
+            style={{ width: '150px', height: '150px' }}
           />
         </View>
 
         {/* Heading */}
-        <Text className="text-gray-900 font-bold text-xl text-center mb-3 tracking-tight">
+        <Text className="text-gray-900 font-bold text-[17px] text-center mb-2.5 tracking-tight">
           Welcome to telebirr Engage
         </Text>
 
         {/* Subtitle */}
-        <Text className="text-gray-400 text-sm text-center leading-relaxed max-w-[280px]">
+        <Text className="text-gray-400 text-xs text-center leading-relaxed max-w-[260px]">
           Engage with your friends and family and experience the power of telebirr!!
         </Text>
       </View>
@@ -155,10 +155,10 @@ export default function EngageView({ onStartEngaging }: EngageViewProps) {
             setInChatMode(true)
             onStartEngaging()
           }}
-          className="w-full max-w-[320px] py-3.5 rounded-full flex items-center justify-center shadow-md active:opacity-90 cursor-pointer"
+          className="w-full max-w-[280px] py-2.5 rounded-lg flex items-center justify-center shadow active:opacity-90 cursor-pointer"
           style={{ backgroundColor: '#76bc21' }}
         >
-          <Text className="text-white font-bold text-base tracking-wide">
+          <Text className="text-white font-semibold text-sm tracking-wide">
             Start Engaging
           </Text>
         </View>

@@ -110,10 +110,10 @@ export default function PaymentView({ onBillerSelect }: PaymentViewProps) {
         {/* Blue Header Bar */}
         <View
           onClick={() => toggleCategory('utility')}
-          className="w-full px-4 py-3 flex flex-row items-center justify-between cursor-pointer"
+          className="w-full px-4 py-2.5 flex flex-row items-center justify-between cursor-pointer"
           style={{ backgroundColor: '#0084ff' }}
         >
-          <Text className="text-white font-bold text-lg">Utility</Text>
+          <Text className="text-white font-bold text-base">Utility</Text>
           <View style={{ transform: expandedCategories['utility'] ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
             <MauiIcon name="arrow" size="14px" color="#ffffff" />
           </View>
@@ -122,21 +122,21 @@ export default function PaymentView({ onBillerSelect }: PaymentViewProps) {
         {/* Expanded Grid of 10 Utility Billers */}
         {expandedCategories['utility'] && (
           <View className="p-3 bg-white">
-            <View className="grid grid-cols-4 gap-y-4 gap-x-2">
+            <View className="grid grid-cols-4 gap-y-3.5 gap-x-2">
               {utilityBillers.map((biller) => (
                 <View
                   key={biller.id}
                   onClick={() => onBillerSelect(biller.name.replace('\n', ' '))}
                   className="flex flex-col items-center justify-start cursor-pointer active:opacity-75"
                 >
-                  <View className="w-12 h-12 rounded-full flex items-center justify-center mb-1">
+                  <View className="w-11 h-11 rounded-full flex items-center justify-center mb-1">
                     <Image
                       src={biller.icon}
                       mode="aspectFit"
-                      style={{ width: '40px', height: '40px' }}
+                      style={{ width: '36px', height: '36px' }}
                     />
                   </View>
-                  <Text className="text-gray-800 text-xs font-semibold text-center leading-tight whitespace-pre-line">
+                  <Text className="text-gray-700 text-[11px] font-normal text-center leading-tight whitespace-pre-line">
                     {biller.name}
                   </Text>
                 </View>
@@ -158,34 +158,34 @@ export default function PaymentView({ onBillerSelect }: PaymentViewProps) {
             {/* Header row */}
             <View
               onClick={() => toggleCategory(cat.id)}
-              className="w-full px-4 py-3.5 flex flex-row items-center justify-between cursor-pointer bg-white active:bg-gray-50"
+              className="w-full px-4 py-3 flex flex-row items-center justify-between cursor-pointer bg-white active:bg-gray-50"
             >
-              <Text className="text-gray-900 font-bold text-base">
+              <Text className="text-gray-800 font-semibold text-[13px]">
                 {cat.title}
               </Text>
               <View style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
-                <MauiIcon name="arrow" size="14px" color="#9ca3af" />
+                <MauiIcon name="arrow" size="13px" color="#9ca3af" />
               </View>
             </View>
 
             {/* Expandable Content Grid */}
             {isExpanded && (
               <View className="p-3 pt-1 border-t border-gray-100 bg-white">
-                <View className="grid grid-cols-4 gap-y-4 gap-x-2">
+                <View className="grid grid-cols-4 gap-y-3.5 gap-x-2">
                   {cat.items.map((item, idx) => (
                     <View
                       key={idx}
                       onClick={() => onBillerSelect(item.name.replace('\n', ' '))}
                       className="flex flex-col items-center justify-start cursor-pointer active:opacity-75"
                     >
-                      <View className="w-12 h-12 rounded-full flex items-center justify-center mb-1 bg-gray-50">
+                      <View className="w-11 h-11 rounded-full flex items-center justify-center mb-1 bg-gray-50">
                         <Image
                           src={item.icon}
                           mode="aspectFit"
-                          style={{ width: '38px', height: '38px' }}
+                          style={{ width: '34px', height: '34px' }}
                         />
                       </View>
-                      <Text className="text-gray-800 text-xs font-semibold text-center leading-tight whitespace-pre-line">
+                      <Text className="text-gray-700 text-[11px] font-normal text-center leading-tight whitespace-pre-line">
                         {item.name}
                       </Text>
                     </View>

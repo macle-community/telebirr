@@ -59,33 +59,33 @@ export default function AccountView({
   return (
     <View className="w-full px-3 py-3 pb-24 space-y-3">
       {/* 1. User Profile Card */}
-      <View className="w-full bg-white rounded-2xl p-4 flex flex-row items-center justify-between telebirr-card-shadow">
+      <View className="w-full bg-white rounded-2xl p-3.5 flex flex-row items-center justify-between telebirr-card-shadow">
         {/* Left: Avatar + Details */}
         <View className="flex flex-row items-center space-x-3">
-          <View className="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center bg-emerald-100">
+          <View className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-emerald-100">
             <Image
               src={accAvatar}
               mode="aspectFill"
-              style={{ width: '56px', height: '56px' }}
+              style={{ width: '48px', height: '48px' }}
             />
           </View>
 
           <View className="flex flex-col">
-            <Text className="text-gray-900 font-bold text-lg tracking-tight">
+            <Text className="text-gray-900 font-bold text-base tracking-tight">
               Natnael
             </Text>
-            <View className="flex flex-row items-center space-x-2 mt-1">
+            <View className="flex flex-row items-center space-x-2 mt-0.5">
               {/* Level 3 Badge */}
               <View
-                className="px-2 py-0.5 rounded"
+                className="px-1.5 py-0.5 rounded"
                 style={{ backgroundColor: '#f59e0b' }}
               >
-                <Text className="text-white font-bold text-xs">
+                <Text className="text-white font-bold text-[10px]">
                   Level 3
                 </Text>
               </View>
               {/* Phone Number */}
-              <Text className="text-gray-700 text-sm font-semibold">
+              <Text className="text-gray-500 text-xs font-normal">
                 +251905410217
               </Text>
             </View>
@@ -100,7 +100,7 @@ export default function AccountView({
           <Image
             src={accQrChevron}
             mode="aspectFit"
-            style={{ width: '60px', height: '32px' }}
+            style={{ width: '52px', height: '28px' }}
           />
         </View>
       </View>
@@ -117,18 +117,18 @@ export default function AccountView({
                 onItemClick(row.title)
               }
             }}
-            className="w-full px-4 py-3.5 flex flex-row items-center justify-between cursor-pointer active:bg-gray-50"
+            className="w-full px-4 py-3 flex flex-row items-center justify-between cursor-pointer active:bg-gray-50"
           >
             {/* Left: Icon + Title */}
-            <View className="flex flex-row items-center space-x-3.5">
-              <View className="w-6 h-6 flex items-center justify-center">
+            <View className="flex flex-row items-center space-x-3">
+              <View className="w-5 h-5 flex items-center justify-center">
                 <Image
                   src={row.icon}
                   mode="aspectFit"
-                  style={{ width: '22px', height: '22px' }}
+                  style={{ width: '20px', height: '20px' }}
                 />
               </View>
-              <Text className="text-gray-800 text-base font-semibold">
+              <Text className="text-gray-800 text-[13px] font-normal">
                 {row.title}
               </Text>
             </View>
@@ -136,11 +136,11 @@ export default function AccountView({
             {/* Right: Optional value + Chevron */}
             <View className="flex flex-row items-center space-x-1.5">
               {row.value && (
-                <Text className="text-gray-400 text-sm font-medium mr-0.5">
+                <Text className="text-gray-400 text-xs font-normal mr-0.5">
                   {row.value}
                 </Text>
               )}
-              <Text className="text-gray-400 font-bold text-base">›</Text>
+              <Text className="text-gray-300 font-normal text-sm">›</Text>
             </View>
           </View>
         ))}
