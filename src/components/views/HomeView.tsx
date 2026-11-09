@@ -172,7 +172,7 @@ export default function HomeView({
   }
 
   return (
-    <View className="w-full pb-28 relative">
+    <View className="w-full pb-36 relative">
       {/* 1. Green Hero & Balance Section */}
       <View
         className="w-full telebirr-header-bg telebirr-wave-texture px-4 pt-2 pb-6 rounded-b-2xl relative"
@@ -394,31 +394,41 @@ export default function HomeView({
         </View>
       </View>
 
-      {/* 7. Scan QR Button & Floating Agent Button */}
-      <View className="w-full px-4 pt-4 flex flex-row items-center justify-center relative">
-        {/* Centered Blue Pill Button: Scan QR */}
-        <View
-          onClick={onScanQR}
-          className="flex-1 py-3 px-6 rounded-full flex flex-row items-center justify-center space-x-2.5 shadow-md active:opacity-90 cursor-pointer"
-          style={{ backgroundColor: '#0084ff', maxWidth: '380px' }}
-        >
-          <IconScanQR size={22} color="#ffffff" />
-          <Text className="text-white font-extrabold text-lg tracking-wide">
-            Scan QR
-          </Text>
-        </View>
+      {/* 7. Floating Scan QR Button & Agent Location Button (Fixed above TabBar) */}
+      <View
+        className="fixed left-0 right-0 z-40 px-3 flex flex-row items-center justify-center pointer-events-none"
+        style={{ bottom: '78px' }}
+      >
+        <View className="w-full flex flex-row items-center justify-between max-w-[390px] px-2 pointer-events-auto">
+          {/* Scan QR Button (Rounded rectangle matching home.jpg) */}
+          <View
+            onClick={onScanQR}
+            className="flex-1 mr-3 h-[46px] rounded-xl flex flex-row items-center justify-center space-x-2.5 shadow-md active:opacity-90 cursor-pointer"
+            style={{
+              backgroundColor: '#0084ff',
+              borderRadius: '12px'
+            }}
+          >
+            <IconScanQR size={22} color="#ffffff" />
+            <Text className="text-white font-extrabold text-base tracking-wide ml-2">
+              Scan QR
+            </Text>
+          </View>
 
-        {/* Floating Agent / Location Button */}
-        <View
-          onClick={() => onQuickAction('Find Nearest telebirr Agent')}
-          className="absolute right-4 w-12 h-12 rounded-full bg-white telebirr-float-shadow flex items-center justify-center cursor-pointer active:scale-95"
-          style={{ bottom: '-4px' }}
-        >
-          <Image
-            src={floatingAgentBtn}
-            mode="aspectFit"
-            style={{ width: '42px', height: '42px' }}
-          />
+          {/* Floating Agent / Location Button */}
+          <View
+            onClick={() => onQuickAction('Find Nearest telebirr Agent')}
+            className="w-12 h-12 rounded-full bg-white telebirr-float-shadow flex items-center justify-center cursor-pointer active:scale-95 flex-shrink-0"
+            style={{
+              marginBottom: '-6px'
+            }}
+          >
+            <Image
+              src={floatingAgentBtn}
+              mode="aspectFit"
+              style={{ width: '44px', height: '44px' }}
+            />
+          </View>
         </View>
       </View>
     </View>
