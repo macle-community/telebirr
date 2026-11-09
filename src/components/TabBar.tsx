@@ -56,8 +56,8 @@ export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
             >
               {isActive ? (
                 /* Active Tab with Elevated Circular Notch */
-                <View className="flex flex-col items-center -mt-5">
-                  <View className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-md border-2 border-[#76bc21] active:scale-95 transition">
+                <View className="flex flex-col items-center -mt-5 transition-transform duration-200">
+                  <View className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-md border-2 border-[#76bc21] active:scale-95 transition-transform duration-150">
                     <MauiIcon name={item.icon} size="24px" color="#76bc21" />
                   </View>
                   <View className="w-1.5 h-1.5 bg-white rounded-full mt-1 mb-0.5" />
@@ -67,7 +67,7 @@ export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
                 </View>
               ) : (
                 /* Inactive Tab */
-                <View className="flex flex-col items-center justify-center py-1">
+                <View className="flex flex-col items-center justify-center py-1 transition-opacity duration-200 opacity-90 active:opacity-60">
                   <MauiIcon name={item.icon} size="22px" color="rgba(255, 255, 255, 0.9)" />
                   <Text className="text-white/90 font-medium text-xs mt-1 tracking-tight">
                     {item.label}

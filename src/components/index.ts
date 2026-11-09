@@ -4,6 +4,10 @@ export { default as TabBar } from './TabBar'
 export { default as PromotionalBanner } from './common/PromotionalBanner'
 export type { BannerItem, PromotionalBannerProps } from './common/PromotionalBanner'
 
+// Layout Components
+export { default as MainLayout } from './layout/MainLayout'
+export type { MainLayoutProps } from './layout/MainLayout'
+
 // Home Page Components
 export { default as BalanceHero } from './home/BalanceHero'
 export type { BalanceHeroProps } from './home/BalanceHero'

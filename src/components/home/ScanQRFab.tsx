@@ -17,7 +17,7 @@ export default function ScanQRFab({
   onClick,
   bottom = '76px',
   right = '16px',
-  className = 'fixed z-40 w-14 h-14 rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition'
+  className = 'absolute z-40 w-14 h-14 rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition'
 }: ScanQRFabProps) {
   return (
     <View

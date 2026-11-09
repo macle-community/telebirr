@@ -27,7 +27,13 @@ export default function Header({
   onMenuClick
 }: HeaderProps) {
   return (
-    <View className="w-full select-none" style={{ backgroundColor: activeTab === 'home' ? '#ffffff' : '#76bc21' }}>
+    <View
+      className="w-full select-none"
+      style={{
+        backgroundColor: activeTab === 'home' ? '#ffffff' : '#76bc21',
+        transition: 'background-color 200ms ease-in-out'
+      }}
+    >
       {/* 1. Android Status Bar Simulation */}
       <View
         className="w-full flex flex-row items-center justify-between px-4 pt-1"
