@@ -25,7 +25,7 @@ export default function HomePage() {
   }
 
   return (
-    <View className="min-h-screen bg-gray-50 flex flex-col relative select-none">
+    <View className="h-screen bg-gray-50 flex flex-col relative select-none overflow-hidden">
       <Header
         activeTab="home"
         language={language}
@@ -34,7 +34,7 @@ export default function HomePage() {
         onNotificationClick={() => Taro.showToast({ title: 'Notifications', icon: 'none' })}
         onMenuClick={() => {}}
       />
-      <View className="flex-1 home-scroll-container">
+      <View className="flex-1 overflow-hidden relative">
         <HomeView
           onNavigateHistory={handleNavigateHistory}
           onScanQR={() => Taro.showToast({ title: 'Scan QR Code', icon: 'none' })}

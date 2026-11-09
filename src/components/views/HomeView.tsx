@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, Image } from '@tarojs/components'
+import { View, Text, Image, ScrollView } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { MauiIcon } from '@macle-community/taro-plugin-macle/components-react'
 
@@ -7,9 +7,12 @@ import { MauiIcon } from '@macle-community/taro-plugin-macle/components-react'
 const SCAN_QR_ICON =
   'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiIHdpZHRoPSIxMDI0IiBoZWlnaHQ9IjEwMjQiPgogIDxwYXRoIGQ9Ik0gMTgwIDM2MCBWIDI2MCBBIDgwIDgwIDAgMCAxIDI2MCAxODAgSCAzNjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJjMmMyYyIgc3Ryb2tlLXdpZHRoPSI4MCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPHBhdGggZD0iTSA2NjQgMTgwIEggNzY0IEEgODAgODAgMCAwIDEgODQ0IDI2MCBWIDM2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMmMyYzJjIiBzdHJva2Utd2lkdGg9IjgwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8cGF0aCBkPSJNIDE4MCA2NjQgViA3NjQgQSA4MCA4MCAwIDAgMCAyNjAgODQ0IEggMzYwIiBmaWxsPSJub25lIiBzdHJva2U9IiMyYzJjMmMiIHN0cm9rZS13aWR0aD0iODAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0gNjY0IDg0NCBIIDc2NCBBIDgwIDgwIDAgMCAwIDg0NCA3NjQgViA2NjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJjMmMyYyIgc3Ryb2tlLXdpZHRoPSI4MCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPHBhdGggZD0iTSAzMzAgNTAwIFYgMzgwIEEgNzAgNzAgMCAwIDEgNDAwIDMxMCBIIDYyNCBBIDcwIDcwIDAgMCAxIDY5NCAzODAgViA1MDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJjMmMyYyIgc3Ryb2tlLXdpZHRoPSI3MCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPHJlY3QgeD0iMjYwIiB5PSI1ODAiIHdpZHRoPSI1MDQiIGhlaWdodD0iOTAiIHJ4PSI0NSIgZmlsbD0iIzJjMmMyYyIvPgo8L3N2Zz4='
 
-import eyeMainIcon from '../../assets/images/icon_eye_main.png'
-import eyeEndekiseIcon from '../../assets/images/icon_eye_endekise.png'
-import eyeRewardIcon from '../../assets/images/icon_eye_reward.png'
+// Eye vector icons (open / closed) for balance privacy toggle
+const EYE_OPEN_ICON =
+  'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMyYzJjMmMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICA8cGF0aCBkPSJNMSAxMnM0LTggMTEtOCAxMSA4IDExIDgtNCA4LTExIDgtMTEtOC0xMS04eiIgLz4KICA8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIzIiBmaWxsPSIjMmMyYzJjIiAvPgo8L3N2Zz4='
+
+const EYE_CLOSE_ICON =
+  'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMyYzJjMmMiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICA8cGF0aCBkPSJNMTcuOTQgMTcuOTRBMTAuMDcgMTAuMDcgMCAwIDEgMTIgMjBjLTcgMC0xMS04LTExLThhMTguNDUgMTguNDUgMCAwIDEgNS4wNi01Ljk0TTkuOSA0LjI0QTkuMTIgOS4xMiAwIDAgMSAxMiA0YzcgMCAxMSA4IDExIDhhMTguNSAxOC41IDAgMCAxLTIuMTYgMy4xOW0tNi43Mi0xLjA3YTMgMyAwIDEgMS00LjI0LTQuMjQiIC8+CiAgPGxpbmUgeDE9IjEiIHkxPSIxIiB4Mj0iMjMiIHkyPSIyMyIgLz4KPC9zdmc='
 import bannerFayda from '../../assets/images/banner_fayda.png'
 import sendMoneyIcon from '../../assets/images/home_send_money.png'
 import cashInOutIcon from '../../assets/images/home_cash_inout.png'
@@ -174,10 +177,10 @@ export default function HomeView({
   }
 
   return (
-    <View className="w-full pb-36 relative">
-      {/* 1. Green Hero & Balance Section */}
+    <View className="w-full h-full flex flex-col relative overflow-hidden select-none">
+      {/* 1. Green Hero & Balance Section (Docked at top) */}
       <View
-        className="w-full telebirr-header-bg telebirr-wave-texture px-4 pt-2 pb-6 rounded-b-2xl relative"
+        className="w-full flex-shrink-0 z-20 telebirr-header-bg telebirr-wave-texture px-4 pt-1 pb-4 relative shadow-xs"
         style={{
           backgroundColor: '#76bc21',
           backgroundImage:
@@ -193,10 +196,10 @@ export default function HomeView({
             <Text className="text-white text-base font-medium tracking-wide">
               Balance (ETB)
             </Text>
-            <Image
-              src={eyeMainIcon}
-              mode="aspectFit"
-              style={{ width: '22px', height: '14px' }}
+            <MauiIcon
+              name={showMainBalance ? EYE_OPEN_ICON : EYE_CLOSE_ICON}
+              size="18px"
+              color="#ffffff"
             />
           </View>
 
@@ -221,10 +224,10 @@ export default function HomeView({
                 <Text className="text-white text-sm font-medium">
                   Endekise (ETB)
                 </Text>
-                <Image
-                  src={eyeEndekiseIcon}
-                  mode="aspectFit"
-                  style={{ width: '18px', height: '13px' }}
+                <MauiIcon
+                  name={showEndekise ? EYE_OPEN_ICON : EYE_CLOSE_ICON}
+                  size="15px"
+                  color="#ffffff"
                 />
               </View>
               <Text className="text-white font-bold text-base mt-0.5">
@@ -241,10 +244,10 @@ export default function HomeView({
                 <Text className="text-white text-sm font-medium">
                   Reward (ETB)
                 </Text>
-                <Image
-                  src={eyeRewardIcon}
-                  mode="aspectFit"
-                  style={{ width: '18px', height: '13px' }}
+                <MauiIcon
+                  name={showReward ? EYE_OPEN_ICON : EYE_CLOSE_ICON}
+                  size="15px"
+                  color="#ffffff"
                 />
               </View>
               <Text className="text-white font-bold text-base mt-0.5">
@@ -255,146 +258,155 @@ export default function HomeView({
         </View>
       </View>
 
-      {/* 2. Orange Banner: ONE APP FOR ALL YOUR NEEDS! */}
-      <View className="w-full px-3 -mt-3.5 flex justify-center z-10">
-        <View
-          className="w-full py-1.5 rounded-full flex items-center justify-center shadow-sm"
-          style={{ backgroundColor: '#f9a825' }}
-        >
-          <Text className="text-white font-bold text-xs tracking-wider uppercase">
-            ONE APP FOR ALL YOUR NEEDS!
-          </Text>
-        </View>
-      </View>
-
-      {/* 3. Primary Quick Services (Top 8 Grid) */}
-      <View className="w-full px-3 pt-3 relative">
-        <View className="grid grid-cols-4 gap-2">
-          {topServices.map((item) => (
+      {/* Scrollable Container for Lower Content */}
+      <ScrollView
+        scrollY
+        className="flex-1 w-full overflow-y-auto home-scroll-container"
+        style={{ boxSizing: 'border-box' }}
+      >
+        <View className="w-full pb-36 pt-0">
+          {/* 2. Orange Banner: ONE APP FOR ALL YOUR NEEDS! */}
+          <View className="w-full px-2 pt-0 flex justify-center z-10">
             <View
-              key={item.id}
-              onClick={item.action}
-              className="relative bg-white rounded-xl py-2 px-1 flex flex-col items-center justify-start telebirr-card-shadow active:bg-gray-50 cursor-pointer min-h-[96px]"
+              className="w-full py-1.5 rounded-t-xl flex items-center justify-center shadow-xs"
+              style={{ backgroundColor: '#f9a825' }}
             >
-              {/* Optional Up to 35% Badge */}
-              {item.badge && (
-                <View
-                  className="absolute -top-1.5 px-1.5 py-0.5 rounded-full z-10"
-                  style={{ backgroundColor: '#f59e0b' }}
-                >
-                  <Text className="text-white font-bold text-[10px]">
-                    {item.badge}
-                  </Text>
-                </View>
-              )}
-
-              {/* Service Icon */}
-              <View className="w-9 h-9 flex items-center justify-center mb-1">
-                <Image
-                  src={item.icon}
-                  mode="aspectFit"
-                  style={{ width: '32px', height: '32px' }}
-                />
-              </View>
-
-              {/* Service Label (Multi-line) */}
-              <Text className="text-gray-800 text-xs font-semibold text-center leading-tight whitespace-pre-line">
-                {item.name}
+              <Text className="text-white font-bold text-xs tracking-wider uppercase">
+                ONE APP FOR ALL YOUR NEEDS!
               </Text>
-            </View>
-          ))}
-        </View>
-
-        {/* Send Money Popup Dialog (photo_6019429732757213092_y.jpg) */}
-        {showSendMoneyModal && (
-          <View className="fixed inset-0 z-50 bg-black/40 flex items-start justify-start pt-64 pl-4">
-            <View className="bg-white rounded-2xl shadow-2xl p-2 w-52 border border-gray-100 animate-in fade-in duration-150">
-              {/* To Individual */}
-              <View
-                onClick={handleNavigateIndividual}
-                className="flex items-center gap-3 px-3 py-3 rounded-xl active:bg-gray-50 cursor-pointer transition border-b border-gray-100"
-              >
-                <Image
-                  src={iconSendIndividual}
-                  className="w-7 h-7 object-contain"
-                />
-                <Text className="text-sm font-semibold text-gray-800">To Individual</Text>
-              </View>
-
-              {/* To Group */}
-              <View
-                onClick={handleNavigateGroup}
-                className="flex items-center gap-3 px-3 py-3 rounded-xl active:bg-gray-50 cursor-pointer transition"
-              >
-                <Image
-                  src={iconSendGroup}
-                  className="w-7 h-7 object-contain"
-                />
-                <Text className="text-sm font-semibold text-gray-800">To Group</Text>
-              </View>
             </View>
           </View>
-        )}
-      </View>
 
-      {/* 4. FAYDA Promotional Banner */}
-      <View className="w-full px-3 pt-3.5">
-        <View className="w-full rounded-2xl overflow-hidden shadow-xs bg-[#094668]">
-          <Image
-            src={bannerFayda}
-            mode="widthFix"
-            className="w-full block"
-          />
-        </View>
+          {/* 3. Primary Quick Services (Top 8 Grid) */}
+          <View className="w-full px-3 pt-3 relative">
+            <View className="grid grid-cols-4 gap-2">
+              {topServices.map((item) => (
+                <View
+                  key={item.id}
+                  onClick={item.action}
+                  className="relative bg-white rounded-xl py-2 px-1 flex flex-col items-center justify-start telebirr-card-shadow active:bg-gray-50 cursor-pointer min-h-[96px]"
+                >
+                  {/* Optional Up to 35% Badge */}
+                  {item.badge && (
+                    <View
+                      className="absolute -top-1.5 px-1.5 py-0.5 rounded-full z-10"
+                      style={{ backgroundColor: '#f59e0b' }}
+                    >
+                      <Text className="text-white font-bold text-[10px]">
+                        {item.badge}
+                      </Text>
+                    </View>
+                  )}
 
-        {/* Carousel Pagination Dots */}
-        <View className="w-full flex flex-row items-center justify-center space-x-1.5 pt-2">
-          <View className="w-3.5 h-1.5 rounded-full bg-[#76bc21]" />
-          <View className="w-1.5 h-1.5 rounded-full border border-gray-300 bg-transparent" />
-        </View>
-      </View>
+                  {/* Service Icon */}
+                  <View className="w-9 h-9 flex items-center justify-center mb-1">
+                    <Image
+                      src={item.icon}
+                      mode="aspectFit"
+                      style={{ width: '32px', height: '32px' }}
+                    />
+                  </View>
 
-      {/* 5. "Transaction Details >" Link */}
-      <View className="w-full px-4 pt-1 flex justify-end">
-        <View
-          onClick={onNavigateHistory}
-          className="flex flex-row items-center space-x-1 py-1 cursor-pointer active:opacity-75"
-        >
-          <Text className="text-sm font-extrabold text-[#0084ff]">Transaction Details</Text>
-          <Text className="text-sm font-extrabold text-[#0084ff]">›</Text>
-        </View>
-      </View>
-
-      {/* 6. Lower Quick Services (photo_6019429732757213091_y.jpg 8-Grid) */}
-      <View className="w-full px-3 pt-1">
-        <View className="grid grid-cols-4 gap-2">
-          {lowerServices.map((item) => (
-            <View
-              key={item.id}
-              onClick={item.action}
-              className="bg-white rounded-xl py-2 px-1 flex flex-col items-center justify-start telebirr-card-shadow active:bg-gray-50 cursor-pointer min-h-[96px]"
-            >
-              {/* Service Icon */}
-              <View className="w-9 h-9 flex items-center justify-center mb-1">
-                {item.id === 'more' ? (
-                  <MauiIcon name="add" size="28px" color="#76bc21" />
-                ) : (
-                  <Image
-                    src={item.icon}
-                    mode="aspectFit"
-                    style={{ width: '32px', height: '32px' }}
-                  />
-                )}
-              </View>
-
-              {/* Service Label (Multi-line) */}
-              <Text className="text-gray-800 text-xs font-semibold text-center leading-tight whitespace-pre-line">
-                {item.name}
-              </Text>
+                  {/* Service Label (Multi-line) */}
+                  <Text className="text-gray-800 text-xs font-semibold text-center leading-tight whitespace-pre-line">
+                    {item.name}
+                  </Text>
+                </View>
+              ))}
             </View>
-          ))}
+          </View>
+
+          {/* 4. FAYDA Promotional Banner */}
+          <View className="w-full px-3 pt-3.5">
+            <View className="w-full rounded-2xl overflow-hidden shadow-xs bg-[#094668]">
+              <Image
+                src={bannerFayda}
+                mode="widthFix"
+                className="w-full block"
+              />
+            </View>
+
+            {/* Carousel Pagination Dots */}
+            <View className="w-full flex flex-row items-center justify-center space-x-1.5 pt-2">
+              <View className="w-3.5 h-1.5 rounded-full bg-[#76bc21]" />
+              <View className="w-1.5 h-1.5 rounded-full border border-gray-300 bg-transparent" />
+            </View>
+          </View>
+
+          {/* 5. "Transaction Details >" Link */}
+          <View className="w-full px-4 pt-1 flex justify-end">
+            <View
+              onClick={onNavigateHistory}
+              className="flex flex-row items-center space-x-1 py-1 cursor-pointer active:opacity-75"
+            >
+              <Text className="text-sm font-extrabold text-[#0084ff]">Transaction Details</Text>
+              <Text className="text-sm font-extrabold text-[#0084ff]">›</Text>
+            </View>
+          </View>
+
+          {/* 6. Lower Quick Services (photo_6019429732757213091_y.jpg 8-Grid) */}
+          <View className="w-full px-3 pt-1">
+            <View className="grid grid-cols-4 gap-2">
+              {lowerServices.map((item) => (
+                <View
+                  key={item.id}
+                  onClick={item.action}
+                  className="bg-white rounded-xl py-2 px-1 flex flex-col items-center justify-start telebirr-card-shadow active:bg-gray-50 cursor-pointer min-h-[96px]"
+                >
+                  {/* Service Icon */}
+                  <View className="w-9 h-9 flex items-center justify-center mb-1">
+                    {item.id === 'more' ? (
+                      <MauiIcon name="add" size="28px" color="#76bc21" />
+                    ) : (
+                      <Image
+                        src={item.icon}
+                        mode="aspectFit"
+                        style={{ width: '32px', height: '32px' }}
+                      />
+                    )}
+                  </View>
+
+                  {/* Service Label (Multi-line) */}
+                  <Text className="text-gray-800 text-xs font-semibold text-center leading-tight whitespace-pre-line">
+                    {item.name}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          </View>
         </View>
-      </View>
+      </ScrollView>
+
+      {/* Send Money Popup Dialog (photo_6019429732757213092_y.jpg) */}
+      {showSendMoneyModal && (
+        <View className="fixed inset-0 z-50 bg-black/40 flex items-start justify-start pt-64 pl-4">
+          <View className="bg-white rounded-2xl shadow-2xl p-2 w-52 border border-gray-100 animate-in fade-in duration-150">
+            {/* To Individual */}
+            <View
+              onClick={handleNavigateIndividual}
+              className="flex items-center gap-3 px-3 py-3 rounded-xl active:bg-gray-50 cursor-pointer transition border-b border-gray-100"
+            >
+              <Image
+                src={iconSendIndividual}
+                className="w-7 h-7 object-contain"
+              />
+              <Text className="text-sm font-semibold text-gray-800">To Individual</Text>
+            </View>
+
+            {/* To Group */}
+            <View
+              onClick={handleNavigateGroup}
+              className="flex items-center gap-3 px-3 py-3 rounded-xl active:bg-gray-50 cursor-pointer transition"
+            >
+              <Image
+                src={iconSendGroup}
+                className="w-7 h-7 object-contain"
+              />
+              <Text className="text-sm font-semibold text-gray-800">To Group</Text>
+            </View>
+          </View>
+        </View>
+      )}
 
       {/* 7. Floating Circular Scan QR Action Button (Fixed above TabBar) */}
       <View
