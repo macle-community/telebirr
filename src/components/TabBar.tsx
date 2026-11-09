@@ -28,11 +28,18 @@ export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
     if (onTabChange) {
       onTabChange(tab)
     } else {
-      try {
-        Taro.redirectTo({ url: `/pages/${tab}/index` })
-      } catch (e) {
-        Taro.navigateTo({ url: `/pages/${tab}/index` })
-      }
+      const url = `/pages/${tab}/index`
+      Taro.reLaunch({
+        url,
+        fail: () => {
+          Taro.redirectTo({
+            url,
+            fail: () => {
+              Taro.navigateTo({ url })
+            }
+          })
+        }
+      })
     }
   }
 

@@ -114,11 +114,9 @@ export default function PaymentView({ onBillerSelect }: PaymentViewProps) {
           style={{ backgroundColor: '#0084ff' }}
         >
           <Text className="text-white font-semibold text-base">Utility</Text>
-          <Image
-            src={expandedCategories['utility'] ? payChevronUp : payChevronDown}
-            mode="aspectFit"
-            style={{ width: '16px', height: '10px' }}
-          />
+          <View style={{ transform: expandedCategories['utility'] ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
+            <MauiIcon name="arrow" size="14px" color="#ffffff" />
+          </View>
         </View>
 
         {/* Expanded Grid of 10 Utility Billers */}
