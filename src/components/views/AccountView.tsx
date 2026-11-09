@@ -26,13 +26,15 @@ interface AccountViewProps {
   onLanguageToggle: () => void
   onItemClick: (title: string) => void
   onShowQR: () => void
+  onLogout?: () => void
 }
 
 export default function AccountView({
   language,
   onLanguageToggle,
   onItemClick,
-  onShowQR
+  onShowQR,
+  onLogout
 }: AccountViewProps) {
   const accountRows = [
     { id: 'fayda', title: 'Verify/Upgrade with Fayda (NID)', icon: accFayda },
@@ -59,17 +61,38 @@ export default function AccountView({
     { id: 'coupon', title: 'My Coupon', icon: accCoupon },
     { id: 'billshare', title: 'Bill Share History', icon: accBillshare },
     { id: 'verifypay', title: 'Verify Payment', icon: accVerifypay },
-    { id: 'wifi', title: 'Access on Wi-FI', icon: accWifi },
-    {
-      id: 'switch_account',
-      title: 'Switch Account / Login',
-      icon: accSecurity,
-      customClick: () => Taro.navigateTo({ url: '/pages/login/index' })
-    }
+    { id: 'wifi', title: 'Access on Wi-FI', icon: accWifi }
   ]
 
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout()
+      return
+    }
+
+    Taro.showModal({
+      title: 'Log Out',
+      content: 'Are you sure you want to log out of telebirr?',
+      confirmText: 'Log Out',
+      confirmColor: '#ef4444',
+      cancelText: 'Cancel',
+      success: (res) => {
+        if (res.confirm) {
+          Taro.showToast({
+            title: 'Logging out...',
+            icon: 'loading',
+            duration: 600
+          })
+          setTimeout(() => {
+            Taro.reLaunch({ url: '/pages/login/index' })
+          }, 600)
+        }
+      }
+    })
+  }
+
   return (
-    <View className="w-full px-3 py-3 pb-24 space-y-3">
+    <View className="w-full px-3 py-3 pb-36 space-y-3">
       {/* 1. User Profile Card */}
       <View className="w-full bg-white rounded-2xl p-3.5 flex flex-row items-center justify-between telebirr-card-shadow">
         {/* Left: Avatar + Details */}
@@ -156,6 +179,26 @@ export default function AccountView({
             </View>
           </View>
         ))}
+      </View>
+
+      {/* 3. Log Out Button */}
+      <View
+        onClick={handleLogout}
+        className="w-full bg-white rounded-2xl py-3.5 px-4 flex flex-row items-center justify-center space-x-2 telebirr-card-shadow active:bg-gray-50 cursor-pointer"
+        style={{
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+        }}
+      >
+        <Text className="text-[#ef4444] font-medium text-[15px] tracking-wide">
+          Log Out
+        </Text>
+      </View>
+
+      {/* App Version Info */}
+      <View className="w-full pt-1 pb-4 flex flex-col items-center justify-center">
+        <Text className="text-gray-400 text-[11px] font-normal">
+          telebirr SuperApp v1.3.3
+        </Text>
       </View>
     </View>
   )
