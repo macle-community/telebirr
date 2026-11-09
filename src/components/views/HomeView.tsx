@@ -188,7 +188,7 @@ export default function HomeView({
             className="flex flex-row items-center space-x-1.5 cursor-pointer"
             onClick={() => setShowMainBalance(!showMainBalance)}
           >
-            <Text className="text-white text-sm font-medium tracking-wide">
+            <Text className="text-white text-base font-medium tracking-wide">
               Balance (ETB)
             </Text>
             <Image
@@ -203,7 +203,7 @@ export default function HomeView({
             className="cursor-pointer py-1 my-0.5 active:opacity-90"
             onClick={onNavigateHistory}
           >
-            <Text className="text-white font-bold text-4xl tracking-tight">
+            <Text className="text-white font-black text-4xl tracking-tight">
               {showMainBalance ? '855.08' : '******'}
             </Text>
           </View>
@@ -216,7 +216,7 @@ export default function HomeView({
                 className="flex flex-row items-center space-x-1.5 cursor-pointer"
                 onClick={() => setShowEndekise(!showEndekise)}
               >
-                <Text className="text-white text-xs font-medium">
+                <Text className="text-white text-sm font-medium">
                   Endekise (ETB)
                 </Text>
                 <Image
@@ -225,7 +225,7 @@ export default function HomeView({
                   style={{ width: '18px', height: '13px' }}
                 />
               </View>
-              <Text className="text-white font-bold text-sm mt-0.5">
+              <Text className="text-white font-bold text-base mt-0.5">
                 {showEndekise ? '0.00' : '******'}
               </Text>
             </View>
@@ -236,7 +236,7 @@ export default function HomeView({
                 className="flex flex-row items-center space-x-1.5 cursor-pointer"
                 onClick={() => setShowReward(!showReward)}
               >
-                <Text className="text-white text-xs font-medium">
+                <Text className="text-white text-sm font-medium">
                   Reward (ETB)
                 </Text>
                 <Image
@@ -245,7 +245,7 @@ export default function HomeView({
                   style={{ width: '18px', height: '13px' }}
                 />
               </View>
-              <Text className="text-white font-bold text-sm mt-0.5">
+              <Text className="text-white font-bold text-base mt-0.5">
                 {showReward ? '25.50' : '******'}
               </Text>
             </View>
@@ -272,7 +272,7 @@ export default function HomeView({
             <View
               key={item.id}
               onClick={item.action}
-              className="relative bg-white rounded-xl py-2.5 px-1 flex flex-col items-center justify-start telebirr-card-shadow active:bg-gray-50 cursor-pointer min-h-[92px]"
+              className="relative bg-white rounded-xl py-2 px-1 flex flex-col items-center justify-start telebirr-card-shadow active:bg-gray-50 cursor-pointer min-h-[96px]"
             >
               {/* Optional Up to 35% Badge */}
               {item.badge && (
@@ -280,23 +280,23 @@ export default function HomeView({
                   className="absolute -top-1.5 px-1.5 py-0.5 rounded-full z-10"
                   style={{ backgroundColor: '#f59e0b' }}
                 >
-                  <Text className="text-white font-semibold text-[9px]">
+                  <Text className="text-white font-bold text-[10px]">
                     {item.badge}
                   </Text>
                 </View>
               )}
 
               {/* Service Icon */}
-              <View className="w-8 h-8 flex items-center justify-center mb-1">
+              <View className="w-9 h-9 flex items-center justify-center mb-1">
                 <Image
                   src={item.icon}
                   mode="aspectFit"
-                  style={{ width: '28px', height: '28px' }}
+                  style={{ width: '32px', height: '32px' }}
                 />
               </View>
 
               {/* Service Label (Multi-line) */}
-              <Text className="text-gray-800 text-[10.5px] font-medium text-center leading-tight whitespace-pre-line">
+              <Text className="text-gray-800 text-xs font-semibold text-center leading-tight whitespace-pre-line">
                 {item.name}
               </Text>
             </View>
@@ -358,8 +358,8 @@ export default function HomeView({
           onClick={onNavigateHistory}
           className="flex flex-row items-center space-x-1 py-1 cursor-pointer active:opacity-75"
         >
-          <Text className="text-sm font-bold text-[#0084ff]">Transaction Details</Text>
-          <Text className="text-sm font-bold text-[#0084ff]">›</Text>
+          <Text className="text-sm font-extrabold text-[#0084ff]">Transaction Details</Text>
+          <Text className="text-sm font-extrabold text-[#0084ff]">›</Text>
         </View>
       </View>
 
@@ -370,23 +370,23 @@ export default function HomeView({
             <View
               key={item.id}
               onClick={item.action}
-              className="bg-white rounded-xl py-2.5 px-1 flex flex-col items-center justify-start telebirr-card-shadow active:bg-gray-50 cursor-pointer min-h-[96px]"
+              className="bg-white rounded-xl py-2 px-1 flex flex-col items-center justify-start telebirr-card-shadow active:bg-gray-50 cursor-pointer min-h-[96px]"
             >
               {/* Service Icon */}
-              <View className="w-8 h-8 flex items-center justify-center mb-1.5">
+              <View className="w-9 h-9 flex items-center justify-center mb-1">
                 {item.id === 'more' ? (
-                  <MauiIcon name="add" size="26px" color="#76bc21" />
+                  <MauiIcon name="add" size="28px" color="#76bc21" />
                 ) : (
                   <Image
                     src={item.icon}
                     mode="aspectFit"
-                    style={{ width: '28px', height: '28px' }}
+                    style={{ width: '32px', height: '32px' }}
                   />
                 )}
               </View>
 
               {/* Service Label (Multi-line) */}
-              <Text className="text-gray-800 text-[10px] font-medium text-center leading-tight whitespace-pre-line">
+              <Text className="text-gray-800 text-xs font-semibold text-center leading-tight whitespace-pre-line">
                 {item.name}
               </Text>
             </View>
@@ -403,7 +403,7 @@ export default function HomeView({
           style={{ backgroundColor: '#0084ff', maxWidth: '380px' }}
         >
           <IconScanQR size={22} color="#ffffff" />
-          <Text className="text-white font-bold text-base tracking-wide">
+          <Text className="text-white font-extrabold text-lg tracking-wide">
             Scan QR
           </Text>
         </View>

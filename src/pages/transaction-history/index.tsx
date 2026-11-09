@@ -234,7 +234,7 @@ export default function TransactionHistory() {
         <View className="w-full bg-white rounded-2xl overflow-hidden telebirr-card-shadow">
           {/* Group Header */}
           <View className="px-4 py-2.5 bg-emerald-50/70 border-b border-emerald-100/50">
-            <Text className="text-gray-900 font-bold text-sm">November</Text>
+            <Text className="text-gray-900 font-bold text-base">November</Text>
           </View>
 
           {/* Records */}
@@ -255,7 +255,7 @@ export default function TransactionHistory() {
                     />
                   </View>
                   <View className="flex flex-col">
-                    <Text className="text-gray-900 font-semibold text-sm">
+                    <Text className="text-gray-900 font-semibold text-base">
                       {tx.title}
                     </Text>
                     <Text className="text-gray-400 text-xs mt-0.5">
@@ -266,10 +266,10 @@ export default function TransactionHistory() {
 
                 {/* Right: Amount & Currency */}
                 <View className="flex flex-col items-end">
-                  <Text className="text-gray-900 font-bold text-base">
+                  <Text className="text-gray-900 font-bold text-lg">
                     {tx.amount > 0 ? `+${tx.amount.toFixed(2)}` : tx.amount.toFixed(2)}
                   </Text>
-                  <Text className="text-gray-400 text-[11px] font-medium uppercase mt-0.5">
+                  <Text className="text-gray-400 text-xs font-medium uppercase mt-0.5">
                     {tx.currency}
                   </Text>
                 </View>
@@ -282,7 +282,7 @@ export default function TransactionHistory() {
         <View className="w-full bg-white rounded-2xl overflow-hidden telebirr-card-shadow">
           {/* Group Header */}
           <View className="px-4 py-2.5 bg-emerald-50/70 border-b border-emerald-100/50">
-            <Text className="text-gray-900 font-bold text-sm">October</Text>
+            <Text className="text-gray-900 font-bold text-base">October</Text>
           </View>
 
           {/* Records */}
@@ -303,7 +303,7 @@ export default function TransactionHistory() {
                     />
                   </View>
                   <View className="flex flex-col">
-                    <Text className="text-gray-900 font-semibold text-sm">
+                    <Text className="text-gray-900 font-semibold text-base">
                       {tx.title}
                     </Text>
                     <Text className="text-gray-400 text-xs mt-0.5">
@@ -314,10 +314,10 @@ export default function TransactionHistory() {
 
                 {/* Right: Amount & Currency */}
                 <View className="flex flex-col items-end">
-                  <Text className="text-gray-900 font-bold text-base">
+                  <Text className="text-gray-900 font-bold text-lg">
                     {tx.amount > 0 ? `+${tx.amount.toFixed(2)}` : tx.amount.toFixed(2)}
                   </Text>
-                  <Text className="text-gray-400 text-[11px] font-medium uppercase mt-0.5">
+                  <Text className="text-gray-400 text-xs font-medium uppercase mt-0.5">
                     {tx.currency}
                   </Text>
                 </View>

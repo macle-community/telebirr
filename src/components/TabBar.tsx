@@ -61,7 +61,7 @@ export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
                     <MauiIcon name={item.icon} size="24px" color="#76bc21" />
                   </View>
                   <View className="w-1.5 h-1.5 bg-white rounded-full mt-1 mb-0.5" />
-                  <Text className="text-white font-bold text-[10.5px] tracking-tight">
+                  <Text className="text-white font-bold text-xs tracking-tight">
                     {item.label}
                   </Text>
                 </View>
@@ -69,7 +69,7 @@ export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
                 /* Inactive Tab */
                 <View className="flex flex-col items-center justify-center py-1">
                   <MauiIcon name={item.icon} size="22px" color="rgba(255, 255, 255, 0.9)" />
-                  <Text className="text-white/80 font-medium text-[10.5px] mt-1 tracking-tight">
+                  <Text className="text-white/90 font-medium text-xs mt-1 tracking-tight">
                     {item.label}
                   </Text>
                 </View>

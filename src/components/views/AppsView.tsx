@@ -95,7 +95,7 @@ export default function AppsView({ onAppSelect }: AppsViewProps) {
             </View>
 
             {/* App Name */}
-            <Text className="text-gray-800 text-xs font-medium text-center leading-tight whitespace-pre-line">
+            <Text className="text-gray-800 text-sm font-semibold text-center leading-tight whitespace-pre-line">
               {app.name}
             </Text>
           </View>

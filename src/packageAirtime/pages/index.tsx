@@ -210,7 +210,7 @@ export default function AirtimePackagePage() {
         {/* Airtime Denominations */}
         {activeTab === 'airtime' ? (
           <View>
-            <Text className="text-sm font-semibold text-gray-800 mb-2.5 block">Select Denomination</Text>
+            <Text className="text-base font-bold text-gray-900 mb-2.5 block">Select Denomination</Text>
 
             <View className="grid grid-cols-3 gap-2.5 mb-4">
               {DENOMINATIONS.map(d => {
@@ -229,18 +229,18 @@ export default function AirtimePackagePage() {
                   >
                     {/* Top badge if any */}
                     {d.badge && (
-                      <View className="absolute -top-2 left-1 bg-gradient-to-r from-[#f59e0b] to-[#ea580c] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-2xs">
+                      <View className="absolute -top-2 left-1 bg-gradient-to-r from-[#f59e0b] to-[#ea580c] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-2xs">
                         {d.badge}
                       </View>
                     )}
 
                     <View className="flex items-baseline justify-center">
-                      <Text className="text-lg font-bold text-gray-900 mr-0.5">{d.amount}</Text>
-                      <Text className="text-[11px] text-gray-500 font-medium">(ETB)</Text>
+                      <Text className="text-xl font-extrabold text-gray-900 mr-0.5">{d.amount}</Text>
+                      <Text className="text-xs text-gray-500 font-medium">(ETB)</Text>
                     </View>
 
                     {d.sub && (
-                      <Text className="text-[10px] text-gray-400 font-medium mt-0.5">{d.sub}</Text>
+                      <Text className="text-xs text-gray-400 font-medium mt-0.5">{d.sub}</Text>
                     )}
                   </View>
                 )
@@ -249,7 +249,7 @@ export default function AirtimePackagePage() {
 
             {/* Other Amount */}
             <View className="mb-6">
-              <Text className="text-sm font-semibold text-gray-800 mb-2 block">Other Amount</Text>
+              <Text className="text-base font-bold text-gray-900 mb-2 block">Other Amount</Text>
               <View className="bg-white rounded-xl border border-gray-200 px-4 py-3 flex items-center justify-between">
                 <Input
                   type="number"

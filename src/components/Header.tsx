@@ -87,7 +87,7 @@ export default function Header({
                   style={{ width: '32px', height: '32px' }}
                 />
               </View>
-              <Text className="text-white font-medium text-sm tracking-wide">
+              <Text className="text-white font-semibold text-base tracking-wide">
                 Selam, Natnael
               </Text>
             </View>
@@ -102,9 +102,9 @@ export default function Header({
               </View>
               <View
                 onClick={onLanguageToggle}
-                className="flex flex-row items-center space-x-1 cursor-pointer bg-white/10 px-2 py-0.5 rounded"
+                className="flex flex-row items-center space-x-1 cursor-pointer bg-white/15 px-2 py-0.5 rounded"
               >
-                <Text className="text-white text-xs font-medium">{language}</Text>
+                <Text className="text-white text-sm font-medium">{language}</Text>
                 <Text className="text-white text-xs">▼</Text>
               </View>
             </View>
@@ -119,7 +119,7 @@ export default function Header({
           <View onClick={onMenuClick} className="cursor-pointer flex items-center justify-center active:opacity-80">
             <MauiIcon name="checklist" size="22px" color="#ffffff" />
           </View>
-          <Text className="text-white font-semibold text-base tracking-wide">
+          <Text className="text-white font-bold text-lg tracking-wide">
             Engage
           </Text>
           <View onClick={onSearchClick} className="cursor-pointer flex items-center justify-center active:opacity-80">
@@ -133,7 +133,7 @@ export default function Header({
           style={{ backgroundColor: '#76bc21', height: '48px' }}
         >
           <View style={{ width: '24px' }} />
-          <Text className="text-white font-semibold text-base tracking-wide capitalize">
+          <Text className="text-white font-bold text-lg tracking-wide capitalize">
             {activeTab}
           </Text>
           <View onClick={onSearchClick} className="cursor-pointer flex items-center justify-center active:opacity-80">

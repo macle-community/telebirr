@@ -71,7 +71,7 @@ export default function AccountView({
           </View>
 
           <View className="flex flex-col">
-            <Text className="text-gray-900 font-bold text-base tracking-tight">
+            <Text className="text-gray-900 font-bold text-lg tracking-tight">
               Natnael
             </Text>
             <View className="flex flex-row items-center space-x-2 mt-1">
@@ -80,12 +80,12 @@ export default function AccountView({
                 className="px-2 py-0.5 rounded"
                 style={{ backgroundColor: '#f59e0b' }}
               >
-                <Text className="text-white font-bold text-[10px]">
+                <Text className="text-white font-bold text-xs">
                   Level 3
                 </Text>
               </View>
               {/* Phone Number */}
-              <Text className="text-gray-600 text-xs font-medium">
+              <Text className="text-gray-700 text-sm font-semibold">
                 +251905410217
               </Text>
             </View>
@@ -117,7 +117,7 @@ export default function AccountView({
                 onItemClick(row.title)
               }
             }}
-            className="w-full px-4 py-3 flex flex-row items-center justify-between cursor-pointer active:bg-gray-50"
+            className="w-full px-4 py-3.5 flex flex-row items-center justify-between cursor-pointer active:bg-gray-50"
           >
             {/* Left: Icon + Title */}
             <View className="flex flex-row items-center space-x-3.5">
@@ -128,7 +128,7 @@ export default function AccountView({
                   style={{ width: '22px', height: '22px' }}
                 />
               </View>
-              <Text className="text-gray-800 text-sm font-medium">
+              <Text className="text-gray-800 text-base font-semibold">
                 {row.title}
               </Text>
             </View>
@@ -136,11 +136,11 @@ export default function AccountView({
             {/* Right: Optional value + Chevron */}
             <View className="flex flex-row items-center space-x-1.5">
               {row.value && (
-                <Text className="text-gray-400 text-xs font-medium mr-0.5">
+                <Text className="text-gray-400 text-sm font-medium mr-0.5">
                   {row.value}
                 </Text>
               )}
-              <Text className="text-gray-400 font-bold text-sm">›</Text>
+              <Text className="text-gray-400 font-bold text-base">›</Text>
             </View>
           </View>
         ))}

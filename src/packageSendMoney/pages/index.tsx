@@ -136,12 +136,12 @@ export default function SendMoneyIndividualPage() {
 
         {/* Mobile Number Card */}
         <View className="bg-white rounded-2xl p-4 shadow-xs border border-gray-100 mb-5">
-          <Text className="text-sm text-gray-700 font-medium mb-3 block">Please Enter Mobile Number</Text>
+          <Text className="text-base text-gray-800 font-semibold mb-3 block">Please Enter Mobile Number</Text>
 
           {/* Input Box */}
           <View className="border-2 border-[#76bc21] rounded-xl px-3.5 py-2.5 flex items-center justify-between mb-4 bg-white">
             <View className="flex items-center flex-1 mr-2">
-              <Text className="text-base font-bold text-gray-900 mr-2 select-none">+251</Text>
+              <Text className="text-lg font-bold text-gray-900 mr-2 select-none">+251</Text>
               <Input
                 type="number"
                 maxlength={9}
@@ -151,7 +151,7 @@ export default function SendMoneyIndividualPage() {
                   setSelectedContact(null)
                 }}
                 placeholder="9..."
-                className="flex-1 text-base font-semibold text-gray-900 bg-transparent outline-none"
+                className="flex-1 text-lg font-bold text-gray-900 bg-transparent outline-none"
               />
             </View>
 
@@ -192,7 +192,7 @@ export default function SendMoneyIndividualPage() {
         {/* Recent Section */}
         <View className="mb-6">
           <View className="flex items-center justify-between mb-2.5 px-1">
-            <Text className="text-sm font-bold text-gray-800">Recent</Text>
+            <Text className="text-base font-bold text-gray-900">Recent</Text>
             {recents.length > 0 && (
               <View 
                 onClick={handleClearRecents}
@@ -221,8 +221,8 @@ export default function SendMoneyIndividualPage() {
                       className="w-10 h-10 rounded-full object-cover bg-gray-100 border border-gray-200"
                     />
                     <View>
-                      <Text className="text-sm font-bold text-gray-900 block">{contact.name}</Text>
-                      <Text className="text-xs text-gray-500 font-mono">{contact.phone}</Text>
+                      <Text className="text-base font-bold text-gray-900 block">{contact.name}</Text>
+                      <Text className="text-sm text-gray-500 font-mono">{contact.phone}</Text>
                     </View>
                   </View>
 

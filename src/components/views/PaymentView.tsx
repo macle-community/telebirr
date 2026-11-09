@@ -113,7 +113,7 @@ export default function PaymentView({ onBillerSelect }: PaymentViewProps) {
           className="w-full px-4 py-3 flex flex-row items-center justify-between cursor-pointer"
           style={{ backgroundColor: '#0084ff' }}
         >
-          <Text className="text-white font-semibold text-base">Utility</Text>
+          <Text className="text-white font-bold text-lg">Utility</Text>
           <View style={{ transform: expandedCategories['utility'] ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
             <MauiIcon name="arrow" size="14px" color="#ffffff" />
           </View>
@@ -129,14 +129,14 @@ export default function PaymentView({ onBillerSelect }: PaymentViewProps) {
                   onClick={() => onBillerSelect(biller.name.replace('\n', ' '))}
                   className="flex flex-col items-center justify-start cursor-pointer active:opacity-75"
                 >
-                  <View className="w-11 h-11 rounded-full flex items-center justify-center mb-1">
+                  <View className="w-12 h-12 rounded-full flex items-center justify-center mb-1">
                     <Image
                       src={biller.icon}
                       mode="aspectFit"
-                      style={{ width: '36px', height: '36px' }}
+                      style={{ width: '40px', height: '40px' }}
                     />
                   </View>
-                  <Text className="text-gray-800 text-[11px] font-medium text-center leading-tight whitespace-pre-line">
+                  <Text className="text-gray-800 text-xs font-semibold text-center leading-tight whitespace-pre-line">
                     {biller.name}
                   </Text>
                 </View>
@@ -160,7 +160,7 @@ export default function PaymentView({ onBillerSelect }: PaymentViewProps) {
               onClick={() => toggleCategory(cat.id)}
               className="w-full px-4 py-3.5 flex flex-row items-center justify-between cursor-pointer bg-white active:bg-gray-50"
             >
-              <Text className="text-gray-900 font-semibold text-sm">
+              <Text className="text-gray-900 font-bold text-base">
                 {cat.title}
               </Text>
               <View style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
@@ -178,14 +178,14 @@ export default function PaymentView({ onBillerSelect }: PaymentViewProps) {
                       onClick={() => onBillerSelect(item.name.replace('\n', ' '))}
                       className="flex flex-col items-center justify-start cursor-pointer active:opacity-75"
                     >
-                      <View className="w-11 h-11 rounded-full flex items-center justify-center mb-1 bg-gray-50">
+                      <View className="w-12 h-12 rounded-full flex items-center justify-center mb-1 bg-gray-50">
                         <Image
                           src={item.icon}
                           mode="aspectFit"
-                          style={{ width: '34px', height: '34px' }}
+                          style={{ width: '38px', height: '38px' }}
                         />
                       </View>
-                      <Text className="text-gray-800 text-[11px] font-medium text-center leading-tight whitespace-pre-line">
+                      <Text className="text-gray-800 text-xs font-semibold text-center leading-tight whitespace-pre-line">
                         {item.name}
                       </Text>
                     </View>
