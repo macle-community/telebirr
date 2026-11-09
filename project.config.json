@@ -1,0 +1,14 @@
+{
+  "miniprogramRoot": "dist/",
+  "projectname": "telebirr-miniapp-taro",
+  "description": "Telebirr SuperApp MiniApp built with Taro 4 React for Macle",
+  "appid": "telebirr_taro_miniapp",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "postcss": true,
+    "minified": true
+  },
+  "compileType": "miniprogram"
+}
+

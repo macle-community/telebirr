@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "image-to-ui-skill": {
+      "source": "bahayonghang/my-ai-cli-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/developer-tools-integrations/image-to-ui-skill/SKILL.md",
+      "computedHash": "f7d8d3a3f767f621483fd12ed44e79d96deb6660a77a852e12aee8b6605f0e37"
+    }
+  }
+}

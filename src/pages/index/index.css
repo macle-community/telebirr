@@ -1,0 +1,6 @@
+/* Main Container Styles */
+.telebirr-scroll-container {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+

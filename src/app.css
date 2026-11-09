@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+page {
+  background-color: #f4f6f8;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: #111827;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+view, text, image, input, button {
+  box-sizing: border-box;
+}
+
+/* Telebirr Green Gradient and Wave Background */
+.telebirr-header-bg {
+  background: linear-gradient(180deg, #71ba1f 0%, #76bc21 60%, #6ab219 100%);
+  background-size: cover;
+  position: relative;
+}
+
+/* Wave pattern texture overlay */
+.telebirr-wave-texture {
+  background-image: radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.22) 15%, transparent 20%),
+                    radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.16) 35%, transparent 40%),
+                    radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.12) 55%, transparent 60%),
+                    radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.08) 75%, transparent 80%),
+                    radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.05) 95%, transparent 100%);
+}
+
+/* Floating shadow styles */
+.telebirr-card-shadow {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.telebirr-float-shadow {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.telebirr-button-active:active {
+  opacity: 0.85;
+  transform: scale(0.98);
+}
+

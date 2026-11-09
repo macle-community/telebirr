@@ -1,0 +1,38 @@
+{
+  "name": "telebirr-miniapp-taro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Telebirr SuperApp MiniApp built with Taro 4 React for Macle",
+  "scripts": {
+    "build:macle": "taro build --type macle",
+    "dev:macle": "taro build --type macle --watch",
+    "sim": "node ../macle-web-simulator/src/cli.js -s ./dist -p 30005"
+  },
+  "dependencies": {
+    "@tarojs/components": "^4.3.2",
+    "@tarojs/helper": "^4.3.2",
+    "@tarojs/plugin-framework-react": "^4.3.2",
+    "@macle-community/taro-plugin-macle": "file:../plugin-platform-macle",
+    "@tarojs/react": "^4.3.2",
+    "@tarojs/runtime": "^4.3.2",
+    "@tarojs/shared": "^4.3.2",
+    "@tarojs/taro": "^4.3.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@babel/preset-react": "^7.29.7",
+    "@tarojs/cli": "^4.3.2",
+    "@tarojs/webpack5-runner": "^4.3.2",
+    "@types/react": "^18.0.0",
+    "@types/webpack-env": "^1.13.6",
+    "babel-preset-taro": "^4.3.2",
+    "postcss-rem-to-responsive-pixel": "^7.0.9",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.0.4",
+    "weapp-tailwindcss": "^3.7.0",
+    "webpack": "^5.78.0"
+  }
+}
+
