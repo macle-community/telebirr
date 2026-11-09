@@ -107,7 +107,7 @@ export default function SendMoneyIndividualPage() {
           >
             <MauiIcon name="arrowleft" size="18px" color="#111827" />
           </View>
-          <Text className="text-base font-bold text-gray-900 tracking-tight">Send Money to Individual</Text>
+          <Text className="text-[15px] font-semibold text-gray-900 tracking-tight">Send Money to Individual</Text>
         </View>
 
         {/* Capsule controls */}
@@ -118,7 +118,7 @@ export default function SendMoneyIndividualPage() {
         </View>
       </View>
 
-      <ScrollView scrollY className="flex-1 px-4 pt-3">
+      <ScrollView scrollY className="flex-1 w-full px-4 pt-3" style={{ boxSizing: 'border-box' }}>
         {/* Banner */}
         <View className="relative w-full rounded-2xl overflow-hidden shadow-xs mb-2 bg-[#0d4f6c]">
           <Image
@@ -136,12 +136,12 @@ export default function SendMoneyIndividualPage() {
 
         {/* Mobile Number Card */}
         <View className="bg-white rounded-2xl p-4 shadow-xs border border-gray-100 mb-5">
-          <Text className="text-base text-gray-800 font-semibold mb-3 block">Please Enter Mobile Number</Text>
+          <Text className="text-xs text-gray-800 font-normal mb-2.5 block">Please Enter Mobile Number</Text>
 
           {/* Input Box */}
-          <View className="border-2 border-[#76bc21] rounded-xl px-3.5 py-2.5 flex items-center justify-between mb-4 bg-white">
-            <View className="flex items-center flex-1 mr-2">
-              <Text className="text-lg font-bold text-gray-900 mr-2 select-none">+251</Text>
+          <View className="border border-[#76bc21] rounded-lg px-3 py-2 flex flex-row items-center justify-between mb-3 bg-white">
+            <View className="flex flex-row items-center flex-1 mr-2">
+              <Text className="text-sm font-medium text-gray-900 mr-2 select-none">+251</Text>
               <Input
                 type="number"
                 maxlength={9}
@@ -151,27 +151,27 @@ export default function SendMoneyIndividualPage() {
                   setSelectedContact(null)
                 }}
                 placeholder="9..."
-                className="flex-1 text-lg font-bold text-gray-900 bg-transparent outline-none"
+                className="flex-1 text-sm font-medium text-gray-900 bg-transparent outline-none placeholder:text-gray-400"
               />
             </View>
 
             {/* Icons: Scanner + Contacts */}
-            <View className="flex items-center gap-2.5">
+            <View className="flex flex-row items-center gap-2">
               <View 
                 onClick={() => {
                   Taro.showToast({ title: 'Opening scanner...', icon: 'none' })
                 }}
-                className="w-7 h-7 flex items-center justify-center cursor-pointer active:scale-95"
+                className="w-6 h-6 flex items-center justify-center cursor-pointer active:scale-95"
               >
-                <Image src={iconScan} className="w-5 h-5 object-contain" />
+                <Image src={iconScan} className="w-4 h-4 object-contain" />
               </View>
               <View 
                 onClick={() => {
                   if (recents.length > 0) handleSelectContact(recents[0])
                 }}
-                className="w-7 h-7 flex items-center justify-center cursor-pointer active:scale-95"
+                className="w-6 h-6 flex items-center justify-center cursor-pointer active:scale-95"
               >
-                <Image src={iconContacts} className="w-5 h-5 object-contain" />
+                <Image src={iconContacts} className="w-4 h-4 object-contain" />
               </View>
             </View>
           </View>
@@ -179,10 +179,10 @@ export default function SendMoneyIndividualPage() {
           {/* Next Button */}
           <View
             onClick={handleNextClick}
-            className={`w-full py-3.5 rounded-xl text-center font-bold text-base transition shadow-2xs ${
+            className={`w-full py-2.5 rounded-lg text-center font-medium text-sm transition shadow-2xs ${
               isFormValid
                 ? 'bg-[#0084ff] text-white cursor-pointer active:brightness-95'
-                : 'bg-[#cfe4f9] text-white cursor-not-allowed'
+                : 'bg-[#cde4f7] text-white cursor-not-allowed'
             }`}
           >
             Next
@@ -191,42 +191,39 @@ export default function SendMoneyIndividualPage() {
 
         {/* Recent Section */}
         <View className="mb-6">
-          <View className="flex items-center justify-between mb-2.5 px-1">
-            <Text className="text-base font-bold text-gray-900">Recent</Text>
+          <View className="flex flex-row items-center justify-between mb-2 px-1">
+            <Text className="text-xs font-normal text-gray-800">Recent</Text>
             {recents.length > 0 && (
               <View 
                 onClick={handleClearRecents}
-                className="w-6 h-6 flex items-center justify-center cursor-pointer active:opacity-70"
+                className="w-5 h-5 flex items-center justify-center cursor-pointer active:opacity-70"
               >
-                <MauiIcon name="recycle" size="18px" color="#9ca3af" />
+                <MauiIcon name="recycle" size="15px" color="#9ca3af" />
               </View>
             )}
           </View>
 
           {recents.length === 0 ? (
-            <View className="bg-white rounded-2xl p-6 text-center text-gray-400 text-sm border border-gray-100">
+            <View className="bg-white rounded-xl p-5 text-center text-gray-400 text-xs border border-gray-100">
               No recent transactions
             </View>
           ) : (
-            <View className="bg-white rounded-2xl shadow-xs border border-gray-100 divide-y divide-gray-100 overflow-hidden">
+            <View className="bg-white rounded-xl shadow-2xs border border-gray-100 divide-y divide-gray-100 overflow-hidden">
               {recents.map(contact => (
                 <View
                   key={contact.id}
                   onClick={() => handleSelectContact(contact)}
-                  className="px-4 py-3.5 flex items-center justify-between cursor-pointer active:bg-gray-50 transition"
+                  className="px-4 py-3 flex flex-row items-center justify-between cursor-pointer active:bg-gray-50 transition"
                 >
-                  <View className="flex items-center gap-3">
+                  <View className="flex flex-row items-center gap-3">
                     <Image
                       src={contact.avatar}
-                      className="w-10 h-10 rounded-full object-cover bg-gray-100 border border-gray-200"
+                      className="w-8 h-8 rounded-lg object-cover bg-gray-100 border border-gray-100"
                     />
-                    <View>
-                      <Text className="text-base font-bold text-gray-900 block">{contact.name}</Text>
-                      <Text className="text-sm text-gray-500 font-mono">{contact.phone}</Text>
-                    </View>
+                    <Text className="text-xs font-normal text-gray-800">{contact.name}</Text>
                   </View>
 
-                  <Text className="text-gray-300 text-base font-bold">›</Text>
+                  <Text className="text-gray-300 text-sm font-light mr-1">›</Text>
                 </View>
               ))}
             </View>

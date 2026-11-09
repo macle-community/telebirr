@@ -94,7 +94,7 @@ export default function AirtimePackagePage() {
           >
             <MauiIcon name="arrowleft" size="18px" color="#111827" />
           </View>
-          <Text className="text-base font-bold text-gray-900 tracking-tight">Airtime/Package</Text>
+          <Text className="text-[15px] font-semibold text-gray-900 tracking-tight">Airtime/Package</Text>
         </View>
 
         {/* Capsule controls */}
@@ -105,7 +105,7 @@ export default function AirtimePackagePage() {
         </View>
       </View>
 
-      <ScrollView scrollY className="flex-1 px-4 pt-3">
+      <ScrollView scrollY className="flex-1 w-full px-4 pt-3" style={{ boxSizing: 'border-box' }}>
         {/* Promo Banner */}
         <View className="relative w-full rounded-2xl overflow-hidden shadow-xs mb-2 bg-[#1b3a1a]">
           <Image
@@ -122,17 +122,17 @@ export default function AirtimePackagePage() {
         </View>
 
         {/* Recipient Selection */}
-        <View className="flex items-center justify-between mb-3">
-          <View className="flex items-center gap-2">
+        <View className="flex flex-row items-center justify-between mb-3">
+          <View className="flex flex-row items-center gap-2">
             <View
               onClick={() => {
                 setRecipientType('self')
                 setPhoneNumber('+251 905410217')
               }}
-              className={`px-5 py-1.5 rounded-md text-sm font-semibold cursor-pointer transition ${
+              className={`px-4 py-1 rounded-md text-xs font-medium cursor-pointer transition ${
                 recipientType === 'self'
-                  ? 'bg-[#76bc21] text-white shadow-xs'
-                  : 'bg-white text-gray-600 border border-gray-200'
+                  ? 'bg-[#76bc21] text-white shadow-2xs'
+                  : 'bg-white text-gray-700 border border-gray-200'
               }`}
             >
               Self
@@ -142,10 +142,10 @@ export default function AirtimePackagePage() {
                 setRecipientType('other')
                 setPhoneNumber('+251 9')
               }}
-              className={`px-5 py-1.5 rounded-md text-sm font-semibold cursor-pointer transition ${
+              className={`px-4 py-1 rounded-md text-xs font-medium cursor-pointer transition ${
                 recipientType === 'other'
-                  ? 'bg-[#76bc21] text-white shadow-xs'
-                  : 'bg-white text-gray-600 border border-gray-200'
+                  ? 'bg-[#76bc21] text-white shadow-2xs'
+                  : 'bg-white text-gray-700 border border-gray-200'
               }`}
             >
               Other
@@ -158,38 +158,38 @@ export default function AirtimePackagePage() {
               setRecipientType('other')
               setPhoneNumber('+251 911234567')
             }}
-            className="w-9 h-8 bg-white border border-gray-200 rounded-md flex items-center justify-center cursor-pointer active:bg-gray-50 shadow-2xs"
+            className="w-8 h-7 bg-white border border-gray-200 rounded-md flex items-center justify-center cursor-pointer active:bg-gray-50 shadow-2xs"
           >
-            <MauiIcon name="add" size="20px" color="#76bc21" />
+            <MauiIcon name="add" size="18px" color="#76bc21" />
           </View>
         </View>
 
         {/* Recipient Phone Field */}
-        <View className="mb-4">
+        <View className="mb-3.5">
           {recipientType === 'self' ? (
-            <View className="border-b border-[#8dc73f]/50 pb-2">
-              <Text className="text-2xl font-bold tracking-wide text-gray-900">{phoneNumber}</Text>
+            <View className="border-b border-[#8dc73f]/60 pb-1.5">
+              <Text className="text-lg font-bold tracking-normal text-gray-900">{phoneNumber}</Text>
             </View>
           ) : (
-            <View className="border-b-2 border-[#76bc21] pb-1 flex items-center">
+            <View className="border-b border-[#76bc21] pb-1 flex items-center">
               <Input
                 type="text"
                 value={phoneNumber}
                 onInput={(e: any) => setPhoneNumber(e.detail ? e.detail.value : e.target.value)}
                 placeholder="Enter 9 digits"
-                className="w-full text-2xl font-bold tracking-wide text-gray-900 bg-transparent outline-none"
+                className="w-full text-lg font-bold tracking-normal text-gray-900 bg-transparent outline-none"
               />
             </View>
           )}
         </View>
 
         {/* Segmented Control: Airtime vs Package */}
-        <View className="bg-[#e4edd2] p-1 rounded-t-xl flex mb-4">
+        <View className="bg-[#e4edd2] p-0.5 rounded-lg flex flex-row mb-3.5">
           <View
             onClick={() => setActiveTab('airtime')}
-            className={`flex-1 py-2.5 text-center text-sm font-bold rounded-lg cursor-pointer transition ${
+            className={`flex-1 py-1.5 text-center text-xs font-medium rounded-md cursor-pointer transition ${
               activeTab === 'airtime'
-                ? 'bg-[#76bc21] text-white shadow-xs'
+                ? 'bg-[#76bc21] text-white shadow-2xs'
                 : 'text-gray-700'
             }`}
           >
@@ -197,9 +197,9 @@ export default function AirtimePackagePage() {
           </View>
           <View
             onClick={() => setActiveTab('package')}
-            className={`flex-1 py-2.5 text-center text-sm font-bold rounded-lg cursor-pointer transition ${
+            className={`flex-1 py-1.5 text-center text-xs font-medium rounded-md cursor-pointer transition ${
               activeTab === 'package'
-                ? 'bg-[#76bc21] text-white shadow-xs'
+                ? 'bg-[#76bc21] text-white shadow-2xs'
                 : 'text-gray-700'
             }`}
           >
@@ -210,37 +210,37 @@ export default function AirtimePackagePage() {
         {/* Airtime Denominations */}
         {activeTab === 'airtime' ? (
           <View>
-            <Text className="text-base font-bold text-gray-900 mb-2.5 block">Select Denomination</Text>
+            <Text className="text-xs font-medium text-gray-900 mb-2 block">Select Denomination</Text>
 
-            <View className="grid grid-cols-3 gap-2.5 mb-4">
+            <View className="grid grid-cols-3 gap-2 mb-4">
               {DENOMINATIONS.map(d => {
                 const isSelected = selectedAmount === d.amount && !customAmount
                 return (
                   <View
                     key={d.amount}
                     onClick={() => handleSelectDenomination(d.amount)}
-                    className={`relative bg-white rounded-xl py-3 px-1 text-center cursor-pointer transition flex flex-col items-center justify-center min-h-[68px] ${
+                    className={`relative bg-white rounded-lg py-2 px-1 text-center cursor-pointer transition flex flex-col items-center justify-center min-h-[56px] ${
                       isSelected
-                        ? 'border-2 border-[#f59e0b] shadow-sm bg-amber-50/20'
+                        ? 'border-2 border-[#f59e0b] shadow-2xs'
                         : d.highlight
-                        ? 'border border-[#f59e0b]/60'
+                        ? 'border border-[#f59e0b]'
                         : 'border border-gray-200'
                     }`}
                   >
                     {/* Top badge if any */}
                     {d.badge && (
-                      <View className="absolute -top-2 left-1 bg-gradient-to-r from-[#f59e0b] to-[#ea580c] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-2xs">
+                      <View className="absolute -top-1.5 left-0.5 bg-[#f59e0b] text-white text-[9px] font-medium px-1.5 py-0.2 rounded-full shadow-2xs">
                         {d.badge}
                       </View>
                     )}
 
                     <View className="flex items-baseline justify-center">
-                      <Text className="text-xl font-extrabold text-gray-900 mr-0.5">{d.amount}</Text>
-                      <Text className="text-xs text-gray-500 font-medium">(ETB)</Text>
+                      <Text className="text-base font-bold text-gray-900 mr-0.5">{d.amount}</Text>
+                      <Text className="text-[10px] text-gray-700 font-normal">(ETB)</Text>
                     </View>
 
                     {d.sub && (
-                      <Text className="text-xs text-gray-400 font-medium mt-0.5">{d.sub}</Text>
+                      <Text className="text-[9px] text-gray-400 font-normal mt-0.5">{d.sub}</Text>
                     )}
                   </View>
                 )
@@ -249,45 +249,45 @@ export default function AirtimePackagePage() {
 
             {/* Other Amount */}
             <View className="mb-6">
-              <Text className="text-base font-bold text-gray-900 mb-2 block">Other Amount</Text>
-              <View className="bg-white rounded-xl border border-gray-200 px-4 py-3 flex items-center justify-between">
+              <Text className="text-xs font-medium text-gray-900 mb-2 block">Other Amount</Text>
+              <View className="bg-white rounded-lg border border-gray-200 px-3 py-2 flex flex-row items-center justify-between">
                 <Input
                   type="number"
                   value={customAmount}
                   onInput={handleCustomAmountChange}
                   placeholder="Enter Amount"
-                  className="flex-1 text-base text-gray-900 bg-transparent outline-none"
+                  className="flex-1 text-xs text-gray-900 bg-transparent outline-none placeholder:text-gray-400"
                 />
-                <Text className="text-sm font-bold text-gray-500 ml-2">ETB</Text>
+                <Text className="text-xs font-normal text-gray-700 ml-2">ETB</Text>
               </View>
             </View>
           </View>
         ) : (
           /* Package Options */
-          <View className="space-y-2.5 mb-6">
-            <Text className="text-sm font-semibold text-gray-800 mb-2.5 block">Select Package</Text>
+          <View className="space-y-2 mb-6">
+            <Text className="text-xs font-medium text-gray-900 mb-2 block">Select Package</Text>
             {PACKAGES.map(pkg => (
               <View
                 key={pkg.id}
                 onClick={() => setSelectedPkgId(pkg.id)}
-                className={`p-3.5 rounded-xl border transition cursor-pointer flex items-center justify-between ${
+                className={`p-3 rounded-lg border transition cursor-pointer flex items-center justify-between ${
                   selectedPkgId === pkg.id
-                    ? 'border-[#76bc21] bg-emerald-50/40 shadow-xs'
+                    ? 'border-[#76bc21] bg-emerald-50/40 shadow-2xs'
                     : 'bg-white border-gray-200'
                 }`}
               >
                 <View>
-                  <View className="flex items-center gap-2">
-                    <Text className="text-sm font-bold text-gray-900">{pkg.name}</Text>
-                    <Text className="bg-[#76bc21]/15 text-[#5ea315] text-[10px] font-bold px-1.5 py-0.5 rounded">
+                  <View className="flex items-center gap-1.5">
+                    <Text className="text-xs font-semibold text-gray-900">{pkg.name}</Text>
+                    <Text className="bg-[#76bc21]/15 text-[#5ea315] text-[9px] font-medium px-1 py-0.2 rounded">
                       {pkg.tag}
                     </Text>
                   </View>
-                  <Text className="text-xs text-gray-500 mt-0.5">Validity: {pkg.validity}</Text>
+                  <Text className="text-[10px] text-gray-500 mt-0.5">Validity: {pkg.validity}</Text>
                 </View>
                 <View className="text-right">
-                  <Text className="text-base font-bold text-[#76bc21]">{pkg.price}</Text>
-                  <Text className="text-[10px] text-gray-500 block">ETB</Text>
+                  <Text className="text-sm font-bold text-[#76bc21]">{pkg.price}</Text>
+                  <Text className="text-[9px] text-gray-500 block">ETB</Text>
                 </View>
               </View>
             ))}
@@ -295,10 +295,10 @@ export default function AirtimePackagePage() {
         )}
 
         {/* Next Button */}
-        <View className="mt-2 mb-8">
+        <View className="mt-4 mb-8">
           <View
             onClick={() => setShowConfirm(true)}
-            className="w-full bg-[#8dc73f] hover:bg-[#76bc21] active:scale-98 text-white font-bold py-3.5 rounded-full text-center text-base shadow-sm cursor-pointer transition flex items-center justify-center"
+            className="w-full bg-[#b8db92] hover:bg-[#a2cb76] active:brightness-95 text-white font-medium py-2.5 rounded-xl text-center text-sm cursor-pointer transition flex items-center justify-center shadow-2xs"
           >
             Next
           </View>

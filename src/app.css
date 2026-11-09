@@ -10,7 +10,7 @@ page {
   box-sizing: border-box;
 }
 
-view, text, image, input, button {
+*, *::before, *::after, view, text, image, input, button, scroll-view {
   box-sizing: border-box;
 }
 
