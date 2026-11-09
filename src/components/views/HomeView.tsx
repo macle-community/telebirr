@@ -1,21 +1,16 @@
 import React, { useState } from 'react'
-import { View, Text, Image, ScrollView, Swiper, SwiperItem } from '@tarojs/components'
+import { View, Text, ScrollView } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import { MauiIcon } from '@macle-community/taro-plugin-macle/components-react'
 
-// QR Scanner vector icon (masked via MAUI Icon)
-const SCAN_QR_ICON =
-  'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiIHdpZHRoPSIxMDI0IiBoZWlnaHQ9IjEwMjQiPgogIDxwYXRoIGQ9Ik0gMTgwIDM2MCBWIDI2MCBBIDgwIDgwIDAgMCAxIDI2MCAxODAgSCAzNjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJjMmMyYyIgc3Ryb2tlLXdpZHRoPSI4MCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPHBhdGggZD0iTSA2NjQgMTgwIEggNzY0IEEgODAgODAgMCAwIDEgODQ0IDI2MCBWIDM2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMmMyYzJjIiBzdHJva2Utd2lkdGg9IjgwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8cGF0aCBkPSJNIDE4MCA2NjQgViA3NjQgQSA4MCA4MCAwIDAgMCAyNjAgODQ0IEggMzYwIiBmaWxsPSJub25lIiBzdHJva2U9IiMyYzJjMmMiIHN0cm9rZS13aWR0aD0iODAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0gNjY0IDg0NCBIIDc2NCBBIDgwIDgwIDAgMCAwIDg0NCA3NjQgViA2NjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJjMmMyYyIgc3Ryb2tlLXdpZHRoPSI4MCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPHBhdGggZD0iTSAzMzAgNTAwIFYgMzgwIEEgNzAgNzAgMCAwIDEgNDAwIDMxMCBIIDYyNCBBIDcwIDcwIDAgMCAxIDY5NCAzODAgViA1MDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJjMmMyYyIgc3Ryb2tlLXdpZHRoPSI3MCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPHJlY3QgeD0iMjYwIiB5PSI1ODAiIHdpZHRoPSI1MDQiIGhlaWdodD0iOTAiIHJ4PSI0NSIgZmlsbD0iIzJjMmMyYyIvPgo8L3N2Zz4='
+import {
+  BalanceHero,
+  NeedsBanner,
+  ServiceGrid,
+  SendMoneyModal,
+  ScanQRFab,
+  PromotionalBanner
+} from '../index'
 
-// Eye vector icons (open / closed) for balance privacy toggle
-const EYE_OPEN_ICON =
-  'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMyYzJjMmMiIHN0cm9rZS13aWR0aD0iMS44IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0yIDEyQzQuNSA3LjUgOC41IDYuNSAxMiA2LjVTMTkuNSA3LjUgMjIgMTJDMTkuNSAxNi41IDE1LjUgMTcuNSAxMiAxNy41UzQuNSAxNi41IDIgMTJaIiAvPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjIuNiIgZmlsbD0iIzJjMmMyYyIgc3Ryb2tlPSJub25lIiAvPjwvc3ZnPg=='
-
-const EYE_CLOSE_ICON =
-  'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMyYzJjMmMiIHN0cm9rZS13aWR0aD0iMS44IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0yIDEyQzQuNSA3LjUgOC41IDYuNSAxMiA2LjVDMTQuMiA2LjUgMTYuNSA3IDE4LjUgOC41TTIyIDEyQzIwLjUgMTQuOCAxNy4yIDE3LjUgMTIgMTcuNUM4LjUgMTcuNSA0LjUgMTYuNSAyIDEyIiAvPjxwYXRoIGQ9Ik0xMC41IDEwLjVBMi42IDIuNiAwIDAgMCAxMy41IDEzLjUiIC8+PGxpbmUgeDE9IjMiIHkxPSIyMCIgeDI9IjIxIiB5Mj0iNCIgLz48L3N2Zz4='
-import bannerFayda from '../../assets/images/banner_fayda.png'
-import bannerZemen from '../../assets/images/zemen_banner.png'
-import bannerFinancial from '../../assets/images/banner_airtime_micro.png'
 import sendMoneyIcon from '../../assets/images/home_send_money.png'
 import cashInOutIcon from '../../assets/images/home_cash_inout.png'
 import airtimeIcon from '../../assets/images/home_airtime.png'
@@ -24,9 +19,6 @@ import dashenLogo from '../../assets/images/logo_dashen.png'
 import cbeLogo from '../../assets/images/logo_cbe.png'
 import siinqeeLogo from '../../assets/images/logo_siinqee.png'
 import transferBankIcon from '../../assets/images/home_transfer_bank.png'
-
-import iconSendIndividual from '../../assets/images/icon_send_individual.png'
-import iconSendGroup from '../../assets/images/icon_send_group.png'
 
 import srvAwash from '../../assets/images/srv_awash.png'
 import srvMerchant from '../../assets/images/srv_merchant.png'
@@ -48,19 +40,7 @@ export default function HomeView({
   onScanQR,
   onQuickAction
 }: HomeViewProps) {
-  // Balance visibility toggle states
-  const [showMainBalance, setShowMainBalance] = useState(true)
-  const [showEndekise, setShowEndekise] = useState(false)
-  const [showReward, setShowReward] = useState(false)
   const [showSendMoneyModal, setShowSendMoneyModal] = useState(false)
-  const [currentBanner, setCurrentBanner] = useState(0)
-
-  // Promotional Banner Slides
-  const banners = [
-    { id: 'fayda', image: bannerFayda, title: 'FAYDA National ID' },
-    { id: 'zemen', image: bannerZemen, title: 'Zemen GEBEYA' },
-    { id: 'financial', image: bannerFinancial, title: 'Financial Services' }
-  ]
 
   // Primary 8-grid services (top two rows)
   const topServices = [
@@ -189,90 +169,7 @@ export default function HomeView({
   return (
     <View className="w-full h-full flex flex-col relative overflow-hidden select-none">
       {/* 1. Green Hero & Balance Section (Docked at top) */}
-      <View
-        className="w-full flex-shrink-0 z-20 telebirr-header-bg telebirr-wave-texture px-4 pt-1 pb-4 relative shadow-xs"
-        style={{
-          backgroundColor: '#76bc21',
-          backgroundImage:
-            'radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.22) 20%, transparent 25%), radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.16) 40%, transparent 45%), radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.12) 60%, transparent 65%), radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08) 80%, transparent 85%)'
-        }}
-      >
-        {/* Main Balance Header */}
-        <View className="flex flex-col items-center justify-center pt-1">
-          <View
-            className="flex flex-row items-center justify-center space-x-1.5 cursor-pointer py-1"
-            onClick={() => setShowMainBalance(!showMainBalance)}
-          >
-            <Text className="text-white text-base font-medium tracking-wide leading-none">
-              Balance (ETB)
-            </Text>
-            <View className="flex items-center justify-center">
-              <MauiIcon
-                name={showMainBalance ? EYE_OPEN_ICON : EYE_CLOSE_ICON}
-                size="15px"
-                color="#ffffff"
-              />
-            </View>
-          </View>
-
-          {/* Amount (Clickable to open Transaction History) */}
-          <View
-            className="cursor-pointer py-1 my-0.5 active:opacity-90"
-            onClick={onNavigateHistory}
-          >
-            <Text className="text-white font-black text-4xl tracking-tight">
-              {showMainBalance ? '855.08' : '******'}
-            </Text>
-          </View>
-
-          {/* Sub Balances: Endekise & Reward */}
-          <View className="w-full flex flex-row items-center justify-between px-6 pt-2">
-            {/* Endekise */}
-            <View className="flex flex-col items-start">
-              <View
-                className="flex flex-row items-center space-x-1 cursor-pointer py-0.5"
-                onClick={() => setShowEndekise(!showEndekise)}
-              >
-                <Text className="text-white text-sm font-medium leading-none">
-                  Endekise (ETB)
-                </Text>
-                <View className="flex items-center justify-center">
-                  <MauiIcon
-                    name={showEndekise ? EYE_OPEN_ICON : EYE_CLOSE_ICON}
-                    size="13px"
-                    color="#ffffff"
-                  />
-                </View>
-              </View>
-              <Text className="text-white font-bold text-base mt-1">
-                {showEndekise ? '0.00' : '******'}
-              </Text>
-            </View>
-
-            {/* Reward */}
-            <View className="flex flex-col items-end">
-              <View
-                className="flex flex-row items-center space-x-1 cursor-pointer py-0.5"
-                onClick={() => setShowReward(!showReward)}
-              >
-                <Text className="text-white text-sm font-medium leading-none">
-                  Reward (ETB)
-                </Text>
-                <View className="flex items-center justify-center">
-                  <MauiIcon
-                    name={showReward ? EYE_OPEN_ICON : EYE_CLOSE_ICON}
-                    size="13px"
-                    color="#ffffff"
-                  />
-                </View>
-              </View>
-              <Text className="text-white font-bold text-base mt-1">
-                {showReward ? '25.50' : '******'}
-              </Text>
-            </View>
-          </View>
-        </View>
-      </View>
+      <BalanceHero onNavigateHistory={onNavigateHistory} />
 
       {/* Scrollable Container for Lower Content */}
       <ScrollView
@@ -282,100 +179,13 @@ export default function HomeView({
       >
         <View className="w-full pb-36 pt-0">
           {/* 2. Orange Banner: ONE APP FOR ALL YOUR NEEDS! */}
-          <View className="w-full px-2 pt-0 flex justify-center z-10">
-            <View
-              className="w-full py-1.5 rounded-t-xl flex items-center justify-center shadow-xs"
-              style={{ backgroundColor: '#f9a825' }}
-            >
-              <Text className="text-white font-bold text-xs tracking-wider uppercase">
-                ONE APP FOR ALL YOUR NEEDS!
-              </Text>
-            </View>
-          </View>
+          <NeedsBanner />
 
           {/* 3. Primary Quick Services (Top 8 Grid) */}
-          <View className="w-full px-3 pt-3 relative">
-            <View className="grid grid-cols-4 gap-2">
-              {topServices.map((item) => (
-                <View
-                  key={item.id}
-                  onClick={item.action}
-                  className="relative bg-white rounded-xl py-2 px-1 flex flex-col items-center justify-start telebirr-card-shadow active:bg-gray-50 cursor-pointer min-h-[96px]"
-                >
-                  {/* Optional Up to 35% Badge */}
-                  {item.badge && (
-                    <View
-                      className="absolute -top-1.5 px-1.5 py-0.5 rounded-full z-10"
-                      style={{ backgroundColor: '#f59e0b' }}
-                    >
-                      <Text className="text-white font-bold text-[10px]">
-                        {item.badge}
-                      </Text>
-                    </View>
-                  )}
-
-                  {/* Service Icon */}
-                  <View className="w-9 h-9 flex items-center justify-center mb-1">
-                    <Image
-                      src={item.icon}
-                      mode="aspectFit"
-                      style={{ width: '32px', height: '32px' }}
-                    />
-                  </View>
-
-                  {/* Service Label (Multi-line) */}
-                  <Text className="text-gray-800 text-xs font-semibold text-center leading-tight whitespace-pre-line">
-                    {item.name}
-                  </Text>
-                </View>
-              ))}
-            </View>
-          </View>
+          <ServiceGrid services={topServices} />
 
           {/* 4. Promotional Banner Slideshow (Auto scroll) */}
-          <View className="w-full px-3 pt-3.5">
-            <View className="w-full rounded-2xl overflow-hidden shadow-xs">
-              <Swiper
-                className="w-full rounded-2xl overflow-hidden"
-                style={{ height: '112px' }}
-                autoplay
-                interval={3500}
-                duration={500}
-                circular
-                indicatorDots={false}
-                onChange={(e) => setCurrentBanner(e.detail.current)}
-              >
-                {banners.map((item) => (
-                  <SwiperItem key={item.id} className="w-full h-full">
-                    <View
-                      className="w-full h-full rounded-2xl overflow-hidden cursor-pointer"
-                      onClick={() => onQuickAction(item.title)}
-                    >
-                      <Image
-                        src={item.image}
-                        mode="aspectFill"
-                        className="w-full h-full block"
-                      />
-                    </View>
-                  </SwiperItem>
-                ))}
-              </Swiper>
-            </View>
-
-            {/* Carousel Pagination Dots */}
-            <View className="w-full flex flex-row items-center justify-center space-x-1.5 pt-2">
-              {banners.map((item, idx) => (
-                <View
-                  key={item.id}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    idx === currentBanner
-                      ? 'w-3.5 bg-[#76bc21]'
-                      : 'w-1.5 border border-gray-300 bg-transparent'
-                  }`}
-                />
-              ))}
-            </View>
-          </View>
+          <PromotionalBanner onBannerClick={(b) => onQuickAction(b.title)} />
 
           {/* 5. "Transaction Details >" Link */}
           <View className="w-full px-4 pt-1 flex justify-end">
@@ -388,82 +198,21 @@ export default function HomeView({
             </View>
           </View>
 
-          {/* 6. Lower Quick Services (photo_6019429732757213091_y.jpg 8-Grid) */}
-          <View className="w-full px-3 pt-1">
-            <View className="grid grid-cols-4 gap-2">
-              {lowerServices.map((item) => (
-                <View
-                  key={item.id}
-                  onClick={item.action}
-                  className="bg-white rounded-xl py-2 px-1 flex flex-col items-center justify-start telebirr-card-shadow active:bg-gray-50 cursor-pointer min-h-[96px]"
-                >
-                  {/* Service Icon */}
-                  <View className="w-9 h-9 flex items-center justify-center mb-1">
-                    {item.id === 'more' ? (
-                      <MauiIcon name="add" size="28px" color="#76bc21" />
-                    ) : (
-                      <Image
-                        src={item.icon}
-                        mode="aspectFit"
-                        style={{ width: '32px', height: '32px' }}
-                      />
-                    )}
-                  </View>
-
-                  {/* Service Label (Multi-line) */}
-                  <Text className="text-gray-800 text-xs font-semibold text-center leading-tight whitespace-pre-line">
-                    {item.name}
-                  </Text>
-                </View>
-              ))}
-            </View>
-          </View>
+          {/* 6. Lower Quick Services (8-Grid) */}
+          <ServiceGrid services={lowerServices} />
         </View>
       </ScrollView>
 
-      {/* Send Money Popup Dialog (photo_6019429732757213092_y.jpg) */}
-      {showSendMoneyModal && (
-        <View className="fixed inset-0 z-50 bg-black/40 flex items-start justify-start pt-64 pl-4">
-          <View className="bg-white rounded-2xl shadow-2xl p-2 w-52 border border-gray-100 animate-in fade-in duration-150">
-            {/* To Individual */}
-            <View
-              onClick={handleNavigateIndividual}
-              className="flex items-center gap-3 px-3 py-3 rounded-xl active:bg-gray-50 cursor-pointer transition border-b border-gray-100"
-            >
-              <Image
-                src={iconSendIndividual}
-                className="w-7 h-7 object-contain"
-              />
-              <Text className="text-sm font-semibold text-gray-800">To Individual</Text>
-            </View>
-
-            {/* To Group */}
-            <View
-              onClick={handleNavigateGroup}
-              className="flex items-center gap-3 px-3 py-3 rounded-xl active:bg-gray-50 cursor-pointer transition"
-            >
-              <Image
-                src={iconSendGroup}
-                className="w-7 h-7 object-contain"
-              />
-              <Text className="text-sm font-semibold text-gray-800">To Group</Text>
-            </View>
-          </View>
-        </View>
-      )}
+      {/* Send Money Popup Dialog */}
+      <SendMoneyModal
+        visible={showSendMoneyModal}
+        onClose={() => setShowSendMoneyModal(false)}
+        onSelectIndividual={handleNavigateIndividual}
+        onSelectGroup={handleNavigateGroup}
+      />
 
       {/* 7. Floating Circular Scan QR Action Button (Fixed above TabBar) */}
-      <View
-        onClick={onScanQR}
-        className="fixed right-4 z-40 w-14 h-14 rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition"
-        style={{
-          bottom: '76px',
-          backgroundColor: '#0084ff',
-          boxShadow: '0 4px 16px rgba(0, 132, 255, 0.45), 0 2px 6px rgba(0, 0, 0, 0.15)'
-        }}
-      >
-        <MauiIcon name={SCAN_QR_ICON} size="30px" color="#ffffff" />
-      </View>
+      <ScanQRFab onClick={onScanQR} />
     </View>
   )
 }

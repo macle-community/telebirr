@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { View, Text, Image, Input, ScrollView } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { MauiIcon } from '@macle-community/taro-plugin-macle/components-react'
-
-import bannerAirtime from '../../assets/images/banner_airtime_micro.png'
+import PromotionalBanner from '../../components/common/PromotionalBanner'
 
 interface Denomination {
   amount: number
@@ -106,20 +105,8 @@ export default function AirtimePackagePage() {
       </View>
 
       <ScrollView scrollY className="flex-1 w-full px-4 pt-3" style={{ boxSizing: 'border-box' }}>
-        {/* Promo Banner */}
-        <View className="relative w-full rounded-2xl overflow-hidden shadow-xs mb-2 bg-[#1b3a1a]">
-          <Image
-            src={bannerAirtime}
-            mode="widthFix"
-            className="w-full block"
-          />
-        </View>
-
-        {/* Slider Indicator */}
-        <View className="flex items-center justify-center gap-1.5 mb-4">
-          <View className="w-4 h-1.5 bg-[#76bc21] rounded-full" />
-          <View className="w-1.5 h-1.5 bg-gray-300 rounded-full" />
-        </View>
+        {/* Reusable Promotional Banner Slideshow */}
+        <PromotionalBanner className="w-full mb-3" />
 
         {/* Recipient Selection */}
         <View className="flex flex-row items-center justify-between mb-3">
