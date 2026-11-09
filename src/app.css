@@ -14,6 +14,14 @@ page {
   box-sizing: border-box;
 }
 
+maui-icon, ma-maui-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  line-height: 1;
+}
+
 /* Telebirr Green Gradient and Wave Background */
 .telebirr-header-bg {
   background: linear-gradient(180deg, #71ba1f 0%, #76bc21 60%, #6ab219 100%);
