@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image } from '@tarojs/components'
+import { View, Text, Image, ScrollView } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { IconChevronRight } from '../Icons'
 
@@ -92,111 +92,132 @@ export default function AccountView({
   }
 
   return (
-    <View className="w-full px-3 py-3 pb-36 space-y-3">
-      {/* 1. User Profile Card */}
-      <View className="w-full bg-white rounded-2xl p-3.5 flex flex-row items-center justify-between telebirr-card-shadow">
-        {/* Left: Avatar + Details */}
-        <View className="flex flex-row items-center space-x-3">
-          <View className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-emerald-100">
-            <Image
-              src={accAvatar}
-              mode="aspectFill"
-              style={{ width: '48px', height: '48px' }}
-            />
-          </View>
-
-          <View className="flex flex-col">
-            <Text className="text-gray-900 font-bold text-base tracking-tight">
-              Natnael
-            </Text>
-            <View className="flex flex-row items-center space-x-2 mt-0.5">
-              {/* Level 3 Badge */}
-              <View
-                className="px-1.5 py-0.5 rounded"
-                style={{ backgroundColor: '#f59e0b' }}
-              >
-                <Text className="text-white font-bold text-[10px]">
-                  Level 3
-                </Text>
-              </View>
-              {/* Phone Number */}
-              <Text className="text-gray-500 text-xs font-normal">
-                +251905410217
-              </Text>
-            </View>
-          </View>
-        </View>
-
-        {/* Right: QR Code icon + Chevron */}
+    <View className="w-full h-full relative overflow-hidden select-none">
+      {/* 1. Scrollable Account Content (Profile & Menu List) */}
+      <ScrollView
+        scrollY
+        className="w-full h-full overflow-y-auto account-scroll-container"
+        style={{ boxSizing: 'border-box' }}
+      >
         <View
-          onClick={onShowQR}
-          className="cursor-pointer active:opacity-70 flex items-center justify-center"
+          className="w-full px-3 py-3 space-y-3"
+          style={{ paddingBottom: '160px' }}
         >
-          <Image
-            src={accQrChevron}
-            mode="aspectFit"
-            style={{ width: '52px', height: '28px' }}
-          />
-        </View>
-      </View>
-
-      {/* 2. Menu List Card with Dividers */}
-      <View className="w-full bg-white rounded-2xl overflow-hidden telebirr-card-shadow divide-y divide-gray-100">
-        {accountRows.map((row) => (
-          <View
-            key={row.id}
-            onClick={() => {
-              if (row.customClick) {
-                row.customClick()
-              } else {
-                onItemClick(row.title)
-              }
-            }}
-            className="w-full px-4 py-3 flex flex-row items-center justify-between cursor-pointer active:bg-gray-50"
-          >
-            {/* Left: Icon + Title */}
+          {/* 1. User Profile Card */}
+          <View className="w-full bg-white rounded-2xl p-3.5 flex flex-row items-center justify-between telebirr-card-shadow">
+            {/* Left: Avatar + Details */}
             <View className="flex flex-row items-center space-x-3">
-              <View className="w-5 h-5 flex items-center justify-center">
+              <View className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-emerald-100">
                 <Image
-                  src={row.icon}
-                  mode="aspectFit"
-                  style={{ width: '20px', height: '20px' }}
+                  src={accAvatar}
+                  mode="aspectFill"
+                  style={{ width: '48px', height: '48px' }}
                 />
               </View>
-              <Text className="text-gray-800 text-[13px] font-normal">
-                {row.title}
-              </Text>
+
+              <View className="flex flex-col">
+                <Text className="text-gray-900 font-bold text-base tracking-tight">
+                  Natnael
+                </Text>
+                <View className="flex flex-row items-center space-x-2 mt-0.5">
+                  {/* Level 3 Badge */}
+                  <View
+                    className="px-1.5 py-0.5 rounded"
+                    style={{ backgroundColor: '#f59e0b' }}
+                  >
+                    <Text className="text-white font-bold text-[10px]">
+                      Level 3
+                    </Text>
+                  </View>
+                  {/* Phone Number */}
+                  <Text className="text-gray-500 text-xs font-normal">
+                    +251905410217
+                  </Text>
+                </View>
+              </View>
             </View>
 
-            {/* Right: Optional value + Chevron */}
-            <View className="flex flex-row items-center space-x-1.5">
-              {row.value && (
-                <Text className="text-gray-400 text-xs font-normal mr-0.5">
-                  {row.value}
-                </Text>
-              )}
-              <Text className="text-gray-300 font-normal text-sm">›</Text>
+            {/* Right: QR Code icon + Chevron */}
+            <View
+              onClick={onShowQR}
+              className="cursor-pointer active:opacity-70 flex items-center justify-center"
+            >
+              <Image
+                src={accQrChevron}
+                mode="aspectFit"
+                style={{ width: '52px', height: '28px' }}
+              />
             </View>
           </View>
-        ))}
-      </View>
 
-      {/* 3. Log Out Button */}
+          {/* 2. Menu List Card with Dividers */}
+          <View className="w-full bg-white rounded-2xl overflow-hidden telebirr-card-shadow divide-y divide-gray-100">
+            {accountRows.map((row) => (
+              <View
+                key={row.id}
+                onClick={() => {
+                  if (row.customClick) {
+                    row.customClick()
+                  } else {
+                    onItemClick(row.title)
+                  }
+                }}
+                className="w-full px-4 py-3 flex flex-row items-center justify-between cursor-pointer active:bg-gray-50"
+              >
+                {/* Left: Icon + Title */}
+                <View className="flex flex-row items-center space-x-3">
+                  <View className="w-5 h-5 flex items-center justify-center">
+                    <Image
+                      src={row.icon}
+                      mode="aspectFit"
+                      style={{ width: '20px', height: '20px' }}
+                    />
+                  </View>
+                  <Text className="text-gray-800 text-[13px] font-normal">
+                    {row.title}
+                  </Text>
+                </View>
+
+                {/* Right: Optional value + Chevron */}
+                <View className="flex flex-row items-center space-x-1.5">
+                  {row.value && (
+                    <Text className="text-gray-400 text-xs font-normal mr-0.5">
+                      {row.value}
+                    </Text>
+                  )}
+                  <Text className="text-gray-300 font-normal text-sm">›</Text>
+                </View>
+              </View>
+            ))}
+          </View>
+        </View>
+      </ScrollView>
+
+      {/* 2. Docked Log Out Bottom Bar (Fixed at bottom above TabBar, no scroll needed) */}
       <View
-        onClick={handleLogout}
-        className="w-full bg-white rounded-2xl py-3.5 px-4 flex flex-row items-center justify-center space-x-2 telebirr-card-shadow active:bg-gray-50 cursor-pointer"
+        className="absolute left-0 right-0 z-20 w-full px-3 pt-2 pb-2 flex flex-col items-center"
         style={{
-          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+          bottom: '74px',
+          background: 'linear-gradient(180deg, rgba(244, 246, 248, 0.92) 0%, rgba(244, 246, 248, 1) 100%)',
+          backdropFilter: 'blur(8px)',
+          borderTop: '1px solid rgba(229, 231, 235, 0.7)',
+          boxShadow: '0 -4px 16px rgba(0, 0, 0, 0.05)'
         }}
       >
-        <Text className="text-[#ef4444] font-medium text-[15px] tracking-wide">
-          Log Out
-        </Text>
-      </View>
+        <View
+          onClick={handleLogout}
+          className="w-full bg-white rounded-2xl py-3 px-4 flex flex-row items-center justify-center space-x-2 telebirr-card-shadow active:bg-red-50 cursor-pointer border border-red-100/70"
+          style={{
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+          }}
+        >
+          <Text className="text-[#ef4444] font-semibold text-[15px] tracking-wide">
+            Log Out
+          </Text>
+        </View>
 
-      {/* App Version Info */}
-      <View className="w-full pt-1 pb-4 flex flex-col items-center justify-center">
-        <Text className="text-gray-400 text-[11px] font-normal">
+        {/* App Version Info */}
+        <Text className="text-gray-400 text-[10px] font-normal mt-1">
           telebirr SuperApp v1.3.3
         </Text>
       </View>

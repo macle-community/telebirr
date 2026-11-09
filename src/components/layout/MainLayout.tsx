@@ -136,7 +136,7 @@ export default function MainLayout({ initialTab = 'home' }: MainLayoutProps) {
           {/* Pane 4: Account */}
           <View
             style={{ width: '20%', height: '100%', flexShrink: 0 }}
-            className="h-full overflow-y-auto account-scroll-container"
+            className="h-full relative overflow-hidden"
           >
             <AccountView
               language={language}
