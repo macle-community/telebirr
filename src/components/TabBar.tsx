@@ -1,11 +1,7 @@
 import React from 'react'
-import { View, Image } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import tabHome from '../assets/images/tabbar_home.png'
-import tabPay from '../assets/images/tabbar_pay.png'
-import tabApps from '../assets/images/tabbar_apps.png'
-import tabEngage from '../assets/images/tabbar_engage.png'
-import tabAccount from '../assets/images/tabbar_account.png'
+import { MauiIcon } from '@macle-community/taro-plugin-macle/components-react'
 
 export type TabType = 'home' | 'payment' | 'apps' | 'engage' | 'account'
 
@@ -14,17 +10,19 @@ interface TabBarProps {
   onTabChange?: (tab: TabType) => void
 }
 
-const TAB_IMAGES: Record<TabType, string> = {
-  home: tabHome,
-  payment: tabPay,
-  apps: tabApps,
-  engage: tabEngage,
-  account: tabAccount
-}
+// SVG vector icon for Home tab (masked via MAUI Icon)
+const HOME_ICON =
+  'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGZpbGw9IiMyYzJjMmMiIGQ9Ik05NDYuMyA1MDVMNTM0LjYgOTMuNGMtMTIuNS0xMi41LTMyLjgtMTIuNS00NS4zIDBMNzcuNyA1MDVjLTEyIDEyLTEyLjUgMzEuMy0xLjIgNDMuOSAxMS44IDEzLjIgMzIuMSAxMy43IDQ0LjUgMS4zTDE2MCA1MTEuMlY5MDRjMCAyMi4xIDE3LjkgNDAgNDAgNDBoMjAwYzIyLjEgMCA0MC0xNy45IDQwLTQwVjY4MGgxNDR2MjI0YzAgMjIuMSAxNy45IDQwIDQwIDQwaDIwMGMyMi4xIDAgNDAtMTcuOSA0MC00MFY1MTEuMmwzOSAzOWM2LjIgNi4yIDE0LjQgOS40IDIyLjYgOS40IDcuNyAwIDE1LjQtMi44IDIxLjQtOC41IDEyLjEtMTIuNiAxMS42LTMyLjktLjctNDYuMXoiLz48L3N2Zz4='
+
+const TAB_CONFIG: { id: TabType; label: string; icon: string }[] = [
+  { id: 'home', label: 'Home', icon: HOME_ICON },
+  { id: 'payment', label: 'Payment', icon: 'shopping' },
+  { id: 'apps', label: 'Apps', icon: 'classification' },
+  { id: 'engage', label: 'Engage', icon: 'dialogue' },
+  { id: 'account', label: 'Account', icon: 'setting' }
+]
 
 export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
-  const tabs: TabType[] = ['home', 'payment', 'apps', 'engage', 'account']
-
   const handleTabClick = (tab: TabType) => {
     if (tab === activeTab) return
     if (onTabChange) {
@@ -39,26 +37,39 @@ export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
   }
 
   return (
-    <View className="fixed bottom-0 left-0 right-0 z-50 select-none" style={{ backgroundColor: '#8dc73f' }}>
-      <View className="relative w-full" style={{ height: '62px' }}>
-        {/* Background Image of Tab Bar with Active Notch & Dot */}
-        <Image
-          src={TAB_IMAGES[activeTab]}
-          mode="aspectFill"
-          className="w-full h-full block"
-          style={{ width: '100%', height: '62px' }}
-        />
-
-        {/* 5 Clickable Touch Targets */}
-        <View className="absolute inset-0 flex flex-row">
-          {tabs.map((tab) => (
+    <View className="fixed bottom-0 left-0 right-0 z-50 select-none bg-[#76bc21] shadow-lg border-t border-[#68a81d]">
+      <View className="relative w-full h-[62px] flex flex-row items-center justify-around px-1">
+        {TAB_CONFIG.map((item) => {
+          const isActive = item.id === activeTab
+          return (
             <View
-              key={tab}
-              className="flex-1 h-full cursor-pointer"
-              onClick={() => handleTabClick(tab)}
-            />
-          ))}
-        </View>
+              key={item.id}
+              onClick={() => handleTabClick(item.id)}
+              className="flex-1 flex flex-col items-center justify-center cursor-pointer relative py-1"
+            >
+              {isActive ? (
+                /* Active Tab with Elevated Circular Notch */
+                <View className="flex flex-col items-center -mt-5">
+                  <View className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-md border-2 border-[#76bc21] active:scale-95 transition">
+                    <MauiIcon name={item.icon} size="24px" color="#76bc21" />
+                  </View>
+                  <View className="w-1.5 h-1.5 bg-white rounded-full mt-1 mb-0.5" />
+                  <Text className="text-white font-bold text-[10.5px] tracking-tight">
+                    {item.label}
+                  </Text>
+                </View>
+              ) : (
+                /* Inactive Tab */
+                <View className="flex flex-col items-center justify-center py-1">
+                  <MauiIcon name={item.icon} size="22px" color="rgba(255, 255, 255, 0.9)" />
+                  <Text className="text-white/80 font-medium text-[10.5px] mt-1 tracking-tight">
+                    {item.label}
+                  </Text>
+                </View>
+              )}
+            </View>
+          )
+        })}
       </View>
     </View>
   )

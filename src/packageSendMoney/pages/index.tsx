@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { View, Text, Image, Input, ScrollView } from '@tarojs/components'
 import Taro from '@tarojs/taro'
+import { MauiIcon } from '@macle-community/taro-plugin-macle/components-react'
 
 import bannerFayda from '../../assets/images/banner_fayda.png'
 import iconScan from '../../assets/images/icon_scan_qr_input.png'
 import iconContacts from '../../assets/images/icon_contacts_input.png'
-import iconTrash from '../../assets/images/icon_trash_recent.png'
 
 import avatarAbebe from '../../assets/images/avatar_abebe.png'
 import avatarYared from '../../assets/images/avatar_yared.png'
@@ -103,9 +103,9 @@ export default function SendMoneyIndividualPage() {
         <View className="flex items-center gap-3">
           <View
             onClick={handleBack}
-            className="w-8 h-8 flex items-center justify-center -ml-1 text-gray-800 active:bg-gray-100 rounded-full cursor-pointer text-xl font-bold"
+            className="w-8 h-8 flex items-center justify-center -ml-1 text-gray-800 active:bg-gray-100 rounded-full cursor-pointer"
           >
-            ←
+            <MauiIcon name="arrowleft" size="18px" color="#111827" />
           </View>
           <Text className="text-base font-bold text-gray-900 tracking-tight">Send Money to Individual</Text>
         </View>
@@ -198,7 +198,7 @@ export default function SendMoneyIndividualPage() {
                 onClick={handleClearRecents}
                 className="w-6 h-6 flex items-center justify-center cursor-pointer active:opacity-70"
               >
-                <Image src={iconTrash} className="w-4 h-4 object-contain" />
+                <MauiIcon name="recycle" size="18px" color="#9ca3af" />
               </View>
             )}
           </View>

@@ -1,14 +1,13 @@
 import React from 'react'
 import { View, Text, Image } from '@tarojs/components'
-import Taro from '@tarojs/taro'
+import { MauiIcon } from '@macle-community/taro-plugin-macle/components-react'
 import { TabType } from './TabBar'
 import ethioLogo from '../assets/images/ethio_logo.png'
 import telebirrLogo from '../assets/images/telebirr_logo.png'
 import userAvatar from '../assets/images/home_user_avatar.png'
-import iconSearchWhite from '../assets/images/icon_search_white.png'
-import iconBellWhite from '../assets/images/icon_bell_white.png'
-import iconMenuWhite from '../assets/images/icon_menu_white.png'
-import iconSearchHeader from '../assets/images/icon_search_header.png'
+
+const SEARCH_ICON =
+  'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGZpbGw9IiMyYzJjMmMiIGQ9Ik05MDkuNiA4NTQuNUw2NDkgNTk0Yy00LjQtNC40LTEwLjQtNi45LTE2LjctNi45aC0xNi4xYy00Ni4xIDM2LjgtMTA0LjYgNTguOS0xNjguMiA1OC45LTE0NS45IDAtMjY0LTExOC4xLTI2NC0yNjRTMzAxLjkgMTE4IDQ0Ny45IDExOGMxNDUuOSAwIDI2NCAxMTguMSAyNjQgMjY0IDAgNjMuNi0yMi4xIDEyMi4xLTU4LjkgMTY4LjJ2MTYuMWMwIDYuMyAyLjUgMTIuMyA2LjkgMTYuN2wyNjAuNSAyNjAuNWM5LjQgOS40IDI0LjYgOS40IDMzLjkgMGw5LjQtOS40YzkuNC05LjQgOS40LTI0LjYgMC0zMy45ek00NDcuOSA1MjBjOTkuNSAwIDE4MC04MC41IDE4MC0xODBzLTgwLjUtMTgwLTE4MC0xODAtMTgwIDgwLjUtMTgwIDE4MCA4MC41IDE4MCAxODAgMTh6Ii8+PC9zdmc+'
 
 interface HeaderProps {
   activeTab: TabType
@@ -58,7 +57,10 @@ export default function Header({
       {activeTab === 'home' ? (
         <View className="w-full">
           {/* Top Brand Bar: Ethio Telecom & telebirr */}
-          <View className="w-full flex flex-row items-center justify-between px-3 py-2 bg-white">
+          <View
+            className="w-full bg-white flex flex-row items-center justify-between px-4 py-2 border-b border-gray-100"
+            style={{ height: '48px' }}
+          >
             <Image
               src={ethioLogo}
               mode="aspectFit"
@@ -71,12 +73,12 @@ export default function Header({
             />
           </View>
 
-          {/* User Profile Bar on green background */}
+          {/* Profile Bar: Selam, Natnael + Action Icons */}
           <View
-            className="w-full flex flex-row items-center justify-between px-4 py-2.5"
+            className="w-full flex flex-row items-center justify-between px-4 pt-2.5 pb-2"
             style={{ backgroundColor: '#76bc21' }}
           >
-            {/* User Greeting */}
+            {/* User Avatar + Greeting */}
             <View className="flex flex-row items-center space-x-2.5">
               <View className="w-8 h-8 rounded-full overflow-hidden border border-white/40 flex items-center justify-center bg-white/20">
                 <Image
@@ -90,21 +92,13 @@ export default function Header({
               </Text>
             </View>
 
-            {/* Header Action Icons */}
-            <View className="flex flex-row items-center space-x-2.5">
-              <View onClick={onSearchClick} className="cursor-pointer flex items-center justify-center">
-                <Image
-                  src={iconSearchWhite}
-                  mode="aspectFit"
-                  style={{ width: '22px', height: '22px' }}
-                />
+            {/* Header Action Icons using MAUI Icon */}
+            <View className="flex flex-row items-center space-x-3">
+              <View onClick={onSearchClick} className="cursor-pointer flex items-center justify-center active:opacity-80">
+                <MauiIcon name={SEARCH_ICON} size="19px" color="#ffffff" />
               </View>
-              <View onClick={onNotificationClick} className="cursor-pointer flex items-center justify-center">
-                <Image
-                  src={iconBellWhite}
-                  mode="aspectFit"
-                  style={{ width: '22px', height: '22px' }}
-                />
+              <View onClick={onNotificationClick} className="cursor-pointer flex items-center justify-center active:opacity-80">
+                <MauiIcon name="remind" info="35" size="20px" color="#ffffff" />
               </View>
               <View
                 onClick={onLanguageToggle}
@@ -117,31 +111,23 @@ export default function Header({
           </View>
         </View>
       ) : activeTab === 'engage' ? (
-        /* Engage Header with Menu Icon */
+        /* Engage Header with MAUI Icon */
         <View
           className="w-full flex flex-row items-center justify-between px-4 py-2.5"
           style={{ backgroundColor: '#76bc21', height: '48px' }}
         >
-          <View onClick={onMenuClick} className="cursor-pointer flex items-center justify-center">
-            <Image
-              src={iconMenuWhite}
-              mode="aspectFit"
-              style={{ width: '24px', height: '24px' }}
-            />
+          <View onClick={onMenuClick} className="cursor-pointer flex items-center justify-center active:opacity-80">
+            <MauiIcon name="checklist" size="22px" color="#ffffff" />
           </View>
           <Text className="text-white font-semibold text-base tracking-wide">
             Engage
           </Text>
-          <View onClick={onSearchClick} className="cursor-pointer flex items-center justify-center">
-            <Image
-              src={iconSearchHeader}
-              mode="aspectFit"
-              style={{ width: '24px', height: '24px' }}
-            />
+          <View onClick={onSearchClick} className="cursor-pointer flex items-center justify-center active:opacity-80">
+            <MauiIcon name={SEARCH_ICON} size="20px" color="#ffffff" />
           </View>
         </View>
       ) : (
-        /* Standard Header for Payment, Apps, Account */
+        /* Standard Header for Payment, Apps, Account with MAUI Icon */
         <View
           className="w-full flex flex-row items-center justify-between px-4 py-2.5"
           style={{ backgroundColor: '#76bc21', height: '48px' }}
@@ -150,12 +136,8 @@ export default function Header({
           <Text className="text-white font-semibold text-base tracking-wide capitalize">
             {activeTab}
           </Text>
-          <View onClick={onSearchClick} className="cursor-pointer flex items-center justify-center">
-            <Image
-              src={iconSearchHeader}
-              mode="aspectFit"
-              style={{ width: '24px', height: '24px' }}
-            />
+          <View onClick={onSearchClick} className="cursor-pointer flex items-center justify-center active:opacity-80">
+            <MauiIcon name={SEARCH_ICON} size="20px" color="#ffffff" />
           </View>
         </View>
       )}

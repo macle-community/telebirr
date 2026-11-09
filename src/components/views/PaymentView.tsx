@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, Image } from '@tarojs/components'
-import { IconChevronDown, IconChevronUp } from '../Icons'
+import { MauiIcon } from '@macle-community/taro-plugin-macle/components-react'
 
 import payEthiotel from '../../assets/images/pay_ethiotel.png'
 import payElectric from '../../assets/images/pay_electric.png'
@@ -12,8 +12,6 @@ import payUnicash from '../../assets/images/pay_unicash.png'
 import payEeu from '../../assets/images/pay_eeu.png'
 import payWebsprix from '../../assets/images/pay_websprix.png'
 import payPalaba from '../../assets/images/pay_palaba.png'
-import payChevronUp from '../../assets/images/pay_chevron_up.png'
-import payChevronDown from '../../assets/images/pay_chevron_down.png'
 
 interface PaymentViewProps {
   onBillerSelect: (name: string) => void
@@ -167,11 +165,9 @@ export default function PaymentView({ onBillerSelect }: PaymentViewProps) {
               <Text className="text-gray-900 font-semibold text-sm">
                 {cat.title}
               </Text>
-              <Image
-                src={isExpanded ? payChevronUp : payChevronDown}
-                mode="aspectFit"
-                style={{ width: '16px', height: '10px' }}
-              />
+              <View style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
+                <MauiIcon name="arrow" size="14px" color="#9ca3af" />
+              </View>
             </View>
 
             {/* Expandable Content Grid */}

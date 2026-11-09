@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import { View, Text, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro'
-import { IconArrowLeft } from '../../components/Icons'
+import { MauiIcon } from '@macle-community/taro-plugin-macle/components-react'
 import txIcon from '../../assets/images/tx_icon.png'
-import txDownloadIcon from '../../assets/images/tx_icon_download.png'
-import txFilterIcon from '../../assets/images/tx_icon_filter.png'
 import './index.css'
 
 interface TransactionItem {
@@ -124,8 +122,8 @@ export default function TransactionHistory() {
       {/* 2. Top Navigation Bar with Back Arrow & Title & Capsule */}
       <View className="w-full h-12 bg-white px-3 flex flex-row items-center justify-between border-b border-gray-100">
         <View className="flex flex-row items-center space-x-2">
-          <View onClick={handleBack} className="p-1 cursor-pointer active:opacity-60">
-            <IconArrowLeft size={22} color="#111827" />
+          <View onClick={handleBack} className="p-1 cursor-pointer active:opacity-60 flex items-center justify-center">
+            <MauiIcon name="arrowleft" size="18px" color="#111827" />
           </View>
           <Text className="text-gray-900 font-bold text-lg tracking-tight">
             Transaction History
@@ -181,27 +179,19 @@ export default function TransactionHistory() {
           </View>
         </View>
 
-        {/* Right Download & Filter Icons */}
+        {/* Right Download & Filter Icons using MAUI Icon */}
         <View className="flex flex-row items-center space-x-2">
           <View
             onClick={() => Taro.showToast({ title: 'Downloading Statement...', icon: 'none' })}
             className="w-9 h-9 flex items-center justify-center cursor-pointer active:opacity-70"
           >
-            <Image
-              src={txDownloadIcon}
-              mode="aspectFit"
-              style={{ width: '28px', height: '28px' }}
-            />
+            <MauiIcon name="download" size="22px" color="#374151" />
           </View>
           <View
             onClick={() => Taro.showToast({ title: 'Filter Transactions', icon: 'none' })}
             className="w-9 h-9 flex items-center justify-center cursor-pointer active:opacity-70"
           >
-            <Image
-              src={txFilterIcon}
-              mode="aspectFit"
-              style={{ width: '28px', height: '28px' }}
-            />
+            <MauiIcon name="classification" size="20px" color="#374151" />
           </View>
         </View>
       </View>

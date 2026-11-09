@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { View, Text, Image, Input, ScrollView } from '@tarojs/components'
 import Taro from '@tarojs/taro'
+import { MauiIcon } from '@macle-community/taro-plugin-macle/components-react'
 
 import bannerAirtime from '../../assets/images/banner_airtime_micro.png'
-import iconContacts from '../../assets/images/icon_airtime_contacts.png'
 
 interface Denomination {
   amount: number
@@ -90,9 +90,9 @@ export default function AirtimePackagePage() {
         <View className="flex items-center gap-2">
           <View 
             onClick={handleBack} 
-            className="w-8 h-8 flex items-center justify-center -ml-1 text-gray-700 active:bg-gray-100 rounded-full cursor-pointer text-xl font-bold"
+            className="w-8 h-8 flex items-center justify-center -ml-1 text-gray-700 active:bg-gray-100 rounded-full cursor-pointer"
           >
-            ‹
+            <MauiIcon name="arrowleft" size="18px" color="#111827" />
           </View>
           <Text className="text-base font-bold text-gray-900 tracking-tight">Airtime/Package</Text>
         </View>
@@ -160,7 +160,7 @@ export default function AirtimePackagePage() {
             }}
             className="w-9 h-8 bg-white border border-gray-200 rounded-md flex items-center justify-center cursor-pointer active:bg-gray-50 shadow-2xs"
           >
-            <Image src={iconContacts} className="w-5 h-5 object-contain" />
+            <MauiIcon name="add" size="20px" color="#76bc21" />
           </View>
         </View>
 

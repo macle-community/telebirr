@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro'
+import { MauiIcon } from '@macle-community/taro-plugin-macle/components-react'
 import { IconScanQR } from '../Icons'
 
 import eyeMainIcon from '../../assets/images/icon_eye_main.png'
@@ -373,11 +374,15 @@ export default function HomeView({
             >
               {/* Service Icon */}
               <View className="w-8 h-8 flex items-center justify-center mb-1.5">
-                <Image
-                  src={item.icon}
-                  mode="aspectFit"
-                  style={{ width: '28px', height: '28px' }}
-                />
+                {item.id === 'more' ? (
+                  <MauiIcon name="add" size="26px" color="#76bc21" />
+                ) : (
+                  <Image
+                    src={item.icon}
+                    mode="aspectFit"
+                    style={{ width: '28px', height: '28px' }}
+                  />
+                )}
               </View>
 
               {/* Service Label (Multi-line) */}
