@@ -19,4 +19,6 @@ export { default as SendMoneyModal } from './home/SendMoneyModal'
 export type { SendMoneyModalProps } from './home/SendMoneyModal'
 export { default as ScanQRFab } from './home/ScanQRFab'
 export type { ScanQRFabProps } from './home/ScanQRFab'
+export { default as HomeAdModal } from './home/HomeAdModal'
+export type { HomeAdModalProps } from './home/HomeAdModal'
 

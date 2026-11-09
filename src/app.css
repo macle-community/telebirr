@@ -38,6 +38,26 @@ maui-icon, ma-maui-icon {
                     radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.05) 95%, transparent 100%);
 }
 
+/* Telebirr Login Subtle Ripple Waves */
+.telebirr-login-bg {
+  background-color: #f7f9f2;
+  background-image: 
+    radial-gradient(circle at 0% 30%, transparent 80px, rgba(118, 188, 33, 0.12) 81px, transparent 83px),
+    radial-gradient(circle at 0% 30%, transparent 120px, rgba(118, 188, 33, 0.11) 121px, transparent 123px),
+    radial-gradient(circle at 0% 30%, transparent 160px, rgba(118, 188, 33, 0.10) 161px, transparent 163px),
+    radial-gradient(circle at 0% 30%, transparent 200px, rgba(118, 188, 33, 0.09) 201px, transparent 203px),
+    radial-gradient(circle at 0% 30%, transparent 240px, rgba(118, 188, 33, 0.08) 241px, transparent 243px),
+    radial-gradient(circle at 0% 30%, transparent 280px, rgba(118, 188, 33, 0.07) 281px, transparent 283px),
+    radial-gradient(circle at 0% 30%, transparent 320px, rgba(118, 188, 33, 0.06) 321px, transparent 323px),
+    radial-gradient(circle at 100% 70%, transparent 80px, rgba(118, 188, 33, 0.12) 81px, transparent 83px),
+    radial-gradient(circle at 100% 70%, transparent 120px, rgba(118, 188, 33, 0.11) 121px, transparent 123px),
+    radial-gradient(circle at 100% 70%, transparent 160px, rgba(118, 188, 33, 0.10) 161px, transparent 163px),
+    radial-gradient(circle at 100% 70%, transparent 200px, rgba(118, 188, 33, 0.09) 201px, transparent 203px),
+    radial-gradient(circle at 100% 70%, transparent 240px, rgba(118, 188, 33, 0.08) 241px, transparent 243px),
+    radial-gradient(circle at 100% 70%, transparent 280px, rgba(118, 188, 33, 0.07) 281px, transparent 283px),
+    radial-gradient(circle at 100% 70%, transparent 320px, rgba(118, 188, 33, 0.06) 321px, transparent 323px);
+}
+
 /* Floating shadow styles */
 .telebirr-card-shadow {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.03);

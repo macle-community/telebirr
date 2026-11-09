@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, Image } from '@tarojs/components'
+import Taro from '@tarojs/taro'
 import { IconChevronRight } from '../Icons'
 
 import accAvatar from '../../assets/images/acc_avatar.png'
@@ -44,7 +45,12 @@ export default function AccountView({
       customClick: onLanguageToggle
     },
     { id: 'security', title: 'Security Question', icon: accSecurity },
-    { id: 'biometric', title: 'Biometric Authentication', icon: accBiometric },
+    {
+      id: 'biometric',
+      title: 'Biometric Authentication',
+      icon: accBiometric,
+      customClick: () => Taro.navigateTo({ url: '/pages/login-finger/index' })
+    },
     { id: 'faq', title: 'FAQ', icon: accFaq },
     { id: 'feedback', title: 'Feedback', icon: accFeedback },
     { id: 'contact', title: 'Contact Us', icon: accContact },
@@ -53,7 +59,13 @@ export default function AccountView({
     { id: 'coupon', title: 'My Coupon', icon: accCoupon },
     { id: 'billshare', title: 'Bill Share History', icon: accBillshare },
     { id: 'verifypay', title: 'Verify Payment', icon: accVerifypay },
-    { id: 'wifi', title: 'Access on Wi-FI', icon: accWifi }
+    { id: 'wifi', title: 'Access on Wi-FI', icon: accWifi },
+    {
+      id: 'switch_account',
+      title: 'Switch Account / Login',
+      icon: accSecurity,
+      customClick: () => Taro.navigateTo({ url: '/pages/login/index' })
+    }
   ]
 
   return (

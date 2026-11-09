@@ -9,6 +9,7 @@ import PaymentView from '../views/PaymentView'
 import AppsView from '../views/AppsView'
 import EngageView from '../views/EngageView'
 import AccountView from '../views/AccountView'
+import HomeAdModal from '../home/HomeAdModal'
 
 export interface MainLayoutProps {
   initialTab?: TabType
@@ -25,6 +26,13 @@ const TAB_INDEX_MAP: Record<TabType, number> = {
 export default function MainLayout({ initialTab = 'home' }: MainLayoutProps) {
   const [activeTab, setActiveTab] = useState<TabType>(initialTab)
   const [language, setLanguage] = useState<'English' | 'አማርኛ'>('English')
+  const [showHomeAd, setShowHomeAd] = useState(() => {
+    try {
+      return Taro.getStorageSync('telebirr_dismiss_home_ad') !== true
+    } catch {
+      return true
+    }
+  })
 
   useLoad((options: any) => {
     if (options && options.tab) {
@@ -142,6 +150,18 @@ export default function MainLayout({ initialTab = 'home' }: MainLayoutProps) {
 
       {/* 3. Bottom TabBar */}
       <TabBar activeTab={activeTab} onTabChange={setActiveTab} />
+
+      {/* 4. Promotional Home Ad Modal Overlay */}
+      {activeTab === 'home' && (
+        <HomeAdModal
+          visible={showHomeAd}
+          onClose={() => setShowHomeAd(false)}
+          onAdClick={() => {
+            Taro.showToast({ title: 'Linking Fayda ID...', icon: 'none' })
+          }}
+        />
+      )}
     </View>
   )
 }
+

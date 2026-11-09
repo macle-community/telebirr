@@ -182,3 +182,15 @@ export function IconFilter({ size = 20, color = '#4b5563' }: IconProps) {
   )
 }
 
+export function IconFingerprint({ size = 32, color = '#76bc21', className = '' }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none" className={className}>
+      <path d="M11 38V24C11 16.82 16.82 11 24 11C31.18 11 37 16.82 37 24V38" stroke={color} strokeWidth="2.8" strokeLinecap="round" />
+      <path d="M16 38V24C16 19.58 19.58 16 24 16C28.42 16 32 19.58 32 24V38" stroke={color} strokeWidth="2.8" strokeLinecap="round" />
+      <path d="M20 38V25C20 22.79 21.79 21 24 21C26.21 21 28 22.79 28 25V38" stroke={color} strokeWidth="2.8" strokeLinecap="round" />
+      <circle cx="24" cy="27" r="1.4" fill={color} />
+      <path d="M24 31V38" stroke={color} strokeWidth="2.8" strokeLinecap="round" />
+    </svg>
+  )
+}
+

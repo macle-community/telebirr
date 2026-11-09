@@ -6,6 +6,8 @@ export default defineAppConfig({
     'pages/engage/index',
     'pages/account/index',
     'pages/transaction-history/index',
+    'pages/login/index',
+    'pages/login-finger/index',
     'pages/index/index'
   ],
   subPackages: [
