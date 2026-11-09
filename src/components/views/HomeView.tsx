@@ -2,7 +2,10 @@ import React, { useState } from 'react'
 import { View, Text, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { MauiIcon } from '@macle-community/taro-plugin-macle/components-react'
-import { IconScanQR } from '../Icons'
+
+// QR Scanner vector icon (masked via MAUI Icon)
+const SCAN_QR_ICON =
+  'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiIHdpZHRoPSIxMDI0IiBoZWlnaHQ9IjEwMjQiPgogIDxwYXRoIGQ9Ik0gMTgwIDM2MCBWIDI2MCBBIDgwIDgwIDAgMCAxIDI2MCAxODAgSCAzNjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJjMmMyYyIgc3Ryb2tlLXdpZHRoPSI4MCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPHBhdGggZD0iTSA2NjQgMTgwIEggNzY0IEEgODAgODAgMCAwIDEgODQ0IDI2MCBWIDM2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMmMyYzJjIiBzdHJva2Utd2lkdGg9IjgwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8cGF0aCBkPSJNIDE4MCA2NjQgViA3NjQgQSA4MCA4MCAwIDAgMCAyNjAgODQ0IEggMzYwIiBmaWxsPSJub25lIiBzdHJva2U9IiMyYzJjMmMiIHN0cm9rZS13aWR0aD0iODAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0gNjY0IDg0NCBIIDc2NCBBIDgwIDgwIDAgMCAwIDg0NCA3NjQgViA2NjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJjMmMyYyIgc3Ryb2tlLXdpZHRoPSI4MCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPHBhdGggZD0iTSAzMzAgNTAwIFYgMzgwIEEgNzAgNzAgMCAwIDEgNDAwIDMxMCBIIDYyNCBBIDcwIDcwIDAgMCAxIDY5NCAzODAgViA1MDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJjMmMyYyIgc3Ryb2tlLXdpZHRoPSI3MCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPHJlY3QgeD0iMjYwIiB5PSI1ODAiIHdpZHRoPSI1MDQiIGhlaWdodD0iOTAiIHJ4PSI0NSIgZmlsbD0iIzJjMmMyYyIvPgo8L3N2Zz4='
 
 import eyeMainIcon from '../../assets/images/icon_eye_main.png'
 import eyeEndekiseIcon from '../../assets/images/icon_eye_endekise.png'
@@ -16,7 +19,6 @@ import dashenLogo from '../../assets/images/logo_dashen.png'
 import cbeLogo from '../../assets/images/logo_cbe.png'
 import siinqeeLogo from '../../assets/images/logo_siinqee.png'
 import transferBankIcon from '../../assets/images/home_transfer_bank.png'
-import floatingAgentBtn from '../../assets/images/floating_agent_btn.png'
 
 import iconSendIndividual from '../../assets/images/icon_send_individual.png'
 import iconSendGroup from '../../assets/images/icon_send_group.png'
@@ -394,42 +396,17 @@ export default function HomeView({
         </View>
       </View>
 
-      {/* 7. Floating Scan QR Button & Agent Location Button (Fixed above TabBar) */}
+      {/* 7. Floating Circular Scan QR Action Button (Fixed above TabBar) */}
       <View
-        className="fixed left-0 right-0 z-40 px-3 flex flex-row items-center justify-center pointer-events-none"
-        style={{ bottom: '78px' }}
+        onClick={onScanQR}
+        className="fixed right-4 z-40 w-14 h-14 rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition"
+        style={{
+          bottom: '76px',
+          backgroundColor: '#0084ff',
+          boxShadow: '0 4px 16px rgba(0, 132, 255, 0.45), 0 2px 6px rgba(0, 0, 0, 0.15)'
+        }}
       >
-        <View className="w-full flex flex-row items-center justify-between max-w-[390px] px-2 pointer-events-auto">
-          {/* Scan QR Button (Rounded rectangle matching home.jpg) */}
-          <View
-            onClick={onScanQR}
-            className="flex-1 mr-3 h-[46px] rounded-xl flex flex-row items-center justify-center space-x-2.5 shadow-md active:opacity-90 cursor-pointer"
-            style={{
-              backgroundColor: '#0084ff',
-              borderRadius: '12px'
-            }}
-          >
-            <IconScanQR size={22} color="#ffffff" />
-            <Text className="text-white font-extrabold text-base tracking-wide ml-2">
-              Scan QR
-            </Text>
-          </View>
-
-          {/* Floating Agent / Location Button */}
-          <View
-            onClick={() => onQuickAction('Find Nearest telebirr Agent')}
-            className="w-12 h-12 rounded-full bg-white telebirr-float-shadow flex items-center justify-center cursor-pointer active:scale-95 flex-shrink-0"
-            style={{
-              marginBottom: '-6px'
-            }}
-          >
-            <Image
-              src={floatingAgentBtn}
-              mode="aspectFit"
-              style={{ width: '44px', height: '44px' }}
-            />
-          </View>
-        </View>
+        <MauiIcon name={SCAN_QR_ICON} size="30px" color="#ffffff" />
       </View>
     </View>
   )
