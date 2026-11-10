@@ -4,6 +4,7 @@ import Taro from '@tarojs/taro'
 import { MauiIcon } from '@macle-community/taro-plugin-macle/components-react'
 
 import aiAgentAvatar from '../../assets/images/ai_agent_avatar.png'
+import MarkdownView from '../common/MarkdownView'
 import AirtimeCard from '../../packageAirtime/skills/buyAirtime/components/airtime-card'
 import PackageCard from '../../packageAirtime/skills/buyAirtime/components/package-card'
 import OrderReceiptCard from '../../packageAirtime/skills/buyAirtime/components/order-receipt-card'
@@ -647,14 +648,11 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
                       </View>
                     )}
 
-                    {/* Message Text */}
-                    <Text
-                      className={`text-[13.5px] leading-relaxed whitespace-pre-wrap ${
-                        isUser ? 'text-white font-medium' : 'text-gray-800 font-normal'
-                      }`}
-                    >
-                      {msg.text}
-                    </Text>
+                    {/* Message Text with Markdown Formatting */}
+                    <MarkdownView
+                      content={msg.text}
+                      isUser={isUser}
+                    />
 
                     {/* Tools Invoked Indicator */}
                     {msg.toolsCalled && msg.toolsCalled.length > 0 && (

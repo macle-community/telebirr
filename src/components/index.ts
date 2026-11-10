@@ -3,6 +3,8 @@ export { default as Header } from './Header'
 export { default as TabBar } from './TabBar'
 export { default as PromotionalBanner } from './common/PromotionalBanner'
 export type { BannerItem, PromotionalBannerProps } from './common/PromotionalBanner'
+export { default as MarkdownView } from './common/MarkdownView'
+export type { MarkdownViewProps } from './common/MarkdownView'
 
 // Layout Components
 export { default as MainLayout } from './layout/MainLayout'
