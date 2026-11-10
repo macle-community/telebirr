@@ -30,5 +30,15 @@ export default defineAppConfig({
     navigationBarTitleText: 'telebirr',
     navigationBarTextStyle: 'white',
     navigationStyle: 'custom'
-  }
+  },
+  agent: {
+    instruction: 'src/packageAirtime/skills/buyAirtime/SKILL.md',
+    skills: [
+      {
+        name: 'buyAirtime',
+        description: 'Purchase mobile airtime recharge and voice/data/SMS packages for telebirr users',
+        path: 'packageAirtime/skills/buyAirtime'
+      }
+    ]
+  } as any
 })
