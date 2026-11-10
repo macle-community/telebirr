@@ -7,8 +7,8 @@ import {
   NeedsBanner,
   ServiceGrid,
   SendMoneyModal,
-  ScanQRFab,
-  PromotionalBanner
+  PromotionalBanner,
+  AIAgentButton
 } from '../index'
 
 import sendMoneyIcon from '../../assets/images/home_send_money.png'
@@ -33,12 +33,14 @@ interface HomeViewProps {
   onNavigateHistory: () => void
   onScanQR: () => void
   onQuickAction: (title: string) => void
+  onOpenAIAgent?: () => void
 }
 
 export default function HomeView({
   onNavigateHistory,
   onScanQR,
-  onQuickAction
+  onQuickAction,
+  onOpenAIAgent
 }: HomeViewProps) {
   const [showSendMoneyModal, setShowSendMoneyModal] = useState(false)
 
@@ -211,8 +213,16 @@ export default function HomeView({
         onSelectGroup={handleNavigateGroup}
       />
 
-      {/* 7. Floating Circular Scan QR Action Button (Fixed above TabBar) */}
-      <ScanQRFab onClick={onScanQR} />
+      {/* 7. Floating AI Agent Button (Fixed above TabBar matching Telebirr AI Agent Dashboard design) */}
+      <AIAgentButton
+        onClick={() => {
+          if (onOpenAIAgent) {
+            onOpenAIAgent()
+          } else {
+            Taro.navigateTo({ url: '/pages/ai-agent/index' })
+          }
+        }}
+      />
     </View>
   )
 }

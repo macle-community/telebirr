@@ -10,6 +10,7 @@ import AppsView from '../views/AppsView'
 import EngageView from '../views/EngageView'
 import AccountView from '../views/AccountView'
 import HomeAdModal from '../home/HomeAdModal'
+import AIAgentModal from '../ai/AIAgentModal'
 
 export interface MainLayoutProps {
   initialTab?: TabType
@@ -26,13 +27,8 @@ const TAB_INDEX_MAP: Record<TabType, number> = {
 export default function MainLayout({ initialTab = 'home' }: MainLayoutProps) {
   const [activeTab, setActiveTab] = useState<TabType>(initialTab)
   const [language, setLanguage] = useState<'English' | 'አማርኛ'>('English')
-  const [showHomeAd, setShowHomeAd] = useState(() => {
-    try {
-      return Taro.getStorageSync('telebirr_dismiss_home_ad') !== true
-    } catch {
-      return true
-    }
-  })
+  const [showHomeAd, setShowHomeAd] = useState(false)
+  const [showAIAgentModal, setShowAIAgentModal] = useState(false)
 
   useLoad((options: any) => {
     if (options && options.tab) {
@@ -102,6 +98,7 @@ export default function MainLayout({ initialTab = 'home' }: MainLayoutProps) {
               onNavigateHistory={handleNavigateHistory}
               onScanQR={() => Taro.showToast({ title: 'Scan QR Code', icon: 'none' })}
               onQuickAction={handleQuickAction}
+              onOpenAIAgent={() => setShowAIAgentModal(true)}
             />
           </View>
 
@@ -161,6 +158,12 @@ export default function MainLayout({ initialTab = 'home' }: MainLayoutProps) {
           }}
         />
       )}
+
+      {/* 5. AI Agent Conversational Assistant Drawer Modal */}
+      <AIAgentModal
+        visible={showAIAgentModal}
+        onClose={() => setShowAIAgentModal(false)}
+      />
     </View>
   )
 }

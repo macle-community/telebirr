@@ -21,4 +21,13 @@ export { default as ScanQRFab } from './home/ScanQRFab'
 export type { ScanQRFabProps } from './home/ScanQRFab'
 export { default as HomeAdModal } from './home/HomeAdModal'
 export type { HomeAdModalProps } from './home/HomeAdModal'
+export { default as AIAgentButton } from './home/AIAgentButton'
+export type { AIAgentButtonProps } from './home/AIAgentButton'
+
+// AI Agent Components
+export { default as AIAgentChat } from './ai/AIAgentChat'
+export type { AIAgentChatProps, ChatMessage } from './ai/AIAgentChat'
+export { default as AIAgentModal } from './ai/AIAgentModal'
+export type { AIAgentModalProps } from './ai/AIAgentModal'
+
 

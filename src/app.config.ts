@@ -8,6 +8,7 @@ export default defineAppConfig({
     'pages/transaction-history/index',
     'pages/login/index',
     'pages/login-finger/index',
+    'pages/ai-agent/index',
     'pages/index/index'
   ],
   subPackages: [
