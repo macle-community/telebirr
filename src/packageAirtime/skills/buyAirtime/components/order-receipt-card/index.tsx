@@ -11,15 +11,19 @@ export interface OrderReceiptCardProps {
 export default function OrderReceiptCard({ data, onConfirmPay }: OrderReceiptCardProps) {
   if (!data) return null
 
-  const isResult = 'success' in data
-  const orderId = data.orderId
-  const amount = data.amount
-  const recipientPhone = isResult
-    ? (data as PaymentResult).recipientPhone
-    : (data as AirtimeOrder).recipient.formattedPhone
-  const timestamp = isResult
-    ? (data as PaymentResult).timestamp
-    : new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  const isResult =
+    ('success' in data && (data as any).success === true) ||
+    (data as any).status === 'paid'
+  const orderId = data.orderId || ''
+  const amount = (data as any).amount ?? (data as any).totalPayable ?? 0
+  const recipientPhone =
+    (data as any).recipientPhone ||
+    (data as any).recipient?.formattedPhone ||
+    (data as any).recipient?.phone ||
+    '+251 905410217'
+  const timestamp =
+    (data as any).timestamp ||
+    new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 
   const handleOpenDetail = () => {
     Taro.navigateTo({ url: '/pages/transaction-history/index' })
@@ -60,6 +64,14 @@ export default function OrderReceiptCard({ data, onConfirmPay }: OrderReceiptCar
             <Text className="text-gray-500">Transaction Ref</Text>
             <Text className="font-medium text-gray-700 font-mono text-[11px]">
               {(data as PaymentResult).transactionId}
+            </Text>
+          </View>
+        )}
+        {isResult && (data as any).newBalance !== undefined && (
+          <View className="flex flex-row justify-between">
+            <Text className="text-gray-500">Remaining Balance</Text>
+            <Text className="font-semibold text-emerald-700 font-mono text-[11px]">
+              {Number((data as any).newBalance).toFixed(2)} ETB
             </Text>
           </View>
         )}

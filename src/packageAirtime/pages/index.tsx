@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, Image, Input, ScrollView } from '@tarojs/components'
-import Taro from '@tarojs/taro'
+import Taro, { useRouter } from '@tarojs/taro'
 import { MauiIcon } from '@macle-community/taro-plugin-macle/components-react'
 import PromotionalBanner from '../../components/common/PromotionalBanner'
 
@@ -31,14 +31,36 @@ const PACKAGES = [
 ]
 
 export default function AirtimePackagePage() {
-  const [recipientType, setRecipientType] = useState<'self' | 'other'>('self')
-  const [phoneNumber, setPhoneNumber] = useState('+251 905410217')
-  const [activeTab, setActiveTab] = useState<'airtime' | 'package'>('airtime')
-  const [selectedAmount, setSelectedAmount] = useState<number>(100)
+  const router = useRouter()
+  const { orderId, amount, recipientPhone, recipientType: rType, activeTab: tab, packageId } =
+    router.params || {}
+
+  const [recipientType, setRecipientType] = useState<'self' | 'other'>(
+    rType === 'other' ? 'other' : 'self'
+  )
+  const [phoneNumber, setPhoneNumber] = useState(recipientPhone || '+251 905410217')
+  const [activeTab, setActiveTab] = useState<'airtime' | 'package'>(
+    tab === 'package' ? 'package' : 'airtime'
+  )
+  const [selectedAmount, setSelectedAmount] = useState<number>(
+    amount ? Number(amount) : 100
+  )
   const [customAmount, setCustomAmount] = useState<string>('')
-  const [selectedPkgId, setSelectedPkgId] = useState<string>('p1')
+  const [selectedPkgId, setSelectedPkgId] = useState<string>(packageId || 'p1')
   const [showConfirm, setShowConfirm] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [handoffOrderId, setHandoffOrderId] = useState<string | null>(orderId || null)
+
+  useEffect(() => {
+    if (orderId) {
+      setHandoffOrderId(orderId)
+      if (amount) setSelectedAmount(Number(amount))
+      if (recipientPhone) setPhoneNumber(recipientPhone)
+      if (tab === 'package') setActiveTab('package')
+      if (packageId) setSelectedPkgId(packageId)
+      setShowConfirm(true)
+    }
+  }, [orderId, amount, recipientPhone, tab, packageId])
 
   const handleSelectDenomination = (amount: number) => {
     setSelectedAmount(amount)
@@ -316,6 +338,14 @@ export default function AirtimePackagePage() {
                 <Text className="text-gray-500">Payment Account</Text>
                 <Text className="font-semibold text-gray-900">telebirr (855.08 ETB)</Text>
               </View>
+              {handoffOrderId && (
+                <View className="flex justify-between items-center text-sm py-1 border-t border-gray-100">
+                  <Text className="text-gray-500">Order Ref (AI Agent)</Text>
+                  <Text className="font-mono text-xs font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                    {handoffOrderId}
+                  </Text>
+                </View>
+              )}
               <View className="flex justify-between items-center text-sm py-1 border-t border-gray-100">
                 <Text className="text-gray-500">Total Amount</Text>
                 <Text className="text-lg font-bold text-[#76bc21]">

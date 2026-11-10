@@ -20,6 +20,10 @@ export interface ChatMessage {
   voiceDuration?: number
   cardType?: 'airtime' | 'package' | 'receipt'
   cardData?: any
+  sources?: string[]
+  toolsCalled?: string[]
+  modelUsed?: string
+  clientHandoff?: any
 }
 
 export interface AIAgentChatProps {
@@ -29,7 +33,8 @@ export interface AIAgentChatProps {
 
 // Quick suggestions for one-tap agent queries
 const QUICK_SUGGESTIONS = [
-  { label: '📱 Buy 100 ETB Airtime', query: 'I want to recharge 100 ETB airtime' },
+  { label: '⚡ Order 100 ETB Airtime', query: 'Create an order to recharge 100 ETB airtime for 0905410217' },
+  { label: '📱 Airtime Options', query: 'I want to recharge airtime' },
   { label: '🌐 Internet Packages', query: 'Show me available data packages' },
   { label: '💰 Check My Balance', query: 'What is my current balance?' },
   { label: '💸 Send Money', query: 'How do I send money?' },
@@ -61,6 +66,7 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
   const [isVoiceReplyEnabled, setIsVoiceReplyEnabled] = useState(true)
   const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null)
   const [walletBalance, setWalletBalance] = useState(855.08)
+  const [threadId] = useState(() => 'telebirr_user_' + Math.random().toString(36).substring(2, 9))
 
   const scrollViewRef = useRef<any>(null)
   const recordingTimerRef = useRef<any>(null)
@@ -73,6 +79,12 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
       const el = document.getElementById('ai-chat-scroll-anchor')
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' })
+      }
+      if (typeof document !== 'undefined') {
+        const scrollViews = document.querySelectorAll('.overflow-y-auto, taro-scroll-view-core, [scroll-y="true"]')
+        scrollViews.forEach(sv => {
+          sv.scrollTop = sv.scrollHeight
+        })
       }
     }, 100)
   }
@@ -157,7 +169,130 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
     setInputText('')
     setIsThinking(true)
 
-    // Simulate agent intelligence & Skill MCP dispatch
+    // 1. Try real AI Agent backend on http://localhost:8000/chat
+    try {
+      const response = await fetch('http://localhost:8000/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          question: queryText,
+          thread_id: threadId,
+          user_id: 'selam_natnael'
+        })
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        let cardType: 'airtime' | 'package' | 'receipt' | undefined
+        let cardData: any = undefined
+
+        const tools: string[] = data.tools_called || []
+        const calls: any[] = data.tool_calls || []
+
+        // 1. Handle WeChat AI Mode UI Components & Handoff Directives
+        if (data.ui_components && data.ui_components.length > 0) {
+          const ui = data.ui_components[0]
+          if (ui.component_path.includes('airtime-card')) {
+            cardType = 'airtime'
+            cardData = { balance: walletBalance, defaultPhone: '+251 905410217', ...ui.data }
+          } else if (ui.component_path.includes('package-card')) {
+            cardType = 'package'
+            cardData = ui.data
+          } else if (ui.component_path.includes('order-receipt-card')) {
+            cardType = 'receipt'
+            cardData = ui.data
+            if (ui.data?.newBalance !== undefined) {
+              setWalletBalance(Number(ui.data.newBalance))
+            } else if (ui.data?.remainingBalance !== undefined) {
+              setWalletBalance(Number(ui.data.remainingBalance))
+            }
+          }
+        } else if (tools.includes('payAirtimeOrder')) {
+          cardType = 'receipt'
+          const payCall = calls.find(c => c.tool === 'payAirtimeOrder')
+          const matchAmount = data.answer.match(/Amount:\*\* ([\d.]+) ETB/)
+          const charged = matchAmount ? parseFloat(matchAmount[1]) : 100
+          const matchBal = data.answer.match(/telebirr Balance:\*\* ([\d.]+) ETB/)
+          const newBal = matchBal ? parseFloat(matchBal[1]) : Math.max(0, walletBalance - charged)
+          setWalletBalance(newBal)
+
+          cardData = {
+            success: true,
+            transactionId:
+              data.answer.match(/Transaction ID:\*\* `([^`]+)`/)?.[1] ||
+              'TXN-' + Date.now().toString(16).toUpperCase(),
+            orderId: payCall?.args?.orderId || 'ORD-' + Date.now(),
+            amount: charged,
+            recipientPhone: '+251 905410217',
+            remainingBalance: newBal,
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          }
+        } else if (tools.includes('createAirtimeOrder') || tools.includes('queryAirtimeOptions')) {
+          const createCall = calls.find(c => c.tool === 'createAirtimeOrder')
+          cardType = 'airtime'
+          cardData = {
+            balance: walletBalance,
+            defaultPhone: createCall?.args?.recipientPhone || '+251 905410217'
+          }
+        } else if (tools.includes('queryPackages')) {
+          cardType = 'package'
+          cardData = {}
+        } else {
+          // If keywords match, show visual aid card
+          const lower = queryText.toLowerCase()
+          if (
+            lower.includes('airtime') ||
+            lower.includes('recharge') ||
+            lower.includes('top up') ||
+            lower.includes('topup')
+          ) {
+            cardType = 'airtime'
+            cardData = { balance: walletBalance, defaultPhone: '+251 905410217' }
+          } else if (
+            lower.includes('package') ||
+            lower.includes('data') ||
+            lower.includes('bundle') ||
+            lower.includes('internet')
+          ) {
+            cardType = 'package'
+            cardData = {}
+          }
+        }
+
+        // Handle Client Handoff (e.g. navigation or native actions)
+        if (data.client_handoff && data.client_handoff.action === 'wx.navigateTo' && data.client_handoff.page_path) {
+          Taro.navigateTo({ url: data.client_handoff.page_path })
+        }
+
+        const botMsgId = 'b_' + Date.now()
+        const botMsg: ChatMessage = {
+          id: botMsgId,
+          sender: 'assistant',
+          text: data.answer,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          cardType,
+          cardData,
+          sources: data.sources,
+          toolsCalled: data.tools_called,
+          modelUsed: data.model_used,
+          clientHandoff: data.client_handoff
+        }
+
+        setMessages(prev => [...prev, botMsg])
+        setIsThinking(false)
+
+        if (isVoiceReplyEnabled) {
+          speakText(data.answer, botMsgId)
+        }
+        return
+      }
+    } catch (err) {
+      console.warn('Real AI Agent backend not responding, fallback to local reasoning:', err)
+    }
+
+    // 2. Local Fallback if backend is unreachable
     setTimeout(async () => {
       const lower = queryText.toLowerCase()
       let replyText = ''
@@ -221,17 +356,17 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
         text: replyText,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         cardType,
-        cardData
+        cardData,
+        modelUsed: 'local-fallback'
       }
 
       setMessages(prev => [...prev, botMsg])
       setIsThinking(false)
 
-      // Auto speak if voice reply is enabled
       if (isVoiceReplyEnabled) {
         speakText(replyText, botMsgId)
       }
-    }, 700)
+    }, 600)
   }
 
   // Handle Airtime direct recharge from card
@@ -521,16 +656,56 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
                       {msg.text}
                     </Text>
 
+                    {/* Tools Invoked Indicator */}
+                    {msg.toolsCalled && msg.toolsCalled.length > 0 && (
+                      <View className="flex flex-row flex-wrap items-center gap-1 mt-2">
+                        {msg.toolsCalled.map(tool => (
+                          <View
+                            key={tool}
+                            className="bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded flex flex-row items-center space-x-1"
+                          >
+                            <Text className="text-[9px] font-bold text-[#2d882d]">
+                              ⚡ {tool}
+                            </Text>
+                          </View>
+                        ))}
+                      </View>
+                    )}
+
+                    {/* Sources & Citations */}
+                    {msg.sources && msg.sources.length > 0 && (
+                      <View className="mt-2 pt-2 border-t border-gray-100 flex flex-col space-y-1">
+                        <Text className="text-[10px] font-bold text-gray-500">
+                          📚 Sources & Citations:
+                        </Text>
+                        <View className="flex flex-wrap gap-1">
+                          {msg.sources.map((src, i) => (
+                            <View
+                              key={i}
+                              className="bg-gray-100 px-2 py-0.5 rounded text-[9px] text-gray-700 font-mono"
+                            >
+                              {src}
+                            </View>
+                          ))}
+                        </View>
+                      </View>
+                    )}
+
                     {/* Skill Visual Card Rendering (MCP UI Binding) */}
                     {msg.cardType === 'airtime' && (
                       <View className="mt-2.5">
                         <AirtimeCard
                           data={{
                             balance: walletBalance,
-                            defaultPhone: '+251 905410217'
+                            defaultPhone: msg.cardData?.defaultPhone || '+251 905410217',
+                            ...msg.cardData
                           }}
                           onSelectAmount={amount => {
-                            handleCardRecharge(amount)
+                            processUserQuery(
+                              `I want to recharge ${amount} ETB airtime for ${
+                                msg.cardData?.defaultPhone || '+251 905410217'
+                              }`
+                            )
                           }}
                         />
                       </View>
@@ -539,17 +714,11 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
                     {msg.cardType === 'package' && (
                       <View className="mt-2.5">
                         <PackageCard
+                          data={msg.cardData}
                           onSelectPackage={(pkg: AirtimePackage) => {
-                            Taro.showModal({
-                              title: `Activate ${pkg.name}`,
-                              content: `Charge ${pkg.price} ETB from telebirr wallet for ${pkg.quota}?`,
-                              confirmColor: '#76bc21',
-                              success: res => {
-                                if (res.confirm) {
-                                  handleCardRecharge(pkg.price)
-                                }
-                              }
-                            })
+                            processUserQuery(
+                              `I want to subscribe to package ${pkg.id} (${pkg.name})`
+                            )
                           }}
                         />
                       </View>
@@ -557,7 +726,71 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
 
                     {msg.cardType === 'receipt' && msg.cardData && (
                       <View className="mt-2.5">
-                        <OrderReceiptCard data={msg.cardData} />
+                        <OrderReceiptCard
+                          data={msg.cardData}
+                          onConfirmPay={() => {
+                            const orderId =
+                              msg.cardData?.orderId || msg.clientHandoff?.params?.orderId
+                            if (orderId) {
+                              processUserQuery(
+                                `Yes, proceed with payment for order ${orderId}`
+                              )
+                            } else {
+                              handleCardRecharge(msg.cardData?.amount || 100)
+                            }
+                          }}
+                        />
+                      </View>
+                    )}
+
+                    {/* WeChat AI Mode Client Handoff Directive Card */}
+                    {msg.clientHandoff && (
+                      <View className="mt-2.5 p-2.5 bg-emerald-50/80 rounded-xl border border-emerald-200 flex flex-col space-y-1.5">
+                        <View className="flex flex-row items-center justify-between">
+                          <View className="flex flex-row items-center space-x-1">
+                            <Text className="text-xs">⚡</Text>
+                            <Text className="text-[10px] font-bold text-emerald-800">
+                              Client Handoff: {msg.clientHandoff.action}
+                            </Text>
+                          </View>
+                          <Text className="text-[9px] text-emerald-700 font-mono">
+                            {msg.clientHandoff.page_path || 'Direct Action'}
+                          </Text>
+                        </View>
+                        <View className="flex flex-row gap-2 pt-1">
+                          {msg.clientHandoff.page_path && (
+                            <View
+                              onClick={() => {
+                                const p = msg.clientHandoff.page_path
+                                const params = msg.clientHandoff.params || {}
+                                const query = Object.entries(params)
+                                  .map(([k, v]) => `${k}=${encodeURIComponent(String(v))}`)
+                                  .join('&')
+                                Taro.navigateTo({ url: query ? `${p}?${query}` : p })
+                              }}
+                              className="flex-1 py-1.5 rounded-lg bg-white border border-emerald-300 flex items-center justify-center cursor-pointer active:bg-emerald-100 shadow-xs"
+                            >
+                              <Text className="text-[11px] font-bold text-emerald-700">
+                                🚀 Open Native Page
+                              </Text>
+                            </View>
+                          )}
+                          {msg.clientHandoff.action === 'wx.requestPayment' &&
+                            msg.clientHandoff.params?.orderId && (
+                              <View
+                                onClick={() => {
+                                  processUserQuery(
+                                    `Yes, proceed with payment for order ${msg.clientHandoff.params.orderId}`
+                                  )
+                                }}
+                                className="flex-1 py-1.5 rounded-lg bg-[#76bc21] flex items-center justify-center cursor-pointer active:opacity-90 shadow-xs"
+                              >
+                                <Text className="text-[11px] font-bold text-white">
+                                  💳 Pay via Agent
+                                </Text>
+                              </View>
+                            )}
+                        </View>
                       </View>
                     )}
 
@@ -568,7 +801,7 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
                           isUser ? 'text-white/70' : 'text-gray-400'
                         }`}
                       >
-                        {msg.timestamp}
+                        {msg.timestamp} {msg.modelUsed ? `• ${msg.modelUsed}` : ''}
                       </Text>
 
                       {!isUser && (
