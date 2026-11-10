@@ -25,6 +25,8 @@ export interface ChatMessage {
   toolsCalled?: string[]
   modelUsed?: string
   clientHandoff?: any
+  audioBase64?: string
+  language?: string
 }
 
 export interface AIAgentChatProps {
@@ -44,10 +46,12 @@ const QUICK_SUGGESTIONS = [
 
 // Fallback voice recognition queries when simulated
 const SIMULATED_VOICE_QUERIES = [
-  'Recharge 100 ETB airtime with bonus',
-  'Show me monthly internet packages',
-  'Check my telebirr wallet balance',
-  'Send 50 ETB to Abebe'
+  'I want to recharge 100 ETB airtime to 0905410217',
+  'የ 100 ብር ካርድ መሙላት እፈልጋለሁ',
+  'Show me monthly internet data packages',
+  'What is my current telebirr balance?',
+  'ቀሪ ሂሳቤን ንገረኝ',
+  'How do I transfer money to another telebirr user?'
 ]
 
 export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProps) {
@@ -72,6 +76,10 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
   const scrollViewRef = useRef<any>(null)
   const recordingTimerRef = useRef<any>(null)
   const speechRecognitionRef = useRef<any>(null)
+  const currentAudioRef = useRef<HTMLAudioElement | null>(null)
+  const mediaRecorderRef = useRef<any>(null)
+  const audioChunksRef = useRef<Blob[]>([])
+  const isSendingRef = useRef(false)
 
   // Auto scroll to bottom when messages change
   const scrollToBottom = () => {
@@ -94,11 +102,15 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
     scrollToBottom()
   }, [messages, isThinking])
 
-  // Stop any ongoing speech synthesis on unmount
+  // Stop any ongoing speech playback on unmount
   useEffect(() => {
     return () => {
       if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
         window.speechSynthesis.cancel()
+      }
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause()
+        currentAudioRef.current = null
       }
       if (recordingTimerRef.current) {
         clearInterval(recordingTimerRef.current)
@@ -106,52 +118,105 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
     }
   }, [])
 
-  // Text-To-Speech (Voice Output)
-  const speakText = (text: string, msgId: string) => {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-      Taro.showToast({ title: 'Voice audio not supported in this environment', icon: 'none' })
-      return
-    }
-
-    if (speakingMessageId === msgId) {
-      window.speechSynthesis.cancel()
-      setSpeakingMessageId(null)
-      return
-    }
-
+  // Web Speech API fallback
+  const speakFallback = (text: string, msgId: string) => {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return
     window.speechSynthesis.cancel()
-
-    // Clean markdown/emojis for smoother TTS pronunciation
-    const cleanText = text.replace(/[*_#`~👋📱🌐💰💸🧾✓]/g, '').trim()
+    const cleanText = text.replace(/[*_#`~👋📱🌐💰💸🧾✓⚡]/g, '').trim()
     const utterance = new SpeechSynthesisUtterance(cleanText)
     utterance.rate = 1.02
     utterance.pitch = 1.05
-
-    // Pick English or default voice
-    const voices = window.speechSynthesis.getVoices()
-    const englishVoice = voices.find(v => v.lang.startsWith('en'))
-    if (englishVoice) {
-      utterance.voice = englishVoice
-    }
-
-    utterance.onstart = () => {
-      setSpeakingMessageId(msgId)
-    }
-
-    utterance.onend = () => {
-      setSpeakingMessageId(null)
-    }
-
-    utterance.onerror = () => {
-      setSpeakingMessageId(null)
-    }
-
+    utterance.onstart = () => setSpeakingMessageId(msgId)
+    utterance.onend = () => setSpeakingMessageId(null)
+    utterance.onerror = () => setSpeakingMessageId(null)
     window.speechSynthesis.speak(utterance)
+  }
+
+  // Play audio source with neural TTS or base64 MP3
+  const playAudioSrc = (src: string, msgId: string, fallbackText?: string) => {
+    if (typeof window === 'undefined') return
+
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause()
+      currentAudioRef.current = null
+    }
+
+    if (speakingMessageId === msgId) {
+      setSpeakingMessageId(null)
+      return
+    }
+
+    try {
+      const audio = new Audio(src)
+      currentAudioRef.current = audio
+      setSpeakingMessageId(msgId)
+
+      audio.onended = () => {
+        setSpeakingMessageId(null)
+        currentAudioRef.current = null
+      }
+      audio.onerror = () => {
+        setSpeakingMessageId(null)
+        currentAudioRef.current = null
+        if (fallbackText) speakFallback(fallbackText, msgId)
+      }
+      audio.play().catch(err => {
+        console.warn('Audio play error, falling back to speech synthesis:', err)
+        if (fallbackText) speakFallback(fallbackText, msgId)
+      })
+    } catch {
+      if (fallbackText) speakFallback(fallbackText, msgId)
+    }
+  }
+
+  // Neural Voice Output (supports English & Amharic)
+  const speakText = (text: string, msgId: string, audioBase64?: string) => {
+    if (speakingMessageId === msgId) {
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause()
+        currentAudioRef.current = null
+      }
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel()
+      }
+      setSpeakingMessageId(null)
+      return
+    }
+
+    // 1. If base64 audio already provided by backend
+    if (audioBase64) {
+      playAudioSrc(`data:audio/mpeg;base64,${audioBase64}`, msgId, text)
+      return
+    }
+
+    // 2. Fetch high-quality neural TTS from /voice/tts (auto detects English / Amharic)
+    const cleanText = text.replace(/[*_#`~👋📱🌐💰💸🧾✓⚡]/g, '').trim()
+    const ttsUrl = `http://localhost:8000/voice/tts?text=${encodeURIComponent(cleanText)}&voice=auto`
+    playAudioSrc(ttsUrl, msgId, cleanText)
+  }
+
+  // Handle debounced sending to prevent duplicate submissions on Enter / click
+  const handleSend = (textToSend?: string) => {
+    const text = (textToSend !== undefined ? textToSend : inputText).trim()
+    if (!text || isSendingRef.current || isThinking) {
+      return
+    }
+
+    isSendingRef.current = true
+    setInputText('')
+
+    // Reset lock after debounce or completion
+    setTimeout(() => {
+      isSendingRef.current = false
+    }, 700)
+
+    processUserQuery(text)
   }
 
   // Handle incoming AI response generation & skill execution
   const processUserQuery = async (queryText: string, isVoice = false, voiceDuration?: number) => {
-    if (!queryText.trim()) return
+    const trimmed = queryText.trim()
+    if (!trimmed || isThinking) return
 
     const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     const userMsgId = 'u_' + Date.now()
@@ -160,7 +225,7 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
     const userMsg: ChatMessage = {
       id: userMsgId,
       sender: 'user',
-      text: queryText,
+      text: trimmed,
       timestamp: now,
       isVoice,
       voiceDuration
@@ -169,6 +234,7 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
     setMessages(prev => [...prev, userMsg])
     setInputText('')
     setIsThinking(true)
+    isSendingRef.current = true
 
     // 1. Try real AI Agent backend on http://localhost:8000/chat
     try {
@@ -283,6 +349,8 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
 
         setMessages(prev => [...prev, botMsg])
         setIsThinking(false)
+    isSendingRef.current = false
+        isSendingRef.current = false
 
         if (isVoiceReplyEnabled) {
           speakText(data.answer, botMsgId)
@@ -363,6 +431,8 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
 
       setMessages(prev => [...prev, botMsg])
       setIsThinking(false)
+    isSendingRef.current = false
+      isSendingRef.current = false
 
       if (isVoiceReplyEnabled) {
         speakText(replyText, botMsgId)
@@ -410,54 +480,154 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
       Taro.showToast({ title: 'Recharge failed. Please try again.', icon: 'none' })
     } finally {
       setIsThinking(false)
+    isSendingRef.current = false
     }
   }
 
-  // Handle Voice Recording (Speech-to-Text)
-  const startVoiceRecording = () => {
+  // Handle full end-to-end voice chat via /voice/chat
+  const handleSendVoiceAudio = async (audioBlob: Blob, duration: number) => {
+    setIsThinking(true)
+    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    const tempUserMsgId = 'u_' + Date.now()
+
+    try {
+      const formData = new FormData()
+      formData.append('audio_file', audioBlob, 'recording.mp3')
+      formData.append('thread_id', threadId)
+      formData.append('user_id', 'selam_natnael')
+      formData.append('voice', 'auto')
+      formData.append('return_audio', 'true')
+
+      const response = await fetch('http://localhost:8000/voice/chat', {
+        method: 'POST',
+        body: formData
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        const userTranscript = data.transcription || 'Voice message'
+
+        // 1. User message bubble
+        const userMsg: ChatMessage = {
+          id: tempUserMsgId,
+          sender: 'user',
+          text: userTranscript,
+          timestamp: now,
+          isVoice: true,
+          voiceDuration: duration,
+          language: data.language
+        }
+
+        // 2. Extract Mini Program UI card components
+        let cardType: 'airtime' | 'package' | 'receipt' | undefined
+        let cardData: any = undefined
+
+        if (data.ui_components && data.ui_components.length > 0) {
+          const ui = data.ui_components[0]
+          if (ui.component_path.includes('airtime-card')) {
+            cardType = 'airtime'
+            cardData = { balance: walletBalance, defaultPhone: '+251 905410217', ...ui.data }
+          } else if (ui.component_path.includes('package-card')) {
+            cardType = 'package'
+            cardData = ui.data
+          } else if (ui.component_path.includes('order-receipt-card')) {
+            cardType = 'receipt'
+            cardData = ui.data
+            if (ui.data?.newBalance !== undefined) {
+              setWalletBalance(Number(ui.data.newBalance))
+            } else if (ui.data?.remainingBalance !== undefined) {
+              setWalletBalance(Number(ui.data.remainingBalance))
+            }
+          }
+        }
+
+        // 3. Client Handoff
+        if (data.client_handoff && data.client_handoff.action === 'wx.navigateTo' && data.client_handoff.page_path) {
+          Taro.navigateTo({ url: data.client_handoff.page_path })
+        }
+
+        // 4. Assistant message bubble
+        const botMsgId = 'b_' + Date.now()
+        const botMsg: ChatMessage = {
+          id: botMsgId,
+          sender: 'assistant',
+          text: data.answer,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          cardType,
+          cardData,
+          sources: data.sources,
+          toolsCalled: data.tools_called,
+          modelUsed: data.model_used,
+          clientHandoff: data.client_handoff,
+          audioBase64: data.audio_base64,
+          language: data.language
+        }
+
+        setMessages(prev => [...prev, userMsg, botMsg])
+        setIsThinking(false)
+    isSendingRef.current = false
+        isSendingRef.current = false
+
+        if (isVoiceReplyEnabled) {
+          if (data.audio_base64) {
+            playAudioSrc(
+              `data:${data.audio_mime_type || 'audio/mpeg'};base64,${data.audio_base64}`,
+              botMsgId,
+              data.answer
+            )
+          } else {
+            speakText(data.answer, botMsgId)
+          }
+        }
+        return
+      }
+    } catch (err) {
+      console.warn('Voice chat backend error, falling back:', err)
+    }
+
+    setIsThinking(false)
+    isSendingRef.current = false
+  }
+
+  // Handle Voice Recording (Speech-to-Text & /voice/chat)
+  const startVoiceRecording = async () => {
     setIsRecording(true)
     setRecordingSeconds(0)
 
-    // Start timer counter
     recordingTimerRef.current = setInterval(() => {
       setRecordingSeconds(s => s + 1)
     }, 1000)
 
-    // Check for native SpeechRecognition support in Web / WebView
-    const SpeechRecognition =
-      typeof window !== 'undefined'
-        ? (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
-        : null
-
-    if (SpeechRecognition) {
+    // Check for real mic in browser / webview
+    if (
+      typeof navigator !== 'undefined' &&
+      navigator.mediaDevices &&
+      navigator.mediaDevices.getUserMedia
+    ) {
       try {
-        const recognition = new SpeechRecognition()
-        recognition.lang = 'en-US'
-        recognition.interimResults = false
-        recognition.maxAlternatives = 1
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+        const recorder = new MediaRecorder(stream)
+        audioChunksRef.current = []
 
-        recognition.onresult = (event: any) => {
-          const transcript = event.results[0][0].transcript
-          stopVoiceRecording(transcript)
+        recorder.ondataavailable = e => {
+          if (e.data && e.data.size > 0) {
+            audioChunksRef.current.push(e.data)
+          }
         }
 
-        recognition.onerror = () => {
-          // If error or permission denied in simulator, fallback to simulated voice recognition
-          simulateVoiceRecognition()
-        }
-
-        recognition.start()
-        speechRecognitionRef.current = recognition
-      } catch {
-        simulateVoiceRecognition()
+        recorder.start(100)
+        mediaRecorderRef.current = recorder
+        return
+      } catch (err) {
+        console.warn('Microphone permission not granted or in simulator:', err)
       }
-    } else {
-      simulateVoiceRecognition()
     }
+
+    // Fallback simulation in simulator environments
+    simulateVoiceRecording()
   }
 
-  const simulateVoiceRecognition = () => {
-    // In simulator environments, simulate listening for 2 seconds and pick a realistic voice query
+  const simulateVoiceRecording = () => {
     setTimeout(() => {
       if (isRecording) {
         const randomQuery =
@@ -466,33 +636,60 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
           ]
         stopVoiceRecording(randomQuery)
       }
-    }, 2200)
+    }, 2400)
   }
 
-  const stopVoiceRecording = (recognizedText?: string) => {
+  const stopVoiceRecording = async (simulatedQuery?: string) => {
     if (recordingTimerRef.current) {
       clearInterval(recordingTimerRef.current)
       recordingTimerRef.current = null
-    }
-
-    if (speechRecognitionRef.current) {
-      try {
-        speechRecognitionRef.current.stop()
-      } catch {
-        // ignore
-      }
-      speechRecognitionRef.current = null
     }
 
     const duration = Math.max(1, recordingSeconds)
     setIsRecording(false)
     setRecordingSeconds(0)
 
-    if (recognizedText && recognizedText.trim()) {
-      processUserQuery(recognizedText, true, duration)
-    } else {
-      Taro.showToast({ title: 'No speech detected', icon: 'none' })
+    // If real mediaRecorder was active
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+      const recorder = mediaRecorderRef.current
+      recorder.onstop = async () => {
+        const mimeType = recorder.mimeType || 'audio/webm'
+        const audioBlob = new Blob(audioChunksRef.current, { type: mimeType })
+        audioChunksRef.current = []
+        try {
+          recorder.stream?.getTracks().forEach((track: any) => track.stop())
+        } catch {
+          // ignore
+        }
+        await handleSendVoiceAudio(audioBlob, duration)
+      }
+      recorder.stop()
+      mediaRecorderRef.current = null
+      return
     }
+
+    // In simulator environments: synthesize query via /voice/tts and send real audio to /voice/chat
+    const query =
+      simulatedQuery ||
+      SIMULATED_VOICE_QUERIES[
+        Math.floor(Math.random() * SIMULATED_VOICE_QUERIES.length)
+      ]
+
+    try {
+      const ttsRes = await fetch(
+        `http://localhost:8000/voice/tts?text=${encodeURIComponent(query)}&voice=auto`
+      )
+      if (ttsRes.ok) {
+        const buffer = await ttsRes.arrayBuffer()
+        const audioBlob = new Blob([buffer], { type: 'audio/mpeg' })
+        await handleSendVoiceAudio(audioBlob, duration)
+        return
+      }
+    } catch {
+      // ignore
+    }
+
+    processUserQuery(query, true, duration)
   }
 
   const handleClearChat = () => {
@@ -539,10 +736,30 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
             </View>
           )}
 
-          <View className="relative w-10 h-10 rounded-full bg-[#76bc21] border-2 border-white shadow-sm flex items-center justify-center overflow-hidden">
+          <View
+            className="relative rounded-full bg-[#76bc21] border-2 border-white shadow-sm flex items-center justify-center overflow-hidden flex-shrink-0"
+            style={{
+              width: '40px',
+              height: '40px',
+              minWidth: '40px',
+              minHeight: '40px',
+              maxWidth: '40px',
+              maxHeight: '40px',
+              flexShrink: 0
+            }}
+          >
             <Image
               src={aiAgentAvatar}
               className="w-full h-full object-cover"
+              style={{
+                width: '40px',
+                height: '40px',
+                minWidth: '40px',
+                minHeight: '40px',
+                maxWidth: '40px',
+                maxHeight: '40px',
+                display: 'block'
+              }}
               mode="aspectFill"
             />
             {/* Green Online Dot */}
@@ -616,14 +833,35 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
             return (
               <View
                 key={msg.id}
-                className={`flex flex-row w-full ${isUser ? 'justify-end' : 'justify-start'}`}
+                className={`flex flex-row w-full items-start ${isUser ? 'justify-end' : 'justify-start'}`}
               >
                 {/* Assistant Avatar */}
                 {!isUser && (
-                  <View className="w-8 h-8 rounded-full bg-[#76bc21] border border-white shadow-xs flex items-center justify-center overflow-hidden flex-shrink-0 mr-2 mt-1">
+                  <View
+                    className="rounded-full bg-[#76bc21] border border-white shadow-xs flex items-center justify-center overflow-hidden flex-shrink-0 mr-2 mt-1 self-start"
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      minWidth: '32px',
+                      minHeight: '32px',
+                      maxWidth: '32px',
+                      maxHeight: '32px',
+                      flexShrink: 0,
+                      alignSelf: 'flex-start'
+                    }}
+                  >
                     <Image
                       src={aiAgentAvatar}
                       className="w-full h-full object-cover"
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        minWidth: '32px',
+                        minHeight: '32px',
+                        maxWidth: '32px',
+                        maxHeight: '32px',
+                        display: 'block'
+                      }}
                       mode="aspectFill"
                     />
                   </View>
@@ -640,11 +878,18 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
                   >
                     {/* Voice Note Bubble Header if spoken */}
                     {msg.isVoice && (
-                      <View className="flex flex-row items-center space-x-1.5 pb-1 mb-1 border-b border-white/20">
-                        <Text className="text-xs">🎙️</Text>
-                        <Text className="text-[10px] font-bold text-white/90">
-                          Voice message ({msg.voiceDuration ?? 2}s)
-                        </Text>
+                      <View className="flex flex-row items-center justify-between pb-1 mb-1 border-b border-white/20">
+                        <View className="flex flex-row items-center space-x-1.5">
+                          <Text className="text-xs">🎙️</Text>
+                          <Text className="text-[10px] font-bold text-white/90">
+                            Voice message ({msg.voiceDuration ?? 2}s)
+                          </Text>
+                        </View>
+                        {msg.language && (
+                          <Text className="text-[8.5px] font-bold text-white/90 bg-white/20 px-1.5 py-0.2 rounded-full">
+                            {msg.language === 'am' ? '🇪🇹 አማርኛ' : '🌐 EN'}
+                          </Text>
+                        )}
                       </View>
                     )}
 
@@ -792,19 +1037,28 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
                       </View>
                     )}
 
-                    {/* Bubble Footer: Timestamp & TTS Speaker */}
+                    {/* Bubble Footer: Timestamp, Language & TTS Speaker */}
                     <View className="flex flex-row items-center justify-between mt-1 pt-1">
-                      <Text
-                        className={`text-[9.5px] ${
-                          isUser ? 'text-white/70' : 'text-gray-400'
-                        }`}
-                      >
-                        {msg.timestamp} {msg.modelUsed ? `• ${msg.modelUsed}` : ''}
-                      </Text>
+                      <View className="flex flex-row items-center space-x-1.5">
+                        <Text
+                          className={`text-[9.5px] ${
+                            isUser ? 'text-white/70' : 'text-gray-400'
+                          }`}
+                        >
+                          {msg.timestamp} {msg.modelUsed ? `• ${msg.modelUsed}` : ''}
+                        </Text>
+                        {!isUser && msg.language && (
+                          <View className="bg-emerald-50 border border-emerald-200/80 px-1 rounded flex flex-row items-center">
+                            <Text className="text-[8.5px] font-bold text-[#2d882d]">
+                              {msg.language === 'am' ? '🇪🇹 አማርኛ' : '🌐 EN'}
+                            </Text>
+                          </View>
+                        )}
+                      </View>
 
                       {!isUser && (
                         <View
-                          onClick={() => speakText(msg.text, msg.id)}
+                          onClick={() => speakText(msg.text, msg.id, msg.audioBase64)}
                           className={`flex flex-row items-center space-x-1 px-1.5 py-0.5 rounded cursor-pointer transition active:scale-95 ${
                             isSpeaking ? 'bg-emerald-100 text-[#5ea315]' : 'text-gray-400 hover:text-gray-600'
                           }`}
@@ -825,10 +1079,30 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
           {/* Thinking / Processing Indicator */}
           {isThinking && (
             <View className="flex flex-row items-center space-x-2 pl-2 py-1">
-              <View className="w-7 h-7 rounded-full bg-[#76bc21] border border-white shadow-xs flex items-center justify-center overflow-hidden">
+              <View
+                className="rounded-full bg-[#76bc21] border border-white shadow-xs flex items-center justify-center overflow-hidden flex-shrink-0"
+                style={{
+                  width: '28px',
+                  height: '28px',
+                  minWidth: '28px',
+                  minHeight: '28px',
+                  maxWidth: '28px',
+                  maxHeight: '28px',
+                  flexShrink: 0
+                }}
+              >
                 <Image
                   src={aiAgentAvatar}
                   className="w-full h-full object-cover"
+                  style={{
+                    width: '28px',
+                    height: '28px',
+                    minWidth: '28px',
+                    minHeight: '28px',
+                    maxWidth: '28px',
+                    maxHeight: '28px',
+                    display: 'block'
+                  }}
                   mode="aspectFill"
                 />
               </View>
@@ -859,7 +1133,7 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
                 {QUICK_SUGGESTIONS.map(sug => (
                   <View
                     key={sug.label}
-                    onClick={() => processUserQuery(sug.query)}
+                    onClick={() => handleSend(sug.query)}
                     className="bg-white border border-[#d2f0a8] px-3 py-1.5 rounded-full shadow-xs cursor-pointer active:scale-95 transition"
                   >
                     <Text className="text-xs font-semibold text-[#2b881f]">
@@ -996,9 +1270,20 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
             <View className="flex-1 bg-gray-100 rounded-full px-4 py-1.5 flex flex-row items-center border border-gray-200 focus-within:border-[#76bc21] focus-within:bg-white transition">
               <Input
                 type="text"
+                confirmType="send"
                 value={inputText}
                 onInput={e => setInputText(e.detail.value)}
-                onConfirm={() => processUserQuery(inputText)}
+                onConfirm={(e: any) => {
+                  const val = e?.detail?.value ?? inputText
+                  handleSend(val)
+                }}
+                onKeyDown={(e: any) => {
+                  if (e.key === 'Enter' || e.keyCode === 13) {
+                    if (e.preventDefault) e.preventDefault()
+                    if (e.stopPropagation) e.stopPropagation()
+                    handleSend(inputText)
+                  }
+                }}
                 placeholder="Ask Telebirr AI (e.g. 'Recharge 100 birr')..."
                 className="w-full text-xs text-gray-800 bg-transparent outline-none"
               />
@@ -1014,11 +1299,11 @@ export default function AIAgentChat({ onClose, isModal = true }: AIAgentChatProp
 
             {/* Send Button */}
             <View
-              onClick={() => processUserQuery(inputText)}
+              onClick={() => handleSend(inputText)}
               className={`w-10 h-10 rounded-full flex items-center justify-center cursor-pointer active:scale-95 transition flex-shrink-0 ${
-                inputText.trim().length > 0
+                inputText.trim().length > 0 && !isThinking
                   ? 'bg-[#76bc21] text-white shadow-md'
-                  : 'bg-gray-200 text-gray-400'
+                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
               }`}
             >
               <svg
