@@ -1,0 +1,194 @@
+{
+  "$schema": "https://developers.weixin.qq.com/miniprogram/dev/ai/schema/mcp.json",
+  "name": "buyAirtime",
+  "version": "1.0.0",
+  "description": "Mobile airtime recharge and voice/data package purchase capability for telebirr Ethio Telecom users.",
+  "tools": [
+    {
+      "name": "queryAirtimeOptions",
+      "description": "Query available airtime top-up denominations, special bonus promotions (+30%, +35%), and the user's current telebirr wallet balance.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "recipientPhone": {
+            "type": "string",
+            "description": "Optional Ethiopian recipient phone number (+2519... or 09...). If omitted, defaults to the authenticated self user."
+          }
+        }
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "denominations": {
+            "type": "array",
+            "description": "List of available recharge amounts with bonus promotions.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "amount": { "type": "number" },
+                "currency": { "type": "string" },
+                "badge": { "type": "string" },
+                "sub": { "type": "string" },
+                "bonusRate": { "type": "number" }
+              },
+              "required": ["amount", "currency"]
+            }
+          },
+          "balance": {
+            "type": "number",
+            "description": "Current available telebirr balance in ETB."
+          },
+          "defaultPhone": {
+            "type": "string",
+            "description": "Registered mobile phone number of the current user."
+          }
+        },
+        "required": ["denominations", "balance"]
+      }
+    },
+    {
+      "name": "queryPackages",
+      "description": "Query available Ethio Telecom mobile internet data, voice call minutes, and combo packages with duration, quota, and price.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": ["all", "daily", "weekly", "monthly", "night"],
+            "description": "Filter packages by validity period or category."
+          }
+        }
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "packages": {
+            "type": "array",
+            "description": "List of available telebirr packages.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "category": { "type": "string" },
+                "validity": { "type": "string" },
+                "price": { "type": "number" },
+                "currency": { "type": "string" },
+                "tag": { "type": "string" }
+              },
+              "required": ["id", "name", "validity", "price"]
+            }
+          }
+        },
+        "required": ["packages"]
+      }
+    },
+    {
+      "name": "validateRecipient",
+      "description": "Validate and normalize an Ethiopian mobile phone number (Ethio Telecom 09... / +251 9... format).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "description": "Phone number entered by the user (supports local '0912345678', international '+251912345678', or 9 digits)."
+          },
+          "type": {
+            "type": "string",
+            "enum": ["self", "other"],
+            "description": "Whether the recharge is for the user's own phone or another contact."
+          }
+        },
+        "required": ["phone"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "valid": { "type": "boolean" },
+          "formattedPhone": { "type": "string" },
+          "carrier": { "type": "string" },
+          "errorMessage": { "type": "string" }
+        },
+        "required": ["valid", "formattedPhone"]
+      }
+    },
+    {
+      "name": "createAirtimeOrder",
+      "description": "Create a pending order for airtime top-up or package subscription before payment confirmation.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "serviceType": {
+            "type": "string",
+            "enum": ["airtime", "package"],
+            "description": "Type of purchase: airtime credit or internet/voice package."
+          },
+          "amount": {
+            "type": "number",
+            "description": "Recharge amount in ETB (required if serviceType is airtime, e.g. 50, 100, 250)."
+          },
+          "packageId": {
+            "type": "string",
+            "description": "Package identifier (required if serviceType is package, e.g. 'p1', 'p2', 'p3', 'p4')."
+          },
+          "recipientPhone": {
+            "type": "string",
+            "description": "Target mobile number to receive the recharge."
+          },
+          "recipientType": {
+            "type": "string",
+            "enum": ["self", "other"],
+            "description": "Whether recipient is self or other."
+          }
+        },
+        "required": ["serviceType", "recipientPhone"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "orderId": { "type": "string" },
+          "serviceType": { "type": "string" },
+          "totalPayable": { "type": "number" },
+          "currency": { "type": "string" },
+          "recipientPhone": { "type": "string" },
+          "bonusInfo": { "type": "string" },
+          "status": { "type": "string" }
+        },
+        "required": ["orderId", "totalPayable", "status"]
+      }
+    },
+    {
+      "name": "payAirtimeOrder",
+      "description": "Execute payment deduction from telebirr balance for a pending airtime or package order.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "orderId": {
+            "type": "string",
+            "description": "Unique identifier of the order to execute."
+          },
+          "confirmed": {
+            "type": "boolean",
+            "description": "Must be true only after the user explicitly confirms the displayed order."
+          }
+        },
+        "required": ["orderId", "confirmed"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "transactionId": { "type": "string" },
+          "orderId": { "type": "string" },
+          "amount": { "type": "number" },
+          "recipientPhone": { "type": "string" },
+          "newBalance": { "type": "number" },
+          "timestamp": { "type": "string" },
+          "message": { "type": "string" }
+        },
+        "required": ["success", "transactionId"]
+      }
+    }
+  ]
+}
+

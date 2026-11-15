@@ -1,4 +1,3 @@
-import path from 'path'
 import { defineConfig, type UserConfigExport } from '@tarojs/cli'
 
 export default defineConfig(async (merge) => {
@@ -17,7 +16,7 @@ export default defineConfig(async (merge) => {
     plugins: [
       '@tarojs/plugin-framework-react',
       [
-        path.resolve(__dirname, '../../plugin-platform-macle'),
+        '@macle-community/taro-plugin-macle',
         {
           tailwindcss: true
         }

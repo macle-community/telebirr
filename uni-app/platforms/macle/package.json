@@ -1,0 +1,14 @@
+{
+  "name": "@macle-community/uni-app-macle",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/compiler.cjs",
+  "uni-app": {
+    "name": "macle",
+    "title": "Macle Mini Program",
+    "apply": [
+      "macle"
+    ],
+    "main": "src/compiler.cjs"
+  }
+}
