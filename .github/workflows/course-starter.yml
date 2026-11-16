@@ -1,0 +1,48 @@
+name: Course starter build
+
+on:
+  push:
+    paths:
+      - "master-class/README.md"
+      - "master-class/course-materials/**"
+      - "master-class/starter-template/**"
+      - "master-class/final-project/**"
+      - ".github/workflows/course-starter.yml"
+  pull_request:
+    paths:
+      - "master-class/README.md"
+      - "master-class/course-materials/**"
+      - "master-class/starter-template/**"
+      - "master-class/final-project/**"
+      - ".github/workflows/course-starter.yml"
+
+jobs:
+  starter:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: master-class/starter-template
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: master-class/starter-template/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build:macle
+
+  capstone:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: master-class/final-project/frontend/package-lock.json
+      - run: npm --prefix master-class/final-project/backend test
+      - run: npm --prefix master-class/final-project/frontend ci
+      - run: npm --prefix master-class/final-project/frontend run typecheck
+      - run: npm --prefix master-class/final-project/frontend run build:macle

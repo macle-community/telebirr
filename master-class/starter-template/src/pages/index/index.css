@@ -1,0 +1,52 @@
+.page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48rpx;
+}
+
+.eyebrow {
+  color: #527a2c;
+  font-size: 24rpx;
+  font-weight: 700;
+  letter-spacing: 3rpx;
+}
+
+.title {
+  margin-top: 20rpx;
+  font-size: 52rpx;
+  font-weight: 700;
+}
+
+.description {
+  margin-top: 20rpx;
+  color: #5b6255;
+  font-size: 30rpx;
+  line-height: 1.5;
+}
+
+.counter {
+  margin: 40rpx 0 24rpx;
+  padding: 28rpx;
+  border-radius: 20rpx;
+  background: #fff;
+  font-size: 30rpx;
+}
+
+.primary-button,
+.secondary-button {
+  margin: 12rpx 0;
+  border-radius: 14rpx;
+  font-size: 30rpx;
+}
+
+.primary-button {
+  background: #76bc21;
+  color: #fff;
+}
+
+.secondary-button {
+  background: #fff;
+  color: #26351d;
+}

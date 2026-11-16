@@ -1,0 +1,158 @@
+.shop {
+  padding: 28rpx;
+  padding-bottom: 56rpx;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  padding: 36rpx;
+  border-radius: 24rpx;
+  background: #4b2e20;
+  color: #fff;
+}
+
+.hero-kicker {
+  color: #e8c99e;
+  font-size: 22rpx;
+  font-weight: 700;
+  letter-spacing: 3rpx;
+}
+
+.hero-title {
+  margin-top: 16rpx;
+  font-size: 42rpx;
+  font-weight: 700;
+}
+
+.hero-copy {
+  margin-top: 12rpx;
+  color: #f0e7dc;
+  font-size: 26rpx;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 34rpx 4rpx 18rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.section-note,
+.product-origin,
+.product-description {
+  color: #777067;
+  font-size: 23rpx;
+}
+
+.product-card {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16rpx;
+  padding: 22rpx;
+  border-radius: 20rpx;
+  background: #fff;
+}
+
+.coffee-mark {
+  display: flex;
+  width: 76rpx;
+  height: 76rpx;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f2e7d8;
+  font-size: 36rpx;
+}
+
+.product-info {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  margin: 0 16rpx;
+}
+
+.product-name {
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.product-description {
+  margin-top: 6rpx;
+}
+
+.product-price {
+  margin-top: 10rpx;
+  color: #4b2e20;
+  font-size: 25rpx;
+  font-weight: 700;
+}
+
+.add-button {
+  min-width: 102rpx;
+  margin: 0;
+  padding: 0 16rpx;
+  border: 0;
+  border-radius: 12rpx;
+  background: #76bc21;
+  color: #fff;
+  font-size: 23rpx;
+  line-height: 68rpx;
+}
+
+.checkout-card {
+  margin-top: 24rpx;
+  padding: 24rpx;
+  border-radius: 20rpx;
+  background: #fff;
+}
+
+.checkout-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.checkout-total {
+  color: #4b2e20;
+}
+
+.demo-warning,
+.notice,
+.success,
+.error {
+  display: block;
+  margin-top: 18rpx;
+  font-size: 23rpx;
+  line-height: 1.5;
+}
+
+.demo-warning,
+.notice {
+  color: #777067;
+}
+
+.error {
+  color: #a53025;
+}
+
+.success {
+  color: #386e1b;
+}
+
+.checkout-button {
+  margin: 20rpx 0 0;
+  border: 0;
+  border-radius: 12rpx;
+  background: #4b2e20;
+  color: #fff;
+  font-size: 27rpx;
+}

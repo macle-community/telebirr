@@ -1,0 +1,5 @@
+device,os_version,macle_runtime,app_build,scenario,result,evidence,notes
+web-simulator,record-version,record-version,record-build,initial-launch,not-tested,,
+approved-test-device,record-model,record-version,record-build,navigation,not-tested,,
+approved-test-device,record-model,record-version,record-build,network-failure,not-tested,,
+approved-test-device,record-model,record-version,record-build,permission-denied,not-tested,,

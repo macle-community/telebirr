@@ -1,0 +1,63 @@
+.quantity-page {
+  padding: 32rpx;
+}
+
+.quantity-title {
+  color: #172112;
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.quantity-card {
+  display: flex;
+  flex-direction: column;
+  margin-top: 24rpx;
+  padding: 28rpx;
+  border-radius: 20rpx;
+  background: #fff;
+}
+
+.quantity-name {
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.quantity-copy,
+.quantity-note {
+  margin-top: 10rpx;
+  color: #666d60;
+  font-size: 23rpx;
+  line-height: 1.5;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24rpx;
+}
+
+.quantity-control {
+  width: 88rpx;
+  height: 76rpx;
+  margin: 0;
+  border-radius: 12rpx;
+  background: #e9eee4;
+  color: #26351d;
+  font-size: 36rpx;
+  line-height: 76rpx;
+}
+
+.quantity-value {
+  min-width: 100rpx;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.quantity-total {
+  margin-top: 24rpx;
+  color: #386e1b;
+  font-size: 28rpx;
+  font-weight: 700;
+}
