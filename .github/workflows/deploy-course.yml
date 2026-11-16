@@ -6,6 +6,7 @@ on:
       - main
       - course/macle-telebirr-masterclass
     paths:
+      - "master-class/README.md"
       - "master-class/site/**"
       - ".github/workflows/deploy-course.yml"
   workflow_dispatch:
