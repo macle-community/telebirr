@@ -1,4 +1,4 @@
-# Day 22 — Device APIs
+# Day 22 — Macle device capabilities and permissions
 
 **Estimated time:** 5–10 minute reading, 25 minute capability lab  
 **Goal:** You design around permissions and missing capabilities.
@@ -32,7 +32,7 @@ that lacks a verified implementation. Showing the distinction lets the
 screen provide a fallback without claiming that the sample called a real
 camera, scanner, or location API.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Select one documented, non-sensitive capability for your environment.
 If none is available, demonstrate a mock adapter returning a fixed result and
@@ -57,7 +57,7 @@ Create a capability matrix with API, runtime version, permission, simulator
 result, device result, and fallback. Keep unverified entries explicitly
 marked “not tested.”
 
-## Detailed walkthrough
+## Macle capability tutorial: step by step
 
 Open the [capability-state example](./code/day-22-to-28/day-22/capability-demo.tsx).
 It has buttons for simulated available, denied, and unavailable outcomes.

@@ -1,4 +1,4 @@
-# Day 15 — Payment flow and trust boundaries
+# Day 15 — Macle payment handoff and trust boundaries
 
 **Estimated time:** 5–10 minute reading, 20 minute architecture exercise  
 **Goal:** You can explain why a client callback is not payment proof.
@@ -42,7 +42,7 @@ labels for the local exercise only. A production provider result would need
 to be verified by the backend using the provider's approved mechanism before
 the app could display a backend-confirmed order state.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Open the [payment trust-boundary diagram](../diagrams/payment-flow.md) and
 trace the actors. In EthioShop, inspect the order endpoint and the visible
@@ -69,7 +69,7 @@ Annotate the diagram with one threat at each boundary and one mitigation.
 Include a sentence explaining why the capstone's demo status is not proof of
 real settlement.
 
-## Detailed walkthrough
+## Macle trust-boundary tutorial: step by step
 
 Open the diagram and read it from left to right. At each arrow, identify
 who controls the data and what evidence is trustworthy:

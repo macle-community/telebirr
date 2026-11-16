@@ -1,7 +1,8 @@
-# Day 2 — Toolchain and simulator
+# Day 2 — The Macle build toolchain and simulator
 
 **Estimated time:** 5–10 minute reading, 20–30 minute setup lab  
-**Goal:** You can build the starter and identify the versions involved.
+**Goal:** You can build for Macle, open the target in its simulator, and
+identify which tool produced each result.
 
 ## Key concepts
 
@@ -34,7 +35,7 @@ A passing typecheck does not prove that the Macle compiler or simulator can
 run the app. Each command answers a different question, so keep its result
 separate in your setup notes.
 
-## Walkthrough
+## Step-by-step tutorial
 
 From `starter-template/`, run:
 
@@ -68,7 +69,7 @@ Write a short “clean setup” note that includes the commands you ran, version
 simulator URL, and one issue encountered or one detail that was easy to miss.
 Do not include credentials, personal tokens, or private device data.
 
-## Detailed walkthrough
+## Macle build verification: step by step
 
 Run setup from the starter directory and keep the output for each command:
 
@@ -84,6 +85,8 @@ Run setup from the starter directory and keep the output for each command:
    the visible page came from the latest build by changing the greeting and
    repeating the command.
 
-Compare recorded Taro and plugin versions with `package-lock.json`. Do not
-install a global CLI to fix a project-local version mismatch. The report
-should separate installation, typecheck, compilation, and simulator results.
+Record the Taro version only to identify the source compiler; the outcome to
+verify is the Macle-targeted build and its behavior in the Macle simulator.
+Do not install a global CLI to fix a project-local version mismatch. The
+report should separate installation, typecheck, Macle compilation, and
+simulator results.

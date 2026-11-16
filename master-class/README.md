@@ -1,6 +1,6 @@
 # Macle Telebirr Mini App Masterclass
 
-A practical, 30-day course for building Telebirr Mini Apps with React, Taro, and the Macle runtime. The course moves from a first page to a shop capstone, while keeping payment credentials and transaction authority on the backend.
+A practical, Macle-first 30-day course for building Telebirr Mini Apps. The starter uses React and Taro as source/build tools; the lessons focus on the Macle runtime, its supported capabilities, and verifying behavior in the target environment.
 
 > **Before publishing:** verify current platform audience figures, SDK names, API signatures, simulator requirements, and developer-portal steps against current official sources. This repository avoids promising unverified user counts or production payment access.
 
@@ -41,56 +41,56 @@ Each lesson is designed for a short lecture followed by a hands-on exercise. Day
 
 | Day | Lesson | Practice |
 | --- | --- | --- |
-| 1 | Telebirr Mini Apps and the course capstone | Explore the finished EthioShop demo |
-| 2 | Node.js, Taro, the Macle plugin, and simulator setup | Build and open the starter |
+| 1 | The Macle Mini App and course project | Explore the finished EthioShop demo and identify runtime boundaries |
+| 2 | The Macle build toolchain and simulator | Build, launch, and record target versions |
 | 3 | Macle logic, view, MAML, and data updates | Trace one rendered page through the runtime |
-| 4 | Taro project structure and app configuration | Find the entry, page, and build configuration |
-| 5 | First React page with `View` and `Text` | Customize the starter greeting |
-| 6 | Layout, responsive units, and generated styles | Build a product card layout |
-| 7 | Mini-project: Telebirr profile page | Create a static profile with reusable sections |
+| 4 | Macle app setup and configuration | Trace a registered route into the Macle build |
+| 5 | Build your first Macle screen | Change a label and verify it in the simulator |
+| 6 | Layout and styling in the Macle view | Build and test a responsive product card |
+| 7 | Macle mini-project: Telebirr profile | Build and verify a profile screen |
 
 ### Phase 2 — Core mechanics (Days 8–14)
 
 | Day | Lesson | Practice |
 | --- | --- | --- |
-| 8 | React state and Mini App events | Add an interactive quantity control |
-| 9 | Page routes and query parameters | Navigate to a product detail page |
-| 10 | Native API bridge and network requests | Load data from a local API |
-| 11 | Component libraries and custom components | Add a documented component and configure it as required |
-| 12 | Lists, keys, and empty states | Render and filter a product list |
-| 13 | Forms, validation, and keyboard behavior | Build a validated contact form |
-| 14 | Mini-project: persistent to-do list | Save and restore tasks with documented storage APIs |
+| 8 | Macle view events and state updates | Trace a tap through to the visible state |
+| 9 | Macle page routes and navigation | Register and verify a product detail route |
+| 10 | Macle network requests and host APIs | Verify a request API and build retry states |
+| 11 | Macle-compatible components | Check target support before integrating a component |
+| 12 | Data-driven lists in the Macle view | Render and filter a product list |
+| 13 | Macle input and form states | Build a validated form with target-supported inputs |
+| 14 | Macle app persistence: to-do list | Verify storage support and handle failures |
 
 ### Phase 3 — Fintech fundamentals (Days 15–21)
 
 | Day | Lesson | Practice |
 | --- | --- | --- |
-| 15 | Payment architecture and trusted handoff | Diagram client, backend, and provider responsibilities |
-| 16 | Backend order creation | Create a server-side demo order |
-| 17 | Payment integration boundaries | Connect a mock checkout adapter; identify provider-specific steps |
-| 18 | User authorization and consent | Implement an authorization flow only with approved platform docs |
-| 19 | Security: secrets, tokens, and least privilege | Keep credentials server-side and redact sensitive logs |
-| 20 | Network failures, cancellation, and idempotency | Exercise retry and error states |
-| 21 | Mini-project: premium unlock | Unlock a demo feature only after a verified mock order status |
+| 15 | Macle payment handoff and trust boundaries | Trace the client, backend, and provider roles |
+| 16 | Macle client and backend order boundary | Keep price and order authority on the server |
+| 17 | Macle checkout request states | Submit a mock order and render its explicit status |
+| 18 | Macle identity, authorization, and consent | Separate consent from platform authorization |
+| 19 | Securing Macle app integrations | Keep secrets off-device and review the build |
+| 20 | Macle network failure and recovery | Test retry and ambiguous order outcomes |
+| 21 | Backend-verified demo feature in Macle | Show only the backend's demo entitlement |
 
 ### Phase 4 — Production readiness (Days 22–28)
 
 | Day | Lesson | Practice |
 | --- | --- | --- |
-| 22 | Device APIs and permission handling | Add a documented device capability with a fallback |
-| 23 | Maps and location privacy | Build a map screen only where the target runtime supports it |
-| 24 | Bundle size, rendering, and data updates | Measure the build and reduce unnecessary updates |
-| 25 | Debugging service and view layers | Diagnose a lifecycle or rendering issue |
-| 26 | Loading, empty, and error states | Polish the shop experience |
-| 27 | Packaging and submission preparation | Produce a release build and check its contents |
-| 28 | Device testing and compatibility | Run a device test matrix and record results |
+| 22 | Macle device capabilities and permissions | Verify capability support and provide a fallback |
+| 23 | Macle location capabilities and privacy | Use location only with verified support and consent |
+| 24 | Macle build and rendering performance | Measure output and reduce unnecessary updates |
+| 25 | Debugging the Macle app pipeline | Trace a failure across source, build, and runtime |
+| 26 | Macle view feedback and polish | Verify loading, empty, and error states |
+| 27 | Building a Macle-targeted package | Build reproducibly and inspect the output |
+| 28 | Testing across Macle runtimes and devices | Record compatibility evidence and gaps |
 
 ### Phase 5 — Capstone and presentation (Days 29–30)
 
 | Day | Lesson | Practice |
 | --- | --- | --- |
-| 29 | EthioShop end-to-end capstone | Build catalog, cart, backend order, and demo checkout |
-| 30 | Demo, feedback, and next steps | Present the app, architecture, limitations, and roadmap |
+| 29 | Macle EthioShop end-to-end tutorial | Build a catalog, cart, and verified mock order flow |
+| 30 | Presenting and validating your Macle app | Show build evidence, limits, and next steps |
 
 ## Repository layout
 

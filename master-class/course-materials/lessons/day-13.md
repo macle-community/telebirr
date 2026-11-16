@@ -1,7 +1,8 @@
-# Day 13 — Forms and input
+# Day 13 — Macle input and form states
 
 **Estimated time:** 5–10 minute reading, 30 minute form lab  
-**Goal:** You validate input and make submission states clear.
+**Goal:** You verify the Macle target's input behavior and make validation
+and submission states clear.
 **Source:** [Day 13 form example](./code/day-10-to-14/day-13/contact-form.tsx)
 
 ## Key concepts
@@ -16,19 +17,21 @@ server must validate every value again. Never ask a user to enter a payment
 PIN into a custom form. For identity or payment, use an approved host flow
 when the platform and account support it.
 
-## Walkthrough
+## Step-by-step tutorial
 
-Build a form with a name and a contact message using Taro components. Keep
-the current values in React state and gate submission on a non-empty trimmed
-name. Display an error message rather than silently ignoring an empty submit.
+Build a form with a name and contact message using components verified for
+the Macle target. Keep current values in the starter's view state and gate
+submission on a non-empty trimmed name. Display an error rather than silently
+ignoring an empty submit.
 
 ```tsx
 const [name, setName] = useState('')
 const valid = name.trim().length > 0
 ```
 
-Explain that the input event's exact type and detail shape should come from
-the installed Taro types.
+Before using the example, verify that the Macle plugin supports this input
+component and event shape. The installed source types help author the
+adapter; a target build and simulator test verify its Macle behavior.
 
 In the full form example, input is controlled by React state:
 
@@ -41,8 +44,8 @@ In the full form example, input is controlled by React state:
 
 `value` displays the current state and `onInput` copies the latest text back
 into it. The form's submit rule can then trim and validate that same value.
-Check the event type against the installed Taro declarations rather than
-guessing at an event shape.
+Check the event shape against the installed component declarations, then
+confirm focus, keyboard, and submit behavior in the Macle simulator or device.
 
 ## Practice
 
@@ -62,7 +65,7 @@ Add one inline validation message and a submitting state. Test keyboard
 visibility and page scrolling in the simulator; if a device test is
 available, record the differences rather than assuming parity.
 
-## Detailed walkthrough
+## Macle form tutorial: step by step
 
 Use the [validated form](./code/day-10-to-14/day-13/contact-form.tsx). Identify the form's
 state variables first: field values, validation message, and submission

@@ -1,4 +1,4 @@
-# Day 25 — Debugging
+# Day 25 — Debugging the Macle app pipeline
 
 **Estimated time:** 5–10 minute reading, 30 minute diagnosis lab  
 **Goal:** You produce a repeatable diagnosis instead of guessing.
@@ -32,7 +32,7 @@ Those details distinguish a backend availability problem from a rendering
 or route bug. Record the actual versions and error from your environment;
 the values above are a fictional example, not a claim about a current run.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Introduce one controlled bug in a branch: misspell a registered route or
 break a harmless import. Run the build, record the first error, correct the
@@ -57,7 +57,7 @@ than hiding the symptom.
 Write a short postmortem for the lab defect. Include what would have made it
 harder to diagnose and one regression test or checklist item to prevent it.
 
-## Detailed walkthrough
+## Macle debugging tutorial: step by step
 
 Use the [diagnosis template](./code/day-22-to-28/day-25/debugging-checklist.md).
 Start with one controlled defect and fill the

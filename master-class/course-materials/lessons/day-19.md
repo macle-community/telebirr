@@ -1,4 +1,4 @@
-# Day 19 — Security best practices
+# Day 19 — Securing Macle app integrations
 
 **Estimated time:** 5–10 minute reading, 25 minute review lab  
 **Goal:** You identify secrets and sensitive values that must not be
@@ -35,7 +35,7 @@ This helper belongs in backend code. Moving a value into a frontend `.env`
 file does not make it secret; frontend build tools can embed it in the
 downloadable app bundle.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Search the frontend source and compiled output for a fake marker such as
 `DEMO_SECRET_DO_NOT_USE`. Explain that the marker is harmless but illustrates
@@ -62,7 +62,7 @@ Submit a short security review with one threat, impact, and mitigation for
 the client, backend, and logs. Verify that no secret-like marker was added
 to the final build.
 
-## Detailed walkthrough
+## Macle integration security: step by step
 
 Inspect the [configuration example](./code/day-15-to-21/day-19/server-config.example.mjs).
 It fails fast when required server configuration is missing and keeps the

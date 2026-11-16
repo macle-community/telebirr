@@ -1,4 +1,4 @@
-# Day 9 — Routing
+# Day 9 — Macle page routes and navigation
 
 **Estimated time:** 5–10 minute reading, 25 minute lab  
 **Goal:** You register a detail route and pass a safe identifier.
@@ -19,17 +19,18 @@ record. Treat route parameters as untrusted input: users, stale links, or
 runtime behavior may produce an empty or unknown value.
 
 Navigation APIs and their callback/promise behavior are version-specific.
-Use the Taro API documented for the installed version, and provide a clear
-fallback for an invalid product rather than leaving an empty page.
+Use only a navigation API verified for the installed Macle plugin/runtime,
+and provide a clear fallback for an invalid product rather than leaving an
+empty page.
 
 The destination reads the ID, looks it up, and shows a not-found state if
 there is no matching product. Encoding makes the query value safe to place in
 the URL; it does not make that value trusted.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Register `pages/product/index` in the app config. From a card, navigate using
-the installed Taro API:
+the route API documented for the Macle target:
 
 ```tsx
 Taro.navigateTo({
@@ -59,7 +60,7 @@ Add a “View details” action to each product card. Record the route format an
 test it after a clean build. Do not rely on an undocumented route API inferred
 from a different platform.
 
-## Detailed walkthrough
+## Macle route tutorial: step by step
 
 1. Add `pages/product/index` to the app's `pages` array. The source folder
    alone does not register a route.

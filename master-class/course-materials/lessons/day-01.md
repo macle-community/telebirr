@@ -1,4 +1,4 @@
-# Day 1 — The opportunity and the course project
+# Day 1 — The Macle Mini App and course project
 
 **Estimated time:** 5–10 minute reading, then a short repository tour  
 **Goal:** You can explain what you will build and distinguish a
@@ -6,10 +6,11 @@ course demo from a production financial service.
 
 ## Key concepts
 
-Over the next 30 days, you will build a small shop experience with
-React and Taro and compile it for the Macle Mini App runtime. You will start
-with a page and finish with an EthioShop catalog, a cart, and a backend-created
-demo order.
+Over the next 30 days, you will learn how a Macle Mini App is configured,
+compiled, rendered, and connected to host capabilities. The course starter
+uses React and Taro as its source and build tools; the learning target is the
+Macle runtime. You will finish with an EthioShop catalog, a cart, and a
+backend-created demo order.
 
 A Mini App runs inside a host application and uses the host platform's
 runtime and capabilities. That makes the host's supported APIs, component
@@ -51,7 +52,7 @@ not contact a payment provider. The ID and amount are illustrative; the
 running demo generates its own order ID and calculates the amount from its
 catalog. Never describe this response as proof that funds moved.
 
-## Walkthrough
+## Step-by-step tutorial
 
 1. Open the course root README and review the 30-day sequence.
 2. Open the starter README and note that it is intentionally small.
@@ -78,7 +79,7 @@ Read both project READMEs. Draw a one-page map of the starter, the shop
 frontend, and the demo backend. Mark which part owns product pricing and
 which part owns the mock order status.
 
-## Detailed walkthrough
+## Macle project tour: step by step
 
 Use this order to explore the repository and locate where
 future work belongs:

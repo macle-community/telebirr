@@ -1,4 +1,4 @@
-# Day 28 — Device testing
+# Day 28 — Testing across Macle runtimes and devices
 
 **Estimated time:** 5–10 minute reading, 30 minute test-matrix lab  
 **Goal:** You report device evidence without assuming simulator parity.
@@ -28,7 +28,7 @@ Replace placeholders only after running the scenario. If no approved device
 is available, leave that result as `not tested`; do not infer device support
 from the simulator row.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Review a small matrix with environment, OS/device, runtime, route, network,
 permission, and result. Run the starter in the simulator, then a supported
@@ -52,7 +52,7 @@ Complete the test matrix and prioritize the top three device risks. Do not
 include phone numbers, account identifiers, or payment information in the
 report.
 
-## Detailed walkthrough
+## Macle test tutorial: step by step
 
 Start with the [device matrix](./code/day-22-to-28/day-28/device-matrix.csv).
 The prefilled rows are test cases, not test results:

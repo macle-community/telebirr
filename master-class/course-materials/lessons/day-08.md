@@ -1,20 +1,21 @@
-# Day 8 — State and events
+# Day 8 — Macle view events and state updates
 
 **Estimated time:** 5–10 minute reading, 25 minute lab  
-**Goal:** You connect a user event to a predictable React state update.
+**Goal:** You trace a user event in the Macle view through a state update to
+the next visible frame.
 **Source:** [Day 8 page TSX](./code/day-06-to-09/day-08/index.tsx) ·
 [stylesheet](./code/day-06-to-09/day-08/index.css)
 
 ## Key concepts
 
-React state is the source of truth for values that change while a page is
-open. When the user taps an action, the handler describes the next state; React
-then renders the interface from that state. Do not manually edit the text
-node or assume a browser DOM exists. This model is why a quantity label and
-the cart total should both be derived from the same cart state.
+The view needs a state model for values that change while a page is open.
+This starter uses React state as its source-level mechanism; the Macle
+behavior to verify is whether a supported event and state update appear in
+the rendered view. Do not assume a browser DOM exists.
 
-In a Mini App, Taro maps component events to the target event system. The
-handler should be short, deterministic, and safe to tap more than once.
+The starter maps component events through its Macle plugin. Exact supported
+events and payloads depend on the installed component and platform version.
+The handler should be short, deterministic, and safe to tap more than once.
 Avoid putting network requests or payment assumptions in a display-only
 button. Separate the state transition from effects such as saving or sending
 a request.
@@ -32,7 +33,7 @@ queued. `Math.max` and `Math.min` keep the quantity between zero and ten.
 The displayed total should be calculated from that quantity, not maintained
 as a second state value that could become inconsistent.
 
-## Walkthrough
+## Step-by-step tutorial
 
 In the starter, use this sequence:
 
@@ -49,10 +50,10 @@ several times, then rebuild and check it in the target simulator.
 
 ## Practice
 
-Add a quantity control to an EthioShop product card. Store quantity in React
-state, keep it between 0 and 10, and derive the visible count from state. Add
-and remove controls, but do not update a second “total” state variable; derive
-the total from cart items and the product catalog.
+Add a quantity control to an EthioShop product card. Store quantity in the
+starter's view state, keep it between 0 and 10, and derive the visible count
+from state. Confirm each tap updates the rendered value in the Macle
+simulator.
 
 ## Review questions
 
@@ -67,7 +68,7 @@ Add a remove-from-cart transition. Write down the state shape and one
 invariant (for example: no item has quantity less than 1). Confirm the cart
 count and total remain correct after adding, removing, and changing quantity.
 
-## Detailed walkthrough
+## Macle event-to-view tutorial: step by step
 
 Open the [quantity example](./code/day-06-to-09/day-08/). Trace these values:
 

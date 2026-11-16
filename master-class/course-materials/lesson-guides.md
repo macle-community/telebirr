@@ -1,9 +1,11 @@
 # 30-day lesson guides
 
-Use these guides to navigate the self-paced readings and practice exercises.
-Start with the starter app, then carry the EthioShop capstone forward as the
-course project. Save a working version after each checkpoint so you can
-compare your progress.
+Use these guides as step-by-step labs for the Macle Mini App runtime. Start
+with the starter app, then carry the EthioShop capstone forward as the course
+project. The starter uses React and Taro to produce a Macle-targeted build;
+focus on runtime behavior and verify each platform component or API in the
+current Macle documentation. Save a working version after each checkpoint
+so you can compare your progress.
 
 Platform features change across compiler, plugin, simulator, and runtime
 versions. Verify API signatures, UI components, device permissions, payment
@@ -12,7 +14,7 @@ your exact development environment.
 
 ## Phase 1 — Foundations
 
-### Day 1 — The Mini App opportunity
+### Day 1 — The Macle Mini App and course project
 
 - **Learn:** What a Mini App is, the course outcome, and the difference
   between a demo and a production service.
@@ -23,10 +25,11 @@ your exact development environment.
 - **Check your progress:** You have a local checkout of the repository and a
   written list of questions to validate with platform documentation.
 
-### Day 2 — Toolchain and simulator
+### Day 2 — The Macle build toolchain and simulator
 
-- **Learn:** Node.js, npm, Taro, the Macle platform plugin, build output, and
-  simulator as separate parts of the toolchain.
+- **Learn:** How Node.js, npm, the source compiler/plugin, Macle build output,
+  and simulator fit together. Taro is the starter's source tool, not the
+  lesson's runtime subject.
 - **Explore:** Install the starter dependencies, run its typecheck and build, and
   launch its simulator.
 - **Try:** Open the starter and record compiler,
@@ -43,7 +46,7 @@ your exact development environment.
 - **Check your progress:** A small diagram of the render/update path for the installed
   runtime version.
 
-### Day 4 — Taro project setup
+### Day 4 — Macle app setup and configuration
 
 - **Learn:** `config/`, `src/`, page registration, project metadata, and build
   scripts.
@@ -52,25 +55,25 @@ your exact development environment.
   route appears in the compiled configuration.
 - **Check your progress:** The app opens on the configured initial route.
 
-### Day 5 — First React page
+### Day 5 — Build your first Macle screen
 
-- **Learn:** Taro `View` and `Text`, component composition, and the
-  relationship between JSX and the platform build.
+- **Learn:** The Macle source-to-view path using this starter's supported
+  components. Confirm each component with the installed Macle plugin/runtime.
 - **Explore:** Add a welcome panel to the starter.
 - **Try:** Create a profile summary with a name, short
   description, and reusable information row.
 - **Check your progress:** The profile page compiles and renders in the simulator.
 
-### Day 6 — Styling and responsive layout
+### Day 6 — Layout and styling in the Macle view
 
-- **Learn:** Taro styles, responsive units, flexbox, spacing, and why generated
-  style files are a build artifact.
+- **Learn:** View layout, responsive units, flexbox, and why compiled style
+  output is evidence of a build rather than a file to edit.
 - **Explore:** Style a product card and test it at two simulator viewport sizes.
 - **Try:** Improve the profile page hierarchy, spacing, and button
   affordance.
 - **Check your progress:** The page remains legible at both tested viewport sizes.
 
-### Day 7 — Mini-project: Telebirr profile
+### Day 7 — Macle mini-project: Telebirr profile
 
 - **Learn:** Reusable UI, visual hierarchy, and an accessible touch target.
 - **Explore:** Review the profile exercise against a simple design checklist.
@@ -81,17 +84,17 @@ your exact development environment.
 
 ## Phase 2 — Core mechanics
 
-### Day 8 — State and events
+### Day 8 — Macle view events and state updates
 
-- **Learn:** React state, event handlers, and keeping rendered UI derived
-  from state.
+- **Learn:** How an event in the Macle-targeted view produces a state update
+  and visible result; React is the starter's implementation mechanism.
 - **Explore:** Use the starter counter; explain the difference between state
   updates and direct DOM mutation.
 - **Try:** Add quantity controls to an EthioShop product card with a
   sensible upper bound.
 - **Check your progress:** Repeated taps update the displayed quantity consistently.
 
-### Day 9 — Routing and parameters
+### Day 9 — Macle page routes and navigation
 
 - **Learn:** Registered routes, navigation methods, query parameters, and
   navigation failure handling.
@@ -101,17 +104,17 @@ your exact development environment.
 - **Check your progress:** Valid IDs show the expected product; invalid IDs show a
   useful fallback.
 
-### Day 10 — Native APIs and network requests
+### Day 10 — Macle network requests and host APIs
 
-- **Learn:** Taro API wrappers, native API boundaries, request lifecycle, and
-  server trust.
+- **Learn:** The Macle host/API boundary, request lifecycle, and server trust.
+  Verify whether the installed plugin supports each API wrapper.
 - **Explore:** Load the capstone product catalog from its local backend.
 - **Try:** Add loading, empty, non-success response, and network error
   states to a small data view.
 - **Check your progress:** Disconnect the backend and confirm the screen reports a
   recoverable error rather than hanging.
 
-### Day 11 — Component libraries
+### Day 11 — Macle-compatible components
 
 - **Learn:** Version compatibility, package installation, component
   registration, and fallbacks.
@@ -123,7 +126,7 @@ your exact development environment.
   component renders; otherwise document the missing prerequisite and build a
   plain Taro fallback.
 
-### Day 12 — Lists and keys
+### Day 12 — Data-driven lists in the Macle view
 
 - **Learn:** Rendering collections, stable keys, filtering, and empty states.
 - **Explore:** Render EthioShop's catalog from the backend response.
@@ -131,7 +134,7 @@ your exact development environment.
   message.
 - **Check your progress:** Filtering preserves item identity and handles no matches.
 
-### Day 13 — Forms and validation
+### Day 13 — Macle input and form states
 
 - **Learn:** Controlled inputs, validation timing, keyboard behavior, and
   safe handling of user-provided data.
@@ -141,7 +144,7 @@ your exact development environment.
 - **Check your progress:** Invalid input is rejected before submit and valid input has
   a visible result.
 
-### Day 14 — Mini-project: persistent to-do list
+### Day 14 — Macle app persistence: to-do list mini-project
 
 - **Learn:** Storage APIs, serialization, versioning, and failure handling.
 - **Explore:** Read the exact storage API signature from the installed platform
@@ -153,7 +156,7 @@ your exact development environment.
 
 ## Phase 3 — Fintech fundamentals
 
-### Day 15 — Payment architecture
+### Day 15 — Macle payment handoff and trust boundaries
 
 - **Learn:** Client/backend/provider responsibilities, user confirmation, and
   why a client callback is not proof of settlement.
@@ -164,7 +167,7 @@ your exact development environment.
 - **Check your progress:** The diagram labels order creation, provider confirmation,
   server verification, and the UI's status query.
 
-### Day 16 — Backend order creation
+### Day 16 — Macle client and backend order boundary
 
 - **Learn:** Server-owned pricing, input validation, HTTP status codes, and
   keeping secrets server-side.
@@ -174,7 +177,7 @@ your exact development environment.
 - **Check your progress:** The server rejects malformed items and derives totals from
   its own product catalog.
 
-### Day 17 — Frontend checkout boundary
+### Day 17 — Macle checkout request states
 
 - **Learn:** Checkout adapter boundaries, async states, and mock versus real
   payment.
@@ -185,7 +188,7 @@ your exact development environment.
 - **Check your progress:** The frontend handles success and failure from the demo API
   and clearly identifies the flow as simulated.
 
-### Day 18 — Authorization and consent
+### Day 18 — Macle identity, authorization, and consent
 
 - **Learn:** Authentication versus authorization, data minimization, user
   consent, and platform-controlled identity flows.
@@ -196,7 +199,7 @@ your exact development environment.
 - **Check your progress:** A written data-flow sketch includes consent, purpose, and
   retention; any live auth exercise waits for approved access and docs.
 
-### Day 19 — Security basics
+### Day 19 — Securing Macle app integrations
 
 - **Learn:** Public client bundles, secret management, token scope, logging,
   and least privilege.
@@ -207,7 +210,7 @@ your exact development environment.
 - **Check your progress:** No merchant secret or PIN is present in app code, build
   output, or logs.
 
-### Day 20 — Failures, retries, and idempotency
+### Day 20 — Macle network failure and recovery
 
 - **Learn:** Timeouts, lost responses, duplicate submissions, cancellation,
   and idempotent order transitions.
@@ -217,7 +220,7 @@ your exact development environment.
 - **Check your progress:** The UI recovers from retryable failure and does not claim
   success before it has a verified order state.
 
-### Day 21 — Mini-project: premium demo feature
+### Day 21 — Backend-verified demo feature in Macle
 
 - **Learn:** Gating UI on an order status and keeping the status authority on
   the server.
@@ -229,7 +232,7 @@ your exact development environment.
 
 ## Phase 4 — Production readiness
 
-### Day 22 — Device APIs and permissions
+### Day 22 — Macle device capabilities and permissions
 
 - **Learn:** Capability detection, permission prompts, fallbacks, and privacy.
 - **Explore:** Select one device API documented for the target runtime; if the
@@ -239,7 +242,7 @@ your exact development environment.
 - **Check your progress:** The app remains usable when permission is denied or the
   device capability is missing.
 
-### Day 23 — Maps and location
+### Day 23 — Macle location capabilities and privacy
 
 - **Learn:** Location consent, purpose limitation, map-provider requirements,
   and simulator/device differences.
@@ -250,7 +253,7 @@ your exact development environment.
 - **Check your progress:** No location request happens without a user action and
   clear purpose.
 
-### Day 24 — Performance
+### Day 24 — Macle build and rendering performance
 
 - **Learn:** Bundle size, route splitting support, list cost, and avoiding
   unnecessary state updates.
@@ -259,7 +262,7 @@ your exact development environment.
   compare output sizes.
 - **Check your progress:** Record before/after measurements and explain the trade-off.
 
-### Day 25 — Debugging
+### Day 25 — Debugging the Macle app pipeline
 
 - **Learn:** Build errors, service/view logs, simulator inspection, and
   separating environment failures from app failures.
@@ -270,7 +273,7 @@ your exact development environment.
 - **Check your progress:** A concise issue report includes reproduction steps, logs,
   environment versions, and the observed-versus-expected result.
 
-### Day 26 — UI polish
+### Day 26 — Macle view feedback and polish
 
 - **Learn:** Loading, empty, error, disabled, and success states; visual
   feedback and touch affordance.
@@ -279,7 +282,7 @@ your exact development environment.
   animation support that has not been verified.
 - **Check your progress:** Each async action has visible pending and failure feedback.
 
-### Day 27 — Packaging
+### Day 27 — Building a Macle-targeted package
 
 - **Learn:** Build artifacts, app metadata, versioning, and submission
   checklists.
@@ -290,7 +293,7 @@ your exact development environment.
 - **Check your progress:** A reproducible release artifact and a list of portal steps
   verified for the current account.
 
-### Day 28 — Device testing
+### Day 28 — Testing across Macle runtimes and devices
 
 - **Learn:** Simulator versus real-device gaps, compatibility matrix, and
   privacy-safe test data.
@@ -304,7 +307,7 @@ your exact development environment.
 
 ## Phase 5 — Capstone and presentation
 
-### Day 29 — EthioShop capstone
+### Day 29 — Macle EthioShop end-to-end tutorial
 
 - **Learn:** Frontend/backend contracts, server-owned order totals, and the
   difference between a demo checkout and merchant payment processing.
@@ -315,7 +318,7 @@ your exact development environment.
 - **Check your progress:** The complete local demo works with a clear simulated
   checkout label and no payment secrets in the client.
 
-### Day 30 — Demo and next steps
+### Day 30 — Presenting and validating your Macle app
 
 - **Learn:** Clear technical demos, honest limitations, and what production
   readiness would require.

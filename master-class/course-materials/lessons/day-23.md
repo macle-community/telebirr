@@ -1,4 +1,4 @@
-# Day 23 — Maps and location
+# Day 23 — Macle location capabilities and privacy
 
 **Estimated time:** 5–10 minute reading, 25 minute privacy and UI lab  
 **Goal:** You explain location use and build a safe fallback.
@@ -30,7 +30,7 @@ The UI may present these as sample pickup choices, but it must not claim
 that either is nearby. A live map, location reading, and permission request
 are separate features with separate compatibility and privacy requirements.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Review a map screen wireframe with three states: permission explanation,
 location unavailable, and a location result. Use a static mock pin or
@@ -56,7 +56,7 @@ Submit a privacy note: purpose, requested data, retention, access control,
 fallback, and map provider requirements. Clearly separate mocked coordinates
 from real device data.
 
-## Detailed walkthrough
+## Macle location tutorial: step by step
 
 Use the [pickup point page](./code/day-22-to-28/day-23/pickup-points.tsx).
 The list contains only fictional labels and explicitly says device location

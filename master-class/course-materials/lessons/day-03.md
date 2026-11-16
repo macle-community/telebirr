@@ -6,11 +6,11 @@ separate known facts from implementation assumptions.
 
 ## Key concepts
 
-Your app uses React components, but the host does not execute its source
-file as a desktop browser would. Taro and its Macle platform plugin compile the
-application into artifacts the Macle runtime can load. At runtime, application
-logic and the visible page communicate through the platform's rendering
-mechanism, and native capabilities are exposed through APIs.
+The host does not execute the starter's source file as a desktop browser
+would. The starter compiler and Macle platform plugin produce artifacts the
+Macle runtime can load. At runtime, application logic and the visible page
+communicate through the platform's rendering mechanism, and native
+capabilities are exposed through the host's supported APIs.
 
 It is useful to think in boundaries: source code, compiler output,
 application logic, view rendering, and native host. It is less useful to
@@ -22,7 +22,7 @@ When a click updates state but the screen does not change, the defect could
 be in the event path, state update, generated output, page lifecycle, or view
 runtime. A layered model gives you a finite debugging plan.
 
-For example, this component asks React to render the current value:
+For example, this source-level component describes a counter:
 
 ```tsx
 const [count, setCount] = useState(0)
@@ -32,15 +32,14 @@ const [count, setCount] = useState(0)
 </Button>
 ```
 
-The event handler changes state; React re-renders the component with the new
-value; the platform build/runtime then reflects that update on screen. The
-snippet is a source-level explanation, not a claim about a particular
-internal Macle rendering file.
+The source event changes state; the compiled Macle app then reflects the
+updated value in its view. The snippet illustrates the input code, not a claim
+about a particular internal Macle rendering file.
 
-## Walkthrough
+## Step-by-step tutorial
 
 1. Build the starter.
-2. Locate the output directory from the Taro config (`outputRoot`).
+2. Locate the output directory from the starter's build config (`outputRoot`).
 3. Search the output for the starter page text and inspect the app/page
    configuration.
 4. Click the counter and observe the rendered value change.
@@ -50,7 +49,7 @@ internal Macle rendering file.
 
 Change the counter label, build again, and locate both the updated text and
 page registration in the output. Write a four-step trace:
-React event → state update → platform output/runtime → visible value. If
+Macle-targeted source event → state update → compiled output/runtime → visible value. If
 you cannot prove a step from the build or logs, mark it “inferred.”
 
 ## Review questions
@@ -65,7 +64,7 @@ Add a simple state-driven message to the starter. Include a short note naming
 the source file changed and how you confirmed the output came from the latest
 build rather than a stale simulator target.
 
-## Detailed walkthrough
+## Macle render trace: step by step
 
 After building the starter, use `config/index.ts` to identify `outputRoot`.
 Inspect the generated files as read-only evidence:

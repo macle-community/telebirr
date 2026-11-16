@@ -1,14 +1,15 @@
-# Day 4 — Project setup and configuration
+# Day 4 — Macle app setup and configuration
 
 **Estimated time:** 5–10 minute reading, 25 minute configuration lab  
-**Goal:** You can trace how an app page is registered and built.
+**Goal:** You can trace how a Macle-targeted app page is registered, compiled,
+and loaded by the simulator.
 
 ## Key concepts
 
-A Taro app is more than its React page. The build configuration selects the
-framework, compiler, source directory, output directory, and platform plugin.
-The app configuration declares routes and shared window settings. A page
-configuration can customize the navigation title or other supported
+The Macle app is more than its starter page. The build configuration selects
+the source compiler, source directory, output directory, and Macle platform
+plugin. The app configuration declares routes and shared window settings. A
+page configuration can customize the navigation title or other supported
 page-level behavior.
 
 A route must exist in the app configuration before navigation to it can work.
@@ -32,7 +33,7 @@ That route corresponds to `src/pages/index/index.tsx`. Adding a component
 file in another folder does not register a new route; the route list and
 source location must agree.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Open `starter-template/config/index.ts`, `src/app.config.ts`, and
 `src/pages/index/index.config.ts`. Identify the output root, initial route,
@@ -42,7 +43,7 @@ and title. Change the app title and rebuild to observe the result.
 
 Create `src/pages/about/index.tsx` with a heading and one paragraph. Add
 `pages/about/index` to the app's `pages` array. Use the route API documented
-for the installed Taro version to navigate there from the starter page, or
+for the installed Macle plugin/runtime combination to navigate there from the starter page, or
 temporarily set it as the first page to verify registration.
 
 ## Review questions
@@ -57,7 +58,7 @@ Add a second route and a clear way to return to the first. Record the exact
 route string used in registration and navigation. If the simulator fails,
 include the build log and console message in your report.
 
-## Detailed walkthrough
+## Macle route tutorial: step by step
 
 Open the three starter configuration files named above and trace a route:
 
@@ -65,8 +66,8 @@ Open the three starter configuration files named above and trace a route:
 2. A page component and optional page configuration live under the matching
    `src/pages/<name>/` directory.
 3. Taro's build config selects the project source and output locations.
-4. Navigation must use the exact route string and the API supported by the
-   installed Taro version.
+4. Navigation must use the exact registered route and an API verified for
+   the installed Macle plugin/runtime combination.
 5. The generated output is the artifact the simulator reads; source changes
    are not visible until a successful rebuild/reload.
 

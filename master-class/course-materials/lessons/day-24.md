@@ -1,4 +1,4 @@
-# Day 24 — Performance
+# Day 24 — Macle build and rendering performance
 
 **Estimated time:** 5–10 minute reading, 30 minute measurement lab  
 **Goal:** You measure before optimizing.
@@ -33,7 +33,7 @@ This avoids storing a second list that could get out of sync with
 example is for learning the pattern, not a performance claim. Measure a real
 bottleneck before keeping an optimization.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Build the starter and capstone once. Record the generated bundle and asset
 sizes with a simple file-size listing. In the simulator, observe a known
@@ -59,7 +59,7 @@ Write a before/after note with the exact command, measured artifact, result,
 and trade-off. Identify one performance question that requires a real
 device rather than the simulator.
 
-## Detailed walkthrough
+## Macle performance tutorial: step by step
 
 Open the [filter example](./code/day-22-to-28/day-24/derived-filter.tsx).
 The visible products are derived from the query and source array; they are

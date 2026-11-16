@@ -1,4 +1,4 @@
-# Day 18 — User authorization and consent
+# Day 18 — Macle identity, authorization, and consent
 
 **Estimated time:** 5–10 minute reading, 20 minute data-flow exercise  
 **Goal:** You distinguish login, authorization, consent, and
@@ -32,7 +32,7 @@ person, request profile details, or grant access to a backend. A real flow
 must separately document the requested data, purpose, platform authorization,
 and server-side checks.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Draw a simple flow: user sees purpose → chooses to continue → host-approved
 authorization → backend receives a scoped, short-lived credential or
@@ -59,7 +59,7 @@ Produce a one-page data-flow note: data collected, purpose, destination,
 retention, deletion path, and official API documentation needed. Use only
 mock values in the repository.
 
-## Detailed walkthrough
+## Macle consent tutorial: step by step
 
 Open the [consent card](./code/day-15-to-21/day-18/consent-card.tsx). It
 changes only local UI state; it deliberately does not pretend to sign a user

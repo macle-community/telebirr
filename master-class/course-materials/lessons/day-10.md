@@ -1,4 +1,4 @@
-# Day 10 — Native APIs and network requests
+# Day 10 — Macle network requests and host APIs
 
 **Estimated time:** 5–10 minute reading, 30 minute request lab  
 **Goal:** You load server data with visible request states.
@@ -30,7 +30,7 @@ For example, an HTTP 200 response with the wrong data shape should still
 enter the error state. A server error is not an empty catalog, and a
 connection timeout does not prove that an order was never created.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Run the EthioShop backend and request `GET /api/products`. Inspect the
 response shape and the frontend's `API_BASE_URL`. Trace the app's state flow:
@@ -65,22 +65,24 @@ Document one expected success response and two failure responses. Add a
 malformed-response case to your UI test notes and explain how the screen
 recovers.
 
-## Detailed walkthrough
+## Macle request-state tutorial: step by step
 
 Use the [request state example](./code/day-10-to-14/day-10/catalog-loader.tsx).
 Before writing
 the request, inspect the backend's `GET /api/products` route and copy its
 response shape into your notes. The page then follows a deliberate sequence:
 
-1. Set `loading` before starting the request so the user sees immediate
+1. Verify the request API and host/allowlist requirements for the installed
+   Macle runtime; do not assume a Taro wrapper is supported.
+2. Set `loading` before starting the request so the user sees immediate
    feedback.
-2. Await `Taro.request`, then check `statusCode`; transport success does not
+3. Await the verified request adapter, then check its HTTP status; transport success does not
    make an HTTP 500 a successful catalog response.
-3. Validate the response shape before rendering it. A 200 response with a
+4. Validate the response shape before rendering it. A 200 response with a
    missing `products` array is still an application error.
-4. On success, store the data and clear the previous error. On failure,
+5. On success, store the data and clear the previous error. On failure,
    retain an actionable message and a retry path.
-5. Test success, server error, stopped server, and malformed JSON/shape. Stop
+6. Test success, server error, stopped server, and malformed JSON/shape. Stop
    the backend intentionally for the connection failure case.
 
 Treat a timeout around an order-creating request differently from a failed

@@ -12,6 +12,7 @@
     });
 
   const resolveSourceLink = (href, day) => {
+    if (href.startsWith("#")) return href;
     try {
       const sourcePage =
         `https://github.com/macle-community/telebirr/blob/main/` +

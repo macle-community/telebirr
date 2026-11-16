@@ -1,4 +1,4 @@
-# Day 16 — Backend order creation
+# Day 16 — Macle client and backend order boundary
 
 **Estimated time:** 5–10 minute reading, 30 minute API lab  
 **Goal:** You validate cart input and compute price on the server.
@@ -35,7 +35,7 @@ total. The real implementation also validates each quantity before adding
 the line; keep validation at the HTTP boundary and return a client error for
 invalid cart data.
 
-## Walkthrough
+## Step-by-step tutorial
 
 From `final-project/backend/`, run `npm test`. Inspect
 `createDemoOrder` in `server.mjs`. Send a request containing a deliberately
@@ -63,19 +63,22 @@ Add one boundary test (for example, the maximum permitted quantity). Write a
 short production gap list: authentication, persistence, monitoring, rate
 limits, and a real provider integration are not implemented.
 
-## Detailed walkthrough
+## Macle client/server order boundary: step by step
 
+Start from the Macle app's checkout request and follow it into the backend.
 Run the backend tests before changing code. In `server.mjs`, trace the
 request boundary to `createDemoOrder`:
 
-1. The route reads JSON input and passes only the cart data to the order
-   function; the client-supplied total is not an authority.
-2. Each line is checked for a known product and a valid quantity.
-3. The server looks up its own price, multiplies in integer cents, and
+1. Inspect the Macle checkout request and identify exactly which cart fields
+   cross the client/server boundary.
+2. The route reads JSON input and passes only cart data to the order
+   function; a client-supplied total is not authoritative.
+3. Each line is checked for a known product and a valid quantity.
+4. The server looks up its own price, multiplies in integer cents, and
    accumulates the total.
-4. The response visibly identifies the mock order. The in-memory map exists
+5. The response visibly identifies the mock order. The in-memory map exists
    only to support this teaching demo.
-5. The tests assert both expected calculations and rejected input.
+6. The tests assert both expected calculations and rejected input.
 
 Add your test first: choose a boundary quantity, assert the HTTP status, and
 assert that no successful order is created. Then implement the smallest

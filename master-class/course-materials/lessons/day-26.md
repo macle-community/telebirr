@@ -1,4 +1,4 @@
-# Day 26 — UI polish
+# Day 26 — Macle view feedback and polish
 
 **Estimated time:** 5–10 minute reading, 30 minute UX lab  
 **Goal:** You add complete feedback states without hiding failures.
@@ -32,7 +32,7 @@ Render a different message and available action for each `kind`. For example,
 an error can offer a retry, while an empty result should explain that there
 is currently no content. Neither state should display a success message.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Walk EthioShop through loading, product list, empty list, backend error,
 empty cart, submitting checkout, and demo order success. Notice that the
@@ -55,7 +55,7 @@ you are working with a partner, ask them to use it without your help. Confirm th
 Submit before/after screenshots and a state table. Include one accessibility
 or readability improvement and one behavior verified on the target.
 
-## Detailed walkthrough
+## Macle view-state tutorial: step by step
 
 Use the [request state component](./code/day-22-to-28/day-26/request-state.tsx)
 to exercise four visible states: loading, empty, error, and success. The

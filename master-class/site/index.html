@@ -6,12 +6,12 @@
     <meta name="theme-color" content="#071b32">
     <meta
       name="description"
-      content="A practical 30-day course for building Telebirr Mini Apps with React, Taro, and the Macle runtime."
+      content="A practical, Macle-first 30-day course with step-by-step lessons for building Telebirr Mini Apps."
     >
     <meta property="og:title" content="Macle Mini App Masterclass">
     <meta
       property="og:description"
-      content="A practical 30-day course for building Telebirr Mini Apps with React, Taro, and the Macle runtime."
+      content="A practical, Macle-first 30-day course with step-by-step lessons for building Telebirr Mini Apps."
     >
     <meta property="og:type" content="website">
     <title>Macle Mini App Masterclass</title>
@@ -752,8 +752,8 @@
           <p class="eyebrow">Learn by building</p>
           <h1>Build your first Telebirr Mini App.</h1>
           <p class="hero-copy">
-            A practical path from React and Taro fundamentals to a complete
-            shop demo—one focused lesson and hands-on exercise at a time.
+            A Macle-first path from the runtime and build pipeline to a complete
+            shop demo, with step-by-step lessons and hands-on verification.
           </p>
           <div class="actions">
             <a class="button" href="#curriculum">Explore the curriculum <span aria-hidden="true">&nbsp;↓</span></a>
@@ -770,7 +770,7 @@
 
     <div class="stats" aria-label="Course details">
       <div class="stat"><strong>30 lessons</strong><span>short, hands-on sessions</span></div>
-      <div class="stat"><strong>React + Taro</strong><span>built for the Macle runtime</span></div>
+      <div class="stat"><strong>Macle first</strong><span>step-by-step runtime labs</span></div>
       <div class="stat"><strong>One capstone</strong><span>an end-to-end shop demo</span></div>
     </div>
 
@@ -793,7 +793,7 @@
         <article class="path-card">
           <span aria-hidden="true">⌘</span>
           <h3>Start with the template</h3>
-          <p>Set up the Taro app, build for Macle, and open it in the simulator.</p>
+          <p>Set up the Macle-targeted starter, build it, and verify it in the simulator.</p>
           <a href="https://github.com/macle-community/telebirr/tree/main/master-class/starter-template">Open starter guide ↗</a>
         </article>
         <article class="path-card">
@@ -850,60 +850,60 @@
           name: "Foundations",
           range: "Days 1–7",
           lessons: [
-            ["Telebirr Mini Apps and the course capstone", "Explore the finished EthioShop demo."],
-            ["Node.js, Taro, Macle plugin, and simulator setup", "Build and open the starter app."],
+            ["The Macle Mini App and course project", "Explore the demo and identify runtime boundaries."],
+            ["The Macle build toolchain and simulator", "Build, launch, and record target versions."],
             ["Macle logic, view, MAML, and data updates", "Trace a rendered page through the runtime."],
-            ["Taro project structure and app configuration", "Find the app entry, page, and build config."],
-            ["Your first React page with View and Text", "Customize the starter greeting."],
-            ["Layout, responsive units, and generated styles", "Build a responsive product card layout."],
-            ["Mini-project: Telebirr profile page", "Create a profile with reusable sections."],
+            ["Macle app setup and configuration", "Trace a registered route into the Macle build."],
+            ["Build your first Macle screen", "Change a label and verify it in the simulator."],
+            ["Layout and styling in the Macle view", "Build and test a responsive product card."],
+            ["Macle mini-project: Telebirr profile", "Build and verify a profile screen."],
           ],
         },
         {
           name: "Core mechanics",
           range: "Days 8–14",
           lessons: [
-            ["React state and Mini App events", "Add an interactive quantity control."],
-            ["Page routes and query parameters", "Navigate to a product detail page."],
-            ["Native API bridge and network requests", "Load data from a local API."],
-            ["Component libraries and custom components", "Add and configure a documented component."],
-            ["Lists, keys, and empty states", "Render and filter a product list."],
-            ["Forms, validation, and keyboard behavior", "Build a validated contact form."],
-            ["Mini-project: persistent to-do list", "Save and restore tasks with documented APIs."],
+            ["Macle view events and state updates", "Trace a tap through to the visible state."],
+            ["Macle page routes and navigation", "Register and verify a product detail route."],
+            ["Macle network requests and host APIs", "Verify a request API and build retry states."],
+            ["Macle-compatible components", "Check target support before integrating a component."],
+            ["Data-driven lists in the Macle view", "Render and filter a product list."],
+            ["Macle input and form states", "Build a validated form with target-supported inputs."],
+            ["Macle app persistence: to-do list", "Verify storage support and handle failures."],
           ],
         },
         {
           name: "Fintech fundamentals",
           range: "Days 15–21",
           lessons: [
-            ["Payment architecture and trusted handoff", "Map client, backend, and provider responsibilities."],
-            ["Backend order creation", "Create an order on the server."],
-            ["Payment integration boundaries", "Connect a mock checkout adapter."],
-            ["User authorization and consent", "Follow approved platform documentation."],
-            ["Security: secrets, tokens, and least privilege", "Keep credentials server-side and redact logs."],
-            ["Network failures, cancellation, and idempotency", "Exercise retry and error states."],
-            ["Mini-project: premium unlock", "Unlock a demo feature after verified mock status."],
+            ["Macle payment handoff and trust boundaries", "Trace the client, backend, and provider roles."],
+            ["Macle client and backend order boundary", "Keep price and order authority on the server."],
+            ["Macle checkout request states", "Submit a mock order and render its explicit status."],
+            ["Macle identity, authorization, and consent", "Separate consent from platform authorization."],
+            ["Securing Macle app integrations", "Keep secrets off-device and review the build."],
+            ["Macle network failure and recovery", "Test retry and ambiguous order outcomes."],
+            ["Backend-verified demo feature in Macle", "Show only the backend's demo entitlement."],
           ],
         },
         {
           name: "Production readiness",
           range: "Days 22–28",
           lessons: [
-            ["Device APIs and permission handling", "Add a documented capability with a fallback."],
-            ["Maps and location privacy", "Build for runtimes that support the feature."],
-            ["Bundle size, rendering, and data updates", "Measure the build and reduce extra updates."],
-            ["Debugging service and view layers", "Diagnose a lifecycle or rendering issue."],
-            ["Loading, empty, and error states", "Polish the shop experience."],
-            ["Packaging and submission preparation", "Build for release and inspect its contents."],
-            ["Device testing and compatibility", "Run a device test matrix and record results."],
+            ["Macle device capabilities and permissions", "Verify capability support and provide a fallback."],
+            ["Macle location capabilities and privacy", "Use location only with verified support and consent."],
+            ["Macle build and rendering performance", "Measure output and reduce unnecessary updates."],
+            ["Debugging the Macle app pipeline", "Trace a failure across source, build, and runtime."],
+            ["Macle view feedback and polish", "Verify loading, empty, and error states."],
+            ["Building a Macle-targeted package", "Build reproducibly and inspect the output."],
+            ["Testing across Macle runtimes and devices", "Record compatibility evidence and gaps."],
           ],
         },
         {
           name: "Capstone and presentation",
           range: "Days 29–30",
           lessons: [
-            ["EthioShop end-to-end capstone", "Build catalog, cart, backend order, and demo checkout."],
-            ["Demo, feedback, and next steps", "Present the app, architecture, and roadmap."],
+            ["Macle EthioShop end-to-end tutorial", "Build a catalog, cart, and verified mock order flow."],
+            ["Presenting and validating your Macle app", "Show the build evidence, limits, and next steps."],
           ],
         },
       ];

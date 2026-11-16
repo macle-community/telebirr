@@ -1,4 +1,4 @@
-# Day 21 — Mini-project: premium demo feature
+# Day 21 — Backend-verified demo feature in Macle
 
 **Estimated time:** 5–10 minute reading, 35 minute integration lab  
 **Goal:** You gate a demo feature on backend state without mistaking
@@ -33,7 +33,7 @@ Because this value is held on the user's device, it is easy to change and
 must never authorize protected backend data. A real entitlement check must
 be performed by the backend for each protected operation.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Inspect the current checkout result, then add a small “Premium roast notes”
 section that appears only after the backend's expected demo status. Keep the
@@ -59,19 +59,17 @@ Write a production migration note separating demo state from real
 entitlement state. List the backend changes, verification requirements, and
 user-facing states that must be designed before launch.
 
-## Detailed walkthrough
+## Macle entitlement tutorial: step by step
 
-Run the [demo entitlement example](./code/day-15-to-21/day-21/demo-entitlement.tsx)
-and toggle its local state. Notice how easily the state can
-be changed on the client. This is intentional: it demonstrates why the
-component cannot grant access to protected backend data.
+1. Run the [demo entitlement example](./code/day-15-to-21/day-21/demo-entitlement.tsx)
+   and toggle its local state in the Macle simulator.
+2. Notice that client state can be changed locally; this is intentional and
+   proves that the component cannot grant access to protected backend data.
+3. Find the capstone order response and show its demo label beside the gated
+   content. Treat a missing or unexpected status as locked/error.
+4. Restart the backend and observe its in-memory limitation.
 
-For the capstone integration exercise, find the order response and make the
-demo label visible beside the gated content. Define the allowed response
-status and handle a missing or unexpected status as locked/error, not as
-unlocked. Then restart the backend to observe its in-memory limitation.
-
-Finally, draw a production model: authenticated user, server-owned
+5. Draw a production model: authenticated user, server-owned
 entitlement record, verified payment event, expiration/revocation policy,
 and an authorization check on every protected backend operation. Keep this
 model conceptual; no live payment or entitlement system is implemented here.

@@ -1,4 +1,4 @@
-# Day 30 — Graduation demo and next steps
+# Day 30 — Presenting and validating your Macle app
 
 **Estimated time:** 5–10 minute review, 30 minute presentation preparation  
 **Goal:** You can present the app, evidence, limitations, and next
@@ -13,8 +13,9 @@ the environment in which it was tested, and make limitations visible. Do
 not turn a mock order into a claim of payment integration or promise a
 platform feature that has not been verified.
 
-Your capstone demonstrates that you can build a React/Taro Mini App,
-connect a backend, model request states, and reason about trusted boundaries.
+Your capstone demonstrates that you can build and validate a Macle-targeted
+Mini App with this starter's React/Taro source toolchain, connect a backend,
+model request states, and reason about trusted boundaries.
 It is the beginning of a production project, not a substitute for platform
 approval or merchant onboarding. The next steps should come from evidence:
 compatibility testing, official API requirements, product needs, and review
@@ -79,7 +80,7 @@ request approved test and merchant access through official channels, replace
 the demo backend with a reviewed service only when ready, and plan security,
 privacy, accessibility, and operational reviews before any real launch.
 
-## Detailed presentation preparation
+## Step-by-step Macle presentation tutorial
 
 Use the [presentation checklist](./code/day-29-to-30/presentation-checklist.md)
 to rehearse:

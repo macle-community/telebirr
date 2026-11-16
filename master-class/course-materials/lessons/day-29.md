@@ -1,4 +1,4 @@
-# Day 29 — EthioShop capstone
+# Day 29 — Macle EthioShop end-to-end tutorial
 
 **Estimated time:** 5–10 minute preparation, 45–60 minute implementation and review  
 **Goal:** You deliver the end-to-end educational shop demo.
@@ -7,11 +7,12 @@
 
 ## Key concepts
 
-This capstone combines the course's core skills. EthioShop has a React/Taro
-frontend, a small Node backend, a product catalog, cart state, and a
-server-calculated demo order. Its simplicity is intentional: you can see the
-contract clearly. It is not a production commerce service and it does not
-process a Telebirr payment.
+This capstone combines the course's Macle app skills. EthioShop is a
+Macle-targeted Mini App backed by a small Node service, with a product
+catalog, cart state, and a server-calculated demo order. React/Taro are the
+current frontend source/build tools, not the runtime contract. Its simplicity
+is intentional: you can see the client, host, and server boundary clearly. It
+is not a production commerce service and it does not process a Telebirr payment.
 
 The final code should handle a missing backend, an invalid response, a
 valid catalog, an empty cart, and a successful mock order. The order total
@@ -39,7 +40,7 @@ The server resolves the ID and computes the total using its catalog. The
 response fields explicitly identify a simulated order; they are not a
 provider receipt or payment confirmation.
 
-## Walkthrough
+## Step-by-step tutorial
 
 From `final-project/backend/`, run the tests and start the API. From
 `final-project/frontend/`, install dependencies, typecheck, build, and open
@@ -68,7 +69,7 @@ production payment “verified.”
 - The result is explicitly marked as a demo.
 - No payment PIN, merchant secret, or real user data is used.
 
-## Detailed implementation path
+## Macle capstone tutorial: step by step
 
 1. Start in `final-project/backend/`, install from its lockfile, run tests,
    then start the server using its README command.

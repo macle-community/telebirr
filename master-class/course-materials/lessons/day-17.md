@@ -1,4 +1,4 @@
-# Day 17 — Frontend checkout
+# Day 17 — Macle checkout request states
 
 **Estimated time:** 5–10 minute reading, 30 minute integration lab  
 **Goal:** You submit a cart to the mock backend and show its explicit
@@ -20,7 +20,7 @@ would query a backend order status using an idempotent order flow. Our local
 demo is intentionally simpler, but you will still avoid showing success when
 the response is malformed or has the wrong status.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Run the backend, build the EthioShop frontend, add two coffees, then choose
 “Place demo order.” Inspect the request payload and response. Point out that
@@ -45,6 +45,7 @@ explicitly simulated.
 The capstone submits only the cart data:
 
 ```tsx
+// Use this adapter only if the installed Macle plugin documents Taro.request support.
 const response = await Taro.request({
   url: `${API_BASE_URL}/api/demo-checkout`,
   method: 'POST',
@@ -64,7 +65,7 @@ Test empty cart, successful mock order, HTTP error, and network error. Write
 the observed result for each. Do not add a real provider SDK or payment
 credential.
 
-## Detailed walkthrough
+## Macle checkout tutorial: step by step
 
 Start the backend and frontend using the project READMEs. In `ShopPage`,
 locate the checkout handler and trace the full state transition:

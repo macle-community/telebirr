@@ -1,7 +1,8 @@
-# Day 7 — Mini-project: Telebirr profile
+# Day 7 — Macle mini-project: Telebirr profile
 
 **Estimated time:** 5–10 minute review, 30–45 minute build and review  
-**Goal:** You deliver a small, static, polished page.
+**Goal:** You deliver a small, static Macle screen and verify the full
+source-to-simulator path.
 **Source:** [Day 7 page TSX](./code/day-06-to-09/day-07/index.tsx) ·
 [stylesheet](./code/day-06-to-09/day-07/index.css)
 
@@ -41,7 +42,7 @@ function ProfileDetail({ label, value }: { label: string; value: string }) {
 row markup. The sample values are course data, not a signed-in user's
 identity or account information.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Review a simple profile made from the previous exercises: a title, short
 description, two labeled details, and one action. Notice its spacing and
@@ -74,7 +75,7 @@ build.
 Submit the project and a brief retrospective: one build issue, one design
 decision, and one platform question to verify before using a native API.
 
-## Detailed walkthrough
+## Macle profile tutorial: step by step
 
 Use the [profile example](./code/day-06-to-09/day-07/). It intentionally uses
 fictional data and a disabled action so you can focus on UI and avoid

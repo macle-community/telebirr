@@ -1,7 +1,8 @@
-# Day 6 — Styling for a small screen
+# Day 6 — Layout and styling in the Macle view
 
 **Estimated time:** 5–10 minute reading, 25 minute styling lab  
-**Goal:** You make a responsive, readable profile or product card.
+**Goal:** You build a readable view for the Macle target and verify its
+layout in the simulator at more than one viewport.
 **Source:** [Day 6 page TSX](./code/day-06-to-09/day-06/index.tsx) ·
 [stylesheet](./code/day-06-to-09/day-06/index.css)
 
@@ -42,7 +43,7 @@ the text column shrink so a long product name does not force the entire row
 to overflow. `rpx` follows the project's configured design-width transform;
 it is not a guarantee of identical physical size on every device.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Open the starter page stylesheet. Add a column layout, a heading scale, and
 a card with padding and rounded corners. Build and inspect it. Resize the
@@ -67,7 +68,7 @@ Capture two viewport sizes and list one thing that changed. Improve the
 layout so neither view has clipped text or horizontal overflow. Record any
 runtime-specific style behavior that needs documentation verification.
 
-## Detailed walkthrough
+## Macle view layout tutorial: step by step
 
 1. **Start from a known build.** Open the starter page and note its current
    padding, width behavior, and typography. Make a copy before replacing it

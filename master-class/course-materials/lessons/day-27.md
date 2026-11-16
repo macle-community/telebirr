@@ -1,4 +1,4 @@
-# Day 27 — Packaging
+# Day 27 — Building a Macle-targeted package
 
 **Estimated time:** 5–10 minute reading, 25 minute release-preparation lab  
 **Goal:** You make a reproducible build and distinguish it from
@@ -31,7 +31,7 @@ Portal approval: not established by this build
 The final line matters: build success proves compilation for the configured
 environment, not account approval, security review, or portal acceptance.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Delete only the generated `dist/` folder in the lesson project, run the
 documented build, and list the resulting files. Compare app configuration
@@ -56,7 +56,7 @@ Attach a build manifest with version, tool versions, build command, output
 location, and unresolved submission prerequisites. Use an approved test app
 identifier only when one has been issued.
 
-## Detailed walkthrough
+## Macle package tutorial: step by step
 
 Use the [release checklist](./code/day-22-to-28/day-27/release-checklist.md)
 to prepare a clean artifact:

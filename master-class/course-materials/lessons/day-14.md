@@ -1,4 +1,4 @@
-# Day 14 — Mini-project: persistent to-do list
+# Day 14 — Macle app persistence: to-do list mini-project
 
 **Estimated time:** 5–10 minute reading, 35–45 minute build  
 **Goal:** You persist a small local list using a documented storage API.
@@ -29,7 +29,7 @@ field types before the page uses it. Verify the synchronous storage API and
 its failure behavior against the installed runtime before relying on it; this
 local list is not a secure store.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Follow this sequence: read a key on page initialization, validate the
 parsed array, render tasks, update state on add/complete/remove, and persist
@@ -54,7 +54,7 @@ claiming the data was safely persisted.
 Add a “clear completed” action. Write down what happens when storage is
 unavailable and which user data must never be placed there.
 
-## Detailed walkthrough
+## Macle storage tutorial: step by step
 
 Open the [to-do example](./code/day-10-to-14/day-14/todo-page.tsx). Begin by inspecting
 the installed plugin's storage documentation, since this lesson's

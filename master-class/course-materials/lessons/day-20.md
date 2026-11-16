@@ -1,4 +1,4 @@
-# Day 20 — Failure handling
+# Day 20 — Macle network failure and recovery
 
 **Estimated time:** 5–10 minute reading, 30 minute failure-injection lab  
 **Goal:** You handle request failure without losing user context or
@@ -33,13 +33,13 @@ Each state has a clear UI meaning. In particular, a caught network error
 should not be converted into `demo-success`; the cart remains visible and the
 status of a production order may need to be checked with the backend.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Place an order while the backend is stopped. Confirm that the cart remains
 available and the error appears. Restart the backend and retry. Then return a controlled
 server error and confirm it is not shown as success.
 
-## Detailed walkthrough
+## Macle recovery tutorial: step by step
 
 Use the capstone's checkout state and deliberately stop the backend before
 submitting an order:

@@ -1,4 +1,4 @@
-# Day 12 — Lists and loops
+# Day 12 — Data-driven lists in the Macle view
 
 **Estimated time:** 5–10 minute reading, 25 minute list lab  
 **Goal:** You render, filter, and empty a list predictably.
@@ -30,7 +30,7 @@ It does not modify `products`; clearing the query returns the full list.
 Render each result with `key={product.id}` so React can preserve item
 identity when the list changes.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Use the capstone catalog shape:
 
@@ -60,7 +60,7 @@ poor key when a list can change.
 Add a “clear filter” action and write a test matrix for: loading, API error,
 empty catalog, no filter matches, and populated list.
 
-## Detailed walkthrough
+## Macle list-rendering tutorial: step by step
 
 The [filterable-list example](./code/day-10-to-14/day-12/filterable-list.tsx) separates its
 source records from the rendered result:

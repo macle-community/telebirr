@@ -1,18 +1,19 @@
-# Day 5 — Your first React page
+# Day 5 — Build your first Macle screen
 
 **Estimated time:** 10–15 minute reading, 25 minute practice  
-**Goal:** Build a small Taro page, identify its React and platform components,
-and verify that a source change appears in the Macle simulator.
+**Goal:** Build a small screen for the Macle runtime, then verify its
+source-to-simulator path. React and Taro are the starter's implementation
+tools, not the runtime being learned.
 
 ## What you are building
 
-In this lesson, you will make a simple product-information page for a
-fictional coffee shop. It contains a category, a product name, a description,
-and a price. The page is intentionally static: the focus is how React
-describes a screen and how Taro components are used in a Mini App. Buttons,
-state changes, styling, and native APIs are covered in later lessons.
+In this lesson, you will make a simple Macle screen for a fictional coffee
+shop. It contains a category, product name, description, and price. The screen
+is intentionally static so you can focus on the Macle build-and-render loop.
+The starter expresses the screen through React and Taro; those are the source
+adapter, while the simulator output is the Macle behavior you verify.
 
-The rendering path is:
+For this starter, the source-to-runtime path is:
 
 ```text
 React page source -> Taro components -> Macle build output -> simulator
@@ -23,28 +24,38 @@ rebuilt and the new output loaded.
 
 ## Key concepts
 
-**A page is a React component.** A component is a JavaScript function that
-returns JSX describing the interface. In this example, `IndexPage` is the
-page component and its `return` value describes the content to show.
+The learning target is the Macle build and runtime. Taro components are the
+source-level interface used by this starter; their availability is determined
+by the installed Macle plugin and must be checked in the compiled target.
+
+**The starter page is compiled for Macle.** In this project, `IndexPage` is a
+React function whose JSX is input to the Macle-targeted build. The runtime
+does not load this source file directly; the simulator loads the compiled
+output.
 
 **JSX describes a tree.** The outer `View` contains several `Text` elements.
 This parent-child structure is important: the elements inside a parent form
 the content of that section.
 
-**Use Taro's platform components.** `View` and `Text` come from
-`@tarojs/components`. They provide cross-platform UI elements that the Taro
-Macle plugin can compile for its target. Do not replace them with browser
-elements such as `<div>` or `<p>` in this page.
+**Verify components at the Macle target.** This starter uses `View` and
+`Text` from `@tarojs/components`. The installed Macle plugin determines
+whether those source components compile and render correctly. Do not assume
+browser elements or components from another Mini App runtime are equivalent.
 
 **The default export makes the page available to the app.** The starter
 registers `pages/index/index` in `src/app.config.ts`; that route resolves to
 `src/pages/index/index.tsx`. Keep the registered route and file location
 consistent.
 
-## Walkthrough
+## Step-by-step Macle screen tutorial
 
-Open `starter-template/src/pages/index/index.tsx` and replace its contents
-with this example:
+1. Open `starter-template/src/pages/index/index.tsx` and confirm
+   `pages/index/index` is registered in `src/app.config.ts`.
+2. Replace the page source with the small product view below.
+3. Build for Macle and launch the simulator using the commands in
+   [Build and inspect the Macle output](#build-and-inspect-the-macle-output).
+4. Verify all four labels in the simulator, change the product name, rebuild,
+   and confirm the new output is loaded.
 
 ```tsx
 import { Text, View } from '@tarojs/components'
@@ -61,10 +72,10 @@ export default function IndexPage() {
 }
 ```
 
-The example imports two Taro components. `IndexPage` returns one outer
-container, followed by four text elements nested inside it. The text is
-sample product information; it is not loaded from a server and it does not
-represent a real offer.
+The source example imports two components, then the Macle build translates
+that source for the target runtime. `IndexPage` returns one outer container,
+followed by four nested text elements. The text is sample product information;
+it is not loaded from a server and does not represent a real offer.
 
 The rendered page should show, in order:
 
@@ -76,7 +87,7 @@ The rendered page should show, in order:
 It may look plain because this example has no page-specific styles. That is
 expected; Day 6 adds layout and visual styling.
 
-## Run and inspect the example
+## Build and inspect the Macle output
 
 From the `starter-template/` directory, run:
 
@@ -111,8 +122,8 @@ Observe why a container is useful when a page has several related elements.
   the simulator.
 - **The app cannot find the page:** check that `pages/index/index` remains in
   `src/app.config.ts` and that the file is in the matching directory.
-- **TypeScript reports that a component is missing:** check the import from
-  `@tarojs/components` and match the component's spelling and capitalization.
+- **The build reports that a component is missing:** verify the installed
+  Macle plugin's supported component set and the source import spelling.
 - **A browser element does not compile or render:** use the Taro components
   supported by the project rather than assuming ordinary web elements work in
   the target runtime.
@@ -123,17 +134,17 @@ Observe why a container is useful when a page has several related elements.
 
 1. What does the `IndexPage` function return?
 2. Which element contains the four text elements?
-3. Why does this example import `View` and `Text` from Taro instead of using
-   HTML elements?
+3. What does the Macle-targeted build do with the source-level `View` and
+   `Text` components?
 4. What steps make a source change visible in the simulator?
 
-**Check your understanding:** The function returns JSX; `View` is the parent
-container; Taro components are intended for the target platform; and source
-changes must be rebuilt and loaded in the simulator.
+**Check your understanding:** The source function describes a view, `View`
+is the parent container, component support is target-specific, and source
+changes must be rebuilt before the Macle simulator can show them.
 
 ## Apply it
 
 Keep your completed page as a checkpoint. Write down the source path, the
 command that produced the Macle build, and one difference between the JSX
 source and what you observed in the simulator. In Day 6, you will style this
-same product information for a small screen.
+same product information for the Macle view.

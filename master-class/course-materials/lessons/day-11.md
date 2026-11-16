@@ -1,4 +1,4 @@
-# Day 11 — Component libraries
+# Day 11 — Macle-compatible components
 
 **Estimated time:** 5–10 minute reading, 25 minute compatibility lab  
 **Goal:** You can integrate a component only when its assets and
@@ -39,7 +39,7 @@ It avoids a third-party asset dependency. Before swapping in a library
 button, verify its templates, styles, registration instructions, and target
 runtime compatibility from that library's documentation.
 
-## Walkthrough
+## Step-by-step tutorial
 
 Open the installed plugin README and identify the documented component setup.
 Compare it with `course-materials/cheatsheets/components.md`. Inspect the
@@ -65,12 +65,19 @@ Write a short integration note with the exact source used, version, required
 configuration, and simulator result. Do not commit proprietary UI assets
 unless the license allows it.
 
-## Detailed walkthrough
+## Macle component integration: step by step
 
 The [source example](./code/day-10-to-14/day-11/core-button.tsx) is intentionally built from
 core Taro components. First, inspect the plugin version actually installed,
 then inspect the component library's own compatibility and registration
 instructions. Record the evidence before editing configuration:
+
+1. Record the installed Macle plugin and component package versions.
+2. Check the component's documented Macle runtime compatibility.
+3. Identify required assets and registration steps from the package docs.
+4. Build and render one component in the Macle simulator.
+5. If any requirement is unverified, keep the core-component fallback and
+   record the missing evidence rather than guessing at setup.
 
 | Question | Evidence to record |
 | --- | --- |
