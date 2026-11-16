@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#071b32">
+    <meta
+      name="description"
+      content="A practical 30-day course for building Telebirr Mini Apps with React, Taro, and the Macle runtime."
+    >
+    <title>Macle Mini App Masterclass</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #10243a;
+        --muted: #526579;
+        --paper: #f5f8fb;
+        --line: #dce5ed;
+        --navy: #071b32;
+        --blue: #1769aa;
+        --mint: #b8f1d7;
+        --white: #fff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.6;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .shell {
+        width: min(1120px, calc(100% - 40px));
+        margin-inline: auto;
+      }
+
+      .topbar {
+        position: relative;
+        z-index: 1;
+        background: var(--navy);
+        color: var(--white);
+      }
+
+      .topbar-inner {
+        display: flex;
+        min-height: 76px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--white);
+        font-size: 0.96rem;
+        font-weight: 750;
+        letter-spacing: 0.01em;
+        text-decoration: none;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 38px;
+        height: 38px;
+        place-items: center;
+        border-radius: 12px;
+        background: var(--mint);
+        color: var(--navy);
+        font-weight: 900;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 26px;
+      }
+
+      .nav-links a {
+        color: #d3deea;
+        font-size: 0.9rem;
+        text-decoration: none;
+      }
+
+      .nav-links a:hover,
+      .nav-links a:focus-visible {
+        color: var(--mint);
+      }
+
+      .hero {
+        overflow: hidden;
+        background:
+          radial-gradient(ellipse at 82% 18%, rgb(33 114 163 / 38%), transparent 32%),
+          linear-gradient(125deg, #071b32 0%, #0c2e4a 62%, #124965 100%);
+        color: var(--white);
+      }
+
+      .hero-inner {
+        display: grid;
+        min-height: 440px;
+        grid-template-columns: minmax(0, 1.4fr) minmax(240px, 0.6fr);
+        align-items: center;
+        gap: 56px;
+        padding-block: 72px;
+      }
+
+      .eyebrow {
+        margin: 0 0 14px;
+        color: var(--mint);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 720px;
+        margin-bottom: 20px;
+        font-size: clamp(2.6rem, 6vw, 4.65rem);
+        letter-spacing: -0.055em;
+        line-height: 1.04;
+      }
+
+      .hero-copy {
+        max-width: 650px;
+        margin-bottom: 30px;
+        color: #d6e1eb;
+        font-size: clamp(1rem, 1.8vw, 1.18rem);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 48px;
+        align-items: center;
+        justify-content: center;
+        padding: 11px 18px;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        background: var(--mint);
+        color: var(--navy);
+        font-size: 0.94rem;
+        font-weight: 800;
+        text-decoration: none;
+        transition: transform 160ms ease, background 160ms ease;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+        background: #d0f8e5;
+      }
+
+      .button-secondary {
+        border-color: #70869a;
+        background: transparent;
+        color: var(--white);
+      }
+
+      .button-secondary:hover {
+        background: rgb(255 255 255 / 10%);
+      }
+
+      .hero-card {
+        position: relative;
+        padding: 26px;
+        border: 1px solid rgb(255 255 255 / 18%);
+        border-radius: 20px;
+        background: rgb(255 255 255 / 8%);
+        box-shadow: 0 24px 70px rgb(0 0 0 / 16%);
+        backdrop-filter: blur(8px);
+      }
+
+      .hero-card::before {
+        position: absolute;
+        top: -18px;
+        right: 24px;
+        width: 52px;
+        height: 52px;
+        border: 1px solid rgb(184 241 215 / 35%);
+        border-radius: 15px;
+        background: rgb(184 241 215 / 13%);
+        content: "";
+        transform: rotate(12deg);
+      }
+
+      .hero-card-label {
+        margin-bottom: 8px;
+        color: #c3d2e0;
+        font-size: 0.82rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .hero-card strong {
+        display: block;
+        font-size: 3.2rem;
+        letter-spacing: -0.06em;
+        line-height: 1.1;
+      }
+
+      .hero-card p:last-child {
+        margin: 10px 0 0;
+        color: #d6e1eb;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        border-bottom: 1px solid var(--line);
+        background: var(--line);
+      }
+
+      .stat {
+        padding: 22px 18px;
+        background: var(--white);
+        text-align: center;
+      }
+
+      .stat strong {
+        display: block;
+        color: var(--navy);
+        font-size: 1.2rem;
+      }
+
+      .stat span {
+        color: var(--muted);
+        font-size: 0.87rem;
+      }
+
+      main {
+        padding-block: 76px;
+      }
+
+      .section-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 28px;
+      }
+
+      .section-heading h2 {
+        margin-bottom: 6px;
+        font-size: clamp(1.8rem, 4vw, 2.45rem);
+        letter-spacing: -0.04em;
+        line-height: 1.15;
+      }
+
+      .section-heading p {
+        margin-bottom: 0;
+        color: var(--muted);
+      }
+
+      .resource-link {
+        flex: 0 0 auto;
+        color: var(--blue);
+        font-weight: 750;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 4px;
+      }
+
+      .phases {
+        display: grid;
+        gap: 18px;
+      }
+
+      .phase {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--white);
+        box-shadow: 0 8px 26px rgb(16 36 58 / 4%);
+      }
+
+      .phase-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 20px 22px 15px;
+      }
+
+      .phase-number {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        flex: 0 0 auto;
+        place-items: center;
+        border-radius: 13px;
+        background: #e9f4fb;
+        color: var(--blue);
+        font-size: 0.85rem;
+        font-weight: 850;
+      }
+
+      .phase-header h3 {
+        margin: 0 0 2px;
+        font-size: 1.12rem;
+      }
+
+      .phase-header p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .lesson-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        padding: 0 22px 22px;
+      }
+
+      .lesson {
+        display: grid;
+        grid-template-columns: 38px minmax(0, 1fr) 20px;
+        align-items: start;
+        gap: 12px;
+        padding: 14px;
+        border: 1px solid #e8eef3;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
+      }
+
+      .lesson:hover,
+      .lesson:focus-visible {
+        transform: translateY(-1px);
+        border-color: #9dc7e4;
+        background: #f7fbfe;
+      }
+
+      .day {
+        display: grid;
+        width: 36px;
+        height: 36px;
+        place-items: center;
+        border-radius: 10px;
+        background: var(--navy);
+        color: var(--white);
+        font-size: 0.75rem;
+        font-weight: 800;
+      }
+
+      .lesson strong {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 0.92rem;
+        line-height: 1.35;
+      }
+
+      .lesson small {
+        display: block;
+        color: var(--muted);
+        font-size: 0.8rem;
+        line-height: 1.45;
+      }
+
+      .arrow {
+        padding-top: 6px;
+        color: var(--blue);
+        font-size: 1rem;
+        font-weight: 800;
+      }
+
+      .pathway {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 72px;
+      }
+
+      .path-card {
+        padding: 23px;
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        background: var(--white);
+      }
+
+      .path-card span {
+        display: block;
+        margin-bottom: 12px;
+        font-size: 1.45rem;
+      }
+
+      .path-card h3 {
+        margin-bottom: 8px;
+        font-size: 1.02rem;
+      }
+
+      .path-card p {
+        margin-bottom: 15px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .path-card a {
+        color: var(--blue);
+        font-size: 0.88rem;
+        font-weight: 750;
+        text-decoration: none;
+      }
+
+      .notice {
+        display: grid;
+        grid-template-columns: 36px 1fr;
+        gap: 14px;
+        margin-top: 28px;
+        padding: 20px;
+        border: 1px solid #efd6a4;
+        border-radius: 14px;
+        background: #fff9eb;
+      }
+
+      .notice-icon {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border-radius: 10px;
+        background: #f7e5bc;
+        color: #76500d;
+        font-weight: 900;
+      }
+
+      .notice strong {
+        display: block;
+        margin-bottom: 3px;
+      }
+
+      .notice p {
+        margin: 0;
+        color: #66583c;
+        font-size: 0.9rem;
+      }
+
+      footer {
+        padding-block: 30px;
+        background: var(--navy);
+        color: #d6e1eb;
+      }
+
+      .footer-inner {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 18px;
+        font-size: 0.87rem;
+      }
+
+      .footer-inner p {
+        margin: 0;
+      }
+
+      .footer-inner a {
+        color: var(--mint);
+        text-decoration: none;
+      }
+
+      @media (max-width: 760px) {
+        .hero-inner {
+          min-height: auto;
+          grid-template-columns: 1fr;
+          gap: 30px;
+          padding-block: 58px;
+        }
+
+        .hero-card {
+          max-width: 360px;
+        }
+
+        .lesson-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .pathway {
+          grid-template-columns: 1fr;
+          margin-top: 56px;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .shell {
+          width: min(100% - 28px, 1120px);
+        }
+
+        .topbar-inner {
+          min-height: 66px;
+        }
+
+        .nav-links {
+          gap: 14px;
+        }
+
+        .nav-links a {
+          font-size: 0.8rem;
+        }
+
+        .brand {
+          font-size: 0.82rem;
+        }
+
+        .brand-mark {
+          width: 34px;
+          height: 34px;
+        }
+
+        .stats {
+          grid-template-columns: 1fr;
+        }
+
+        .stat {
+          display: flex;
+          align-items: baseline;
+          justify-content: center;
+          gap: 8px;
+          padding: 12px;
+        }
+
+        .section-heading {
+          align-items: start;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        main {
+          padding-block: 56px;
+        }
+
+        .phase-header {
+          padding-inline: 16px;
+        }
+
+        .lesson-grid {
+          padding-inline: 16px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="shell topbar-inner">
+        <a class="brand" href="#top" aria-label="Macle Mini App Masterclass home">
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span>Macle Mini App Masterclass</span>
+        </a>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#curriculum">Curriculum</a>
+          <a href="#resources">Resources</a>
+          <a href="https://github.com/macle-community/telebirr">GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero" id="top">
+      <div class="shell hero-inner">
+        <div>
+          <p class="eyebrow">Learn by building</p>
+          <h1>Build your first Telebirr Mini App.</h1>
+          <p class="hero-copy">
+            A practical path from React and Taro fundamentals to a complete
+            shop demo—one focused lesson and hands-on exercise at a time.
+          </p>
+          <div class="actions">
+            <a class="button" href="#curriculum">Explore the curriculum <span aria-hidden="true">&nbsp;↓</span></a>
+            <a class="button button-secondary" href="https://github.com/macle-community/telebirr/tree/main/master-class/starter-template">Get the starter</a>
+          </div>
+        </div>
+        <aside class="hero-card" aria-label="Course at a glance">
+          <p class="hero-card-label">Your learning path</p>
+          <strong>30 days</strong>
+          <p>Five phases. Practical projects. One EthioShop capstone.</p>
+        </aside>
+      </div>
+    </section>
+
+    <div class="stats" aria-label="Course details">
+      <div class="stat"><strong>30 lessons</strong><span>short, hands-on sessions</span></div>
+      <div class="stat"><strong>React + Taro</strong><span>built for the Macle runtime</span></div>
+      <div class="stat"><strong>One capstone</strong><span>an end-to-end shop demo</span></div>
+    </div>
+
+    <main class="shell">
+      <section id="curriculum" aria-labelledby="curriculum-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" style="color: var(--blue); margin-bottom: 8px;">The curriculum</p>
+            <h2 id="curriculum-title">A guided path from first page to capstone</h2>
+            <p>Choose a lesson to open its full guide and practice exercise.</p>
+          </div>
+          <a class="resource-link" href="https://github.com/macle-community/telebirr/blob/main/master-class/course-materials/lesson-guides.md">
+            View all lesson guides <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <div class="phases" id="phases"></div>
+      </section>
+
+      <section class="pathway" id="resources" aria-label="Course resources">
+        <article class="path-card">
+          <span aria-hidden="true">⌘</span>
+          <h3>Start with the template</h3>
+          <p>Set up the Taro app, build for Macle, and open it in the simulator.</p>
+          <a href="https://github.com/macle-community/telebirr/tree/main/master-class/starter-template">Open starter guide ↗</a>
+        </article>
+        <article class="path-card">
+          <span aria-hidden="true">▤</span>
+          <h3>Browse course materials</h3>
+          <p>Find reference sheets, architecture diagrams, and lesson code.</p>
+          <a href="https://github.com/macle-community/telebirr/tree/main/master-class/course-materials">Explore materials ↗</a>
+        </article>
+        <article class="path-card">
+          <span aria-hidden="true">◈</span>
+          <h3>Build the EthioShop demo</h3>
+          <p>Bring together a catalog, cart, backend order, and mock checkout.</p>
+          <a href="https://github.com/macle-community/telebirr/tree/main/master-class/final-project">View the capstone ↗</a>
+        </article>
+      </section>
+
+      <aside class="notice" aria-label="Payment safety notice">
+        <span class="notice-icon" aria-hidden="true">!</span>
+        <div>
+          <strong>Demo checkout only</strong>
+          <p>
+            The EthioShop payment flow is a mock demonstration, not a production
+            Telebirr integration. Never collect a payment PIN or put merchant
+            secrets in frontend code.
+          </p>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div class="shell footer-inner">
+        <p>Macle Mini App Masterclass · Learn, build, and verify with current platform docs.</p>
+        <p><a href="https://github.com/macle-community/telebirr">View the course on GitHub ↗</a></p>
+      </div>
+    </footer>
+
+    <script>
+      const lessonRoot =
+        "https://github.com/macle-community/telebirr/blob/main/master-class/course-materials/lessons";
+      const phases = [
+        {
+          name: "Foundations",
+          range: "Days 1–7",
+          lessons: [
+            ["Telebirr Mini Apps and the course capstone", "Explore the finished EthioShop demo."],
+            ["Node.js, Taro, Macle plugin, and simulator setup", "Build and open the starter app."],
+            ["Macle logic, view, MAML, and data updates", "Trace a rendered page through the runtime."],
+            ["Taro project structure and app configuration", "Find the app entry, page, and build config."],
+            ["Your first React page with View and Text", "Customize the starter greeting."],
+            ["Layout, responsive units, and generated styles", "Build a responsive product card layout."],
+            ["Mini-project: Telebirr profile page", "Create a profile with reusable sections."],
+          ],
+        },
+        {
+          name: "Core mechanics",
+          range: "Days 8–14",
+          lessons: [
+            ["React state and Mini App events", "Add an interactive quantity control."],
+            ["Page routes and query parameters", "Navigate to a product detail page."],
+            ["Native API bridge and network requests", "Load data from a local API."],
+            ["Component libraries and custom components", "Add and configure a documented component."],
+            ["Lists, keys, and empty states", "Render and filter a product list."],
+            ["Forms, validation, and keyboard behavior", "Build a validated contact form."],
+            ["Mini-project: persistent to-do list", "Save and restore tasks with documented APIs."],
+          ],
+        },
+        {
+          name: "Fintech fundamentals",
+          range: "Days 15–21",
+          lessons: [
+            ["Payment architecture and trusted handoff", "Map client, backend, and provider responsibilities."],
+            ["Backend order creation", "Create an order on the server."],
+            ["Payment integration boundaries", "Connect a mock checkout adapter."],
+            ["User authorization and consent", "Follow approved platform documentation."],
+            ["Security: secrets, tokens, and least privilege", "Keep credentials server-side and redact logs."],
+            ["Network failures, cancellation, and idempotency", "Exercise retry and error states."],
+            ["Mini-project: premium unlock", "Unlock a demo feature after verified mock status."],
+          ],
+        },
+        {
+          name: "Production readiness",
+          range: "Days 22–28",
+          lessons: [
+            ["Device APIs and permission handling", "Add a documented capability with a fallback."],
+            ["Maps and location privacy", "Build for runtimes that support the feature."],
+            ["Bundle size, rendering, and data updates", "Measure the build and reduce extra updates."],
+            ["Debugging service and view layers", "Diagnose a lifecycle or rendering issue."],
+            ["Loading, empty, and error states", "Polish the shop experience."],
+            ["Packaging and submission preparation", "Build for release and inspect its contents."],
+            ["Device testing and compatibility", "Run a device test matrix and record results."],
+          ],
+        },
+        {
+          name: "Capstone and presentation",
+          range: "Days 29–30",
+          lessons: [
+            ["EthioShop end-to-end capstone", "Build catalog, cart, backend order, and demo checkout."],
+            ["Demo, feedback, and next steps", "Present the app, architecture, and roadmap."],
+          ],
+        },
+      ];
+
+      const phaseContainer = document.querySelector("#phases");
+
+      phases.forEach((phase, phaseIndex) => {
+        const section = document.createElement("section");
+        section.className = "phase";
+        const heading = document.createElement("header");
+        heading.className = "phase-header";
+        heading.innerHTML =
+          `<span class="phase-number">0${phaseIndex + 1}</span>` +
+          `<div><h3>Phase ${phaseIndex + 1} · ${phase.name}</h3>` +
+          `<p>${phase.range}</p></div>`;
+        section.append(heading);
+
+        const grid = document.createElement("div");
+        grid.className = "lesson-grid";
+        const firstDay = phases
+          .slice(0, phaseIndex)
+          .reduce((sum, previous) => sum + previous.lessons.length, 0);
+
+        phase.lessons.forEach(([title, practice], lessonIndex) => {
+          const day = firstDay + lessonIndex + 1;
+          const lesson = document.createElement("a");
+          lesson.className = "lesson";
+          lesson.href = `${lessonRoot}/day-${String(day).padStart(2, "0")}.md`;
+          lesson.setAttribute("aria-label", `Day ${day}: ${title}. ${practice}`);
+          lesson.innerHTML =
+            `<span class="day">DAY ${String(day).padStart(2, "0")}</span>` +
+            `<span><strong>${title}</strong><small>${practice}</small></span>` +
+            `<span class="arrow" aria-hidden="true">↗</span>`;
+          grid.append(lesson);
+        });
+
+        section.append(grid);
+        phaseContainer.append(section);
+      });
+    </script>
+  </body>
+</html>

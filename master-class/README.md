@@ -6,6 +6,7 @@ A practical, 30-day course for building Telebirr Mini Apps with React, Taro, and
 
 ## Start here
 
+- [Course website](https://macle-community.github.io/telebirr/)
 - [30-day syllabus](#30-day-syllabus)
 - [Full lesson manuscripts](./course-materials/lessons/README.md)
 - [Lesson source code (Day 6 onward)](./course-materials/lessons/code/README.md)
