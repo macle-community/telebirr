@@ -1,84 +1,57 @@
-# Day 3 — How a Macle app renders
+# Day 3 — How a Macle screen gets from code to simulator
 
-**Estimated time:** 5–10 minute reading, 20 minute investigation  
-**Goal:** You can describe the observed source-to-screen path and
-separate known facts from implementation assumptions.
+**Time:** About 20 minutes
+**You will:** Change one line and follow it from your file to the screen.
 
-## Key concepts
+## In simple words
 
-The host does not execute the starter's source file as a desktop browser
-would. The starter compiler and Macle platform plugin produce artifacts the
-Macle runtime can load. At runtime, application logic and the visible page
-communicate through the platform's rendering mechanism, and native
-capabilities are exposed through the host's supported APIs.
+The simulator does not show your edited file by magic. You edit the **source
+code**, run a **build** to prepare it for Macle, and then look at the result
+in the simulator.
 
-It is useful to think in boundaries: source code, compiler output,
-application logic, view rendering, and native host. It is less useful to
-memorize an internal file name and assume every release keeps it. The compiler
-and runtime can change. Inspect the artifacts produced by your installed versions and label what
-you actually observe.
-
-When a click updates state but the screen does not change, the defect could
-be in the event path, state update, generated output, page lifecycle, or view
-runtime. A layered model gives you a finite debugging plan.
-
-For example, this source-level component describes a counter:
-
-```tsx
-const [count, setCount] = useState(0)
-
-<Button onClick={() => setCount((current) => current + 1)}>
-  Taps: {count}
-</Button>
+```text
+file you edit → Macle build → simulator screen
 ```
 
-The source event changes state; the compiled Macle app then reflects the
-updated value in its view. The snippet illustrates the input code, not a claim
-about a particular internal Macle rendering file.
+In the starter, clicking the button also changes the tap count. That is a
+small example of an **event** (something the user does) changing **state**
+(information the app remembers while it is open).
 
-## Step-by-step tutorial
+## Step by step
 
-1. Build the starter.
-2. Locate the output directory from the starter's build config (`outputRoot`).
-3. Search the output for the starter page text and inspect the app/page
-   configuration.
-4. Click the counter and observe the rendered value change.
-5. Explain that generated output is evidence for this build, not a stable API.
+1. Make sure the starter is running from Day 2.
+2. In `starter-template/src/pages/index/index.tsx`, find the words
+   `Hello, Telebirr`.
+3. Change them to `Hello from my Macle app`. Save the file.
+4. In the terminal, go to the `starter-template/` folder if you are not
+   already there, then run:
 
-## Practice
+   ```sh
+   npm run build:macle
+   ```
 
-Change the counter label, build again, and locate both the updated text and
-page registration in the output. Write a four-step trace:
-Macle-targeted source event → state update → compiled output/runtime → visible value. If
-you cannot prove a step from the build or logs, mark it “inferred.”
+5. Refresh the simulator page. If the new message does not appear, run
+   `npm run sim:macle` again and check the address it prints.
+6. Click **Try an event**. The tap count should increase.
 
-## Review questions
+## What happened?
 
-**Question:** Is generated MAML or a compiler-internal service file the API you should
-build product code against? No. Prefer documented Taro APIs; inspect
-generated files when diagnosing compatibility or compiler behavior.
+- The file in `src/` is the source you changed.
+- The build made Macle-ready output files.
+- The simulator opened those files.
+- The button click changed the number shown on the screen.
 
-## Apply it
+Some build output files may have names such as `.maml`. They are generated
+files: look at them if a lesson asks you to, but do not edit them. A new
+build can replace them.
 
-Add a simple state-driven message to the starter. Include a short note naming
-the source file changed and how you confirmed the output came from the latest
-build rather than a stale simulator target.
+## Check your understanding
 
-## Macle render trace: step by step
+If the simulator still shows the old message, what should you check first?
+Make sure you saved the source file, rebuilt the app, and refreshed the
+simulator.
 
-After building the starter, use `config/index.ts` to identify `outputRoot`.
-Inspect the generated files as read-only evidence:
+## Save your progress
 
-1. Search for the changed page text and compare it with the source.
-2. Find the generated route/app configuration and compare it with
-   `src/app.config.ts`.
-3. Click the counter and observe whether the event updates React state and
-   the visible value.
-4. Rebuild after changing the text, then verify the updated output and
-   simulator page.
-5. Describe the path as observed or inferred at each step.
-
-Do not edit generated files to repair a source issue. They are regenerated
-and may not have stable internal names across compiler releases. The expected
-artifact is a short annotated trace with source path, generated output
-location, and one uncertainty explicitly marked.
+Write down the file you changed and the command you used to build it. In Day
+4, you will find the file that tells the app which screen to open.

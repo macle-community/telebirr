@@ -5,6 +5,12 @@
 and submission states clear.
 **Source:** [Day 13 form example](./code/day-10-to-14/day-13/contact-form.tsx)
 
+## In simple words
+
+A form lets someone type information. Before accepting it, check that the
+required fields are not empty. Show what needs fixing; do not silently ignore
+the person's input.
+
 ## Key concepts
 
 A form is a contract with the user. Label each field, explain required

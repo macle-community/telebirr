@@ -1,61 +1,24 @@
-# Day 5 — Build your first Macle screen
+# Day 5 — Make your first Macle screen
 
-**Estimated time:** 10–15 minute reading, 25 minute practice  
-**Goal:** Build a small screen for the Macle runtime, then verify its
-source-to-simulator path. React and Taro are the starter's implementation
-tools, not the runtime being learned.
+**Time:** About 25 minutes
+**You will:** Change the starter screen and see your change in the simulator.
 
-## What you are building
+## What you are making
 
-In this lesson, you will make a simple Macle screen for a fictional coffee
-shop. It contains a category, product name, description, and price. The screen
-is intentionally static so you can focus on the Macle build-and-render loop.
-The starter expresses the screen through React and Taro; those are the source
-adapter, while the simulator output is the Macle behavior you verify.
+You will change the starter's welcome screen into a sample coffee product
+screen. You do not need to understand every line of code. For now, notice
+that the words between `<Text>` and `</Text>` appear on the screen.
 
-For this starter, the source-to-runtime path is:
+## Step by step
 
-```text
-React page source -> Taro components -> Macle build output -> simulator
-```
-
-Changing the source file alone does not update the simulator. The app must be
-rebuilt and the new output loaded.
-
-## Key concepts
-
-The learning target is the Macle build and runtime. Taro components are the
-source-level interface used by this starter; their availability is determined
-by the installed Macle plugin and must be checked in the compiled target.
-
-**The starter page is compiled for Macle.** In this project, `IndexPage` is a
-React function whose JSX is input to the Macle-targeted build. The runtime
-does not load this source file directly; the simulator loads the compiled
-output.
-
-**JSX describes a tree.** The outer `View` contains several `Text` elements.
-This parent-child structure is important: the elements inside a parent form
-the content of that section.
-
-**Verify components at the Macle target.** This starter uses `View` and
-`Text` from `@tarojs/components`. The installed Macle plugin determines
-whether those source components compile and render correctly. Do not assume
-browser elements or components from another Mini App runtime are equivalent.
-
-**The default export makes the page available to the app.** The starter
-registers `pages/index/index` in `src/app.config.ts`; that route resolves to
-`src/pages/index/index.tsx`. Keep the registered route and file location
-consistent.
-
-## Step-by-step Macle screen tutorial
-
-1. Open `starter-template/src/pages/index/index.tsx` and confirm
-   `pages/index/index` is registered in `src/app.config.ts`.
-2. Replace the page source with the small product view below.
-3. Build for Macle and launch the simulator using the commands in
-   [Build and inspect the Macle output](#build-and-inspect-the-macle-output).
-4. Verify all four labels in the simulator, change the product name, rebuild,
-   and confirm the new output is loaded.
+1. Open `master-class/starter-template/src/pages/index/index.tsx`.
+2. Select all the text in that file and replace it with the example below.
+3. Save the file.
+4. Open a terminal in `master-class/starter-template/`.
+5. Run `npm run build:macle` and wait for “Compiled successfully.”
+6. If the simulator is already running, refresh its page. Otherwise run
+   `npm run sim:macle`, then open `http://localhost:30005`.
+7. Check that the screen shows the coffee name, description, and price.
 
 ```tsx
 import { Text, View } from '@tarojs/components'
@@ -72,79 +35,32 @@ export default function IndexPage() {
 }
 ```
 
-The source example imports two components, then the Macle build translates
-that source for the target runtime. `IndexPage` returns one outer container,
-followed by four nested text elements. The text is sample product information;
-it is not loaded from a server and does not represent a real offer.
+## Understand just enough
 
-The rendered page should show, in order:
+- `<View>` is a box that holds other things on the screen.
+- Each `<Text>` line shows words on the screen.
+- The coffee details are examples. They are not loaded from a shop and are
+  not a real offer.
+- The Macle build turns this saved example into an app the simulator can
+  open. If you change the file, build again.
 
-1. `ETHIOPIAN COFFEE`
-2. `Yirgacheffe Coffee`
-3. `Washed coffee with floral and citrus notes.`
-4. `Price: 250 ETB`
+## Try one change
 
-It may look plain because this example has no page-specific styles. That is
-expected; Day 6 adds layout and visual styling.
+1. Change `Yirgacheffe Coffee` to another name.
+2. Save the file.
+3. Run `npm run build:macle` again.
+4. Refresh the simulator.
+5. Check that your new name appears.
 
-## Build and inspect the Macle output
+## If it does not work
 
-From the `starter-template/` directory, run:
+- If the build reports an error, check that the example was copied
+  completely and that the quote marks and brackets match.
+- If the screen has the old name, save the file, build again, then refresh.
+- If the page is blank, check the first build error and make sure you are
+  running the simulator from `starter-template/`.
 
-```sh
-npm run typecheck
-npm run build:macle
-npm run sim:macle
-```
+## Check your understanding
 
-The typecheck verifies the TypeScript source. The build compiles the app for
-Macle, and the simulator loads that build. Confirm that all four text lines
-appear. Then change `Yirgacheffe Coffee` to another sample name, rebuild, and
-confirm the new name appears. This checks that you are viewing the latest
-output rather than a stale build.
-
-## Practice
-
-Extend the page with a fictional coffee product of your choice:
-
-- Change the name, description, and displayed price.
-- Add one more `Text` element describing the roast or origin.
-- Keep each piece of content inside the `View`.
-- Rebuild and confirm that the new text appears in the order you intended.
-
-Before moving on, try temporarily removing the outer `View`, then restore it.
-Observe why a container is useful when a page has several related elements.
-
-## Common mistakes
-
-- **The page still shows the old greeting:** confirm you edited
-  `starter-template/src/pages/index/index.tsx`, then build again and reload
-  the simulator.
-- **The app cannot find the page:** check that `pages/index/index` remains in
-  `src/app.config.ts` and that the file is in the matching directory.
-- **The build reports that a component is missing:** verify the installed
-  Macle plugin's supported component set and the source import spelling.
-- **A browser element does not compile or render:** use the Taro components
-  supported by the project rather than assuming ordinary web elements work in
-  the target runtime.
-- **The text looks unstyled:** that is expected in this lesson. Day 6 covers
-  stylesheets and responsive layout.
-
-## Review questions
-
-1. What does the `IndexPage` function return?
-2. Which element contains the four text elements?
-3. What does the Macle-targeted build do with the source-level `View` and
-   `Text` components?
-4. What steps make a source change visible in the simulator?
-
-**Check your understanding:** The source function describes a view, `View`
-is the parent container, component support is target-specific, and source
-changes must be rebuilt before the Macle simulator can show them.
-
-## Apply it
-
-Keep your completed page as a checkpoint. Write down the source path, the
-command that produced the Macle build, and one difference between the JSX
-source and what you observed in the simulator. In Day 6, you will style this
-same product information for the Macle view.
+Which file did you change? What command prepared the app for the Macle
+simulator? Write those two answers down. That is enough for today.

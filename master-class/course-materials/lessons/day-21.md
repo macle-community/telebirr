@@ -6,6 +6,12 @@ local UI state for a real entitlement.
 **Source:** [demo entitlement toggle](./code/day-15-to-21/day-21/demo-entitlement.tsx) ·
 [mock order backend](../../final-project/backend/server.mjs)
 
+## In simple words
+
+You will show a sample feature only when the server says it is available.
+A button or value on the phone can be changed, so it cannot be trusted to
+grant access by itself.
+
 ## Key concepts
 
 A premium badge or locked screen is an interface, not an access-control

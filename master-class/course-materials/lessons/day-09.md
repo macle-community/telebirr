@@ -6,6 +6,12 @@
 [detail page](./code/day-06-to-09/day-09/product.tsx) ·
 [page config](./code/day-06-to-09/day-09/product.config.ts)
 
+## In simple words
+
+You will add a second screen for a product. The app needs the screen's name
+in its page list before it can open it. You will pass the product's short ID
+so the second screen knows which product to show.
+
 ## Key concepts
 
 A multi-page app has two separate jobs: declare which pages exist and

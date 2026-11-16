@@ -6,6 +6,12 @@ steps responsibly.
 **Source:** [presentation checklist](./code/day-29-to-30/presentation-checklist.md) ·
 [capstone README](../../final-project/README.md)
 
+## In simple words
+
+Show what you built, how you checked it, and what you have not checked.
+Explain that checkout is pretend. You do not need to claim the app is ready
+for production.
+
 ## Key concepts
 
 A strong technical demo is honest and repeatable. Show what works, explain

@@ -1,78 +1,78 @@
-# Day 4 — Macle app setup and configuration
+# Day 4 — Find the Macle app's first screen
 
-**Estimated time:** 5–10 minute reading, 25 minute configuration lab  
-**Goal:** You can trace how a Macle-targeted app page is registered, compiled,
-and loaded by the simulator.
+**Time:** About 20 minutes
+**You will:** Find how the starter chooses its first screen.
 
-## Key concepts
+## In simple words
 
-The Macle app is more than its starter page. The build configuration selects
-the source compiler, source directory, output directory, and Macle platform
-plugin. The app configuration declares routes and shared window settings. A
-page configuration can customize the navigation title or other supported
-page-level behavior.
+A **page** is one screen in an app. A **route** is the page's name in the
+app's list. The starter currently has a route named `pages/index/index`.
+That route points to the page file you edited yesterday.
 
-A route must exist in the app configuration before navigation to it can work.
-The source folder and compiled output are different: edit `src/`, then
-build into `dist/`. Do not hand-edit generated output to fix a source issue;
-the next build will replace it.
+You will look at the setup, not change it yet. This helps you know where to
+look if the simulator cannot find a page.
 
-Configuration is executable project behavior. Make one small change at a
-time, rebuild, and inspect the result. If you copy settings from a different
-framework, verify that this plugin version understands them.
+## Step by step
 
-In the starter, the app route is registered in `src/app.config.ts`:
+1. Open `starter-template/src/app.config.ts`.
+2. Find `pages/index/index`. This is the first page route in the starter.
+3. Open `starter-template/src/pages/index/index.tsx`. This file contains
+   the screen's content.
+4. Open `starter-template/config/index.ts`. Find `outputRoot`; it names
+   the folder where the build puts its generated files.
+5. Compare the route and page filename:
 
-```ts
-export default defineAppConfig({
-  pages: ['pages/index/index'],
-})
-```
+   ```text
+   route: pages/index/index
+   file:  src/pages/index/index.tsx
+   ```
 
-That route corresponds to `src/pages/index/index.tsx`. Adding a component
-file in another folder does not register a new route; the route list and
-source location must agree.
+6. Build again with `npm run build:macle`. Check that it finishes.
 
-## Step-by-step tutorial
+## Add a practice page
 
-Open `starter-template/config/index.ts`, `src/app.config.ts`, and
-`src/pages/index/index.config.ts`. Identify the output root, initial route,
-and title. Change the app title and rebuild to observe the result.
+Do this only after you have found the files above:
 
-## Practice
+1. Create a new folder named `src/pages/about/`.
+2. Inside it, create `index.tsx` and copy in this small screen:
 
-Create `src/pages/about/index.tsx` with a heading and one paragraph. Add
-`pages/about/index` to the app's `pages` array. Use the route API documented
-for the installed Macle plugin/runtime combination to navigate there from the starter page, or
-temporarily set it as the first page to verify registration.
+   ```tsx
+   import { Text, View } from '@tarojs/components'
 
-## Review questions
+   export default function AboutPage() {
+     return (
+       <View>
+         <Text>About this practice app</Text>
+         <Text>This is my second screen.</Text>
+       </View>
+     )
+   }
+   ```
 
-Find the source of truth for the route list, app title, and generated files:
-the app config, page config, and build output, respectively. If you have a
-partner, compare your answers.
+3. In `src/app.config.ts`, add the new route to the `pages` list:
 
-## Apply it
+   ```ts
+   pages: ['pages/index/index', 'pages/about/index'],
+   ```
 
-Add a second route and a clear way to return to the first. Record the exact
-route string used in registration and navigation. If the simulator fails,
-include the build log and console message in your report.
+   Keep the existing `window` settings below it.
+4. Build again with `npm run build:macle`. If the build succeeds, the new
+   route is registered.
 
-## Macle route tutorial: step by step
+The app will still open on its first screen. That is expected: adding a
+second screen does not add a button to open it. Page navigation is covered
+on Day 9.
 
-Open the three starter configuration files named above and trace a route:
+## Check your understanding
 
-1. `src/app.config.ts` contains the registered page path.
-2. A page component and optional page configuration live under the matching
-   `src/pages/<name>/` directory.
-3. Taro's build config selects the project source and output locations.
-4. Navigation must use the exact registered route and an API verified for
-   the installed Macle plugin/runtime combination.
-5. The generated output is the artifact the simulator reads; source changes
-   are not visible until a successful rebuild/reload.
+Does making a new page file automatically add it to the app? **No.** Add
+its route to `src/app.config.ts` too.
 
-Add the about page, register it, and temporarily make it the initial route if
-navigation support is unclear. Build before adding navigation so you can
-isolate route registration from event behavior. Then add a link back and test
-both directions. Check that the route exists and is registered, the build
-succeeds, the initial page renders, and navigation reaches its destination.
+## If something goes wrong
+
+- If the build says it cannot find the page, compare the route spelling with
+  the folder and filename.
+- If the build succeeds but the simulator does not show the new page, that
+  is expected: you added a route but did not change the first page.
+- If you are unsure, remove only the practice page and route entry, then
+  rebuild to return to the original starter.

@@ -6,6 +6,12 @@ demo result.
 **Source:** [EthioShop frontend checkout](../../final-project/frontend/src/pages/index/index.tsx) ·
 [backend order endpoint](../../final-project/backend/server.mjs)
 
+## In simple words
+
+You will send the chosen products to the sample server and show its reply.
+The screen must say the result is a demo. It must not say or imply that a
+real payment happened.
+
 ## Key concepts
 
 The frontend sends product IDs and quantities, not an authoritative total.

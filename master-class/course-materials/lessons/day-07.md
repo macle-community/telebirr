@@ -6,6 +6,12 @@ source-to-simulator path.
 **Source:** [Day 7 page TSX](./code/day-06-to-09/day-07/index.tsx) ·
 [stylesheet](./code/day-06-to-09/day-07/index.css)
 
+## In simple words
+
+Build one profile screen using made-up information. “Static” means its
+content does not change when someone taps it. The goal is to make the screen
+clear and confirm it opens in the simulator.
+
 ## Key concepts
 
 The earlier lessons separated the important layers: source, configuration,

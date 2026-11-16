@@ -5,6 +5,12 @@
 **Source:** [payment boundary diagram](../diagrams/payment-flow.md) ·
 [mock order backend](../../final-project/backend/server.mjs)
 
+## In simple words
+
+The app on the phone can ask for an order, but it cannot prove that a
+payment happened. A trusted server must check the result. In this course,
+the order is pretend and no money moves.
+
 ## Key concepts
 
 A payment flow crosses three trust domains: the Mini App, the merchant

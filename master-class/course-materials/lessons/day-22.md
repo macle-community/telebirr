@@ -4,6 +4,12 @@
 **Goal:** You design around permissions and missing capabilities.
 **Source:** [mock capability states](./code/day-22-to-28/day-22/capability-demo.tsx)
 
+## In simple words
+
+Some phone features, like the camera, need permission. A feature may also
+not be available in the version you are testing. Tell these two cases apart
+and provide another way to continue.
+
 ## Key concepts
 
 Device APIs are powerful because they connect an app to a camera, location

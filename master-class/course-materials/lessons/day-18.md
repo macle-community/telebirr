@@ -5,6 +5,12 @@
 permission.
 **Source:** [mock consent card](./code/day-15-to-21/day-18/consent-card.tsx)
 
+## In simple words
+
+Asking permission and proving who someone is are different things. Only ask
+for information the feature needs, explain why, and let the person say no.
+This lesson uses a pretend consent screen, not real account access.
+
 ## Key concepts
 
 Authentication answers ‘who is signed in?’ Authorization answers ‘what may

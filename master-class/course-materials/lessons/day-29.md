@@ -5,6 +5,12 @@
 **Source:** [capstone frontend](../../final-project/frontend/src/pages/index/index.tsx) ·
 [backend and tests](../../final-project/backend/)
 
+## In simple words
+
+Put together the product list, shopping cart, and sample order. The screen
+shows the products; the server checks the cart and makes the pretend order.
+Follow the numbered instructions and test one part at a time.
+
 ## Key concepts
 
 This capstone combines the course's Macle app skills. EthioShop is a

@@ -4,6 +4,12 @@
 **Goal:** You explain location use and build a safe fallback.
 **Source:** [fictional pickup points](./code/day-22-to-28/day-23/pickup-points.tsx)
 
+## In simple words
+
+Location can show nearby places, but it is private information. Ask only
+when needed, explain why, and let the app work another way if someone says
+no or the feature is not available.
+
 ## Key concepts
 
 Location is sensitive. Ask for it only when the feature needs it, explain

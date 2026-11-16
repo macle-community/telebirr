@@ -1,68 +1,59 @@
 # 30-day lesson guides
 
-Use these guides as step-by-step labs for the Macle Mini App runtime. Start
-with the starter app, then carry the EthioShop capstone forward as the course
-project. The starter uses React and Taro to produce a Macle-targeted build;
-focus on runtime behavior and verify each platform component or API in the
-current Macle documentation. Save a working version after each checkpoint
-so you can compare your progress.
+Use these guides as step-by-step lessons. Start with the small starter app;
+you do not need to know Macle, React, or Taro first. Each day adds a small
+idea and a way to check that it worked. The starter uses React and Taro
+behind the scenes to make an app for Macle. Save a working version after
+each checkpoint so you can return to it if something goes wrong.
 
-Platform features change across compiler, plugin, simulator, and runtime
-versions. Verify API signatures, UI components, device permissions, payment
-eligibility, and submission procedures with the official documentation for
-your exact development environment.
+Some features depend on the version of Macle and the simulator you have.
+When a lesson asks you to check a feature, use the official documentation
+for your environment. Do not assume a feature works just because an example
+uses it.
 
 ## Phase 1 — Foundations
 
-### Day 1 — The Macle Mini App and course project
+### Day 1 — Your first look at a Macle Mini App
 
-- **Learn:** What a Mini App is, the course outcome, and the difference
-  between a demo and a production service.
-- **Explore:** EthioShop's product list and mock checkout; note that it
-  processes no real payment.
-- **Try:** Clone the course repo and identify the starter,
-  capstone, and lesson materials.
-- **Check your progress:** You have a local checkout of the repository and a
-  written list of questions to validate with platform documentation.
+- **Learn:** What this course will build and why the shop order is pretend.
+- **Explore:** Read the EthioShop README and find the word `simulated` in
+  the sample backend. Do not enter real payment details.
+- **Try:** Open the course folder and find the starter and shop example.
+- **Check your progress:** You can find the starter and explain that its
+  shop order is pretend.
 
-### Day 2 — The Macle build toolchain and simulator
+### Day 2 — Open the starter in the Macle simulator
 
-- **Learn:** How Node.js, npm, the source compiler/plugin, Macle build output,
-  and simulator fit together. Taro is the starter's source tool, not the
-  lesson's runtime subject.
+- **Learn:** What each setup command does and how to open the first screen.
 - **Explore:** Install the starter dependencies, run its typecheck and build, and
   launch its simulator.
-- **Try:** Open the starter and record compiler,
-  simulator, and operating-system versions.
+- **Try:** Write down which commands worked and save the first error if one
+  did not.
 - **Check your progress:** A successful starter build and a screenshot or brief note
   of the running page.
 
-### Day 3 — How Macle renders a page
+### Day 3 — How a Macle screen gets from code to simulator
 
-- **Learn:** The source-to-artifact path and the logic/view/native boundaries.
-- **Explore:** Change a label, rebuild, and inspect the generated page artifacts.
-- **Try:** Trace a button event from React handler to visible state
-  change; distinguish observed behavior from assumptions about internals.
-- **Check your progress:** A small diagram of the render/update path for the installed
-  runtime version.
+- **Learn:** Your edits do not appear in the simulator until you rebuild.
+- **Explore:** Change a label and look for it in the simulator.
+- **Try:** Click the starter button and watch the tap count change.
+- **Check your progress:** You can name the file you changed and command
+  you ran.
 
-### Day 4 — Macle app setup and configuration
+### Day 4 — Find the Macle app's first screen
 
-- **Learn:** `config/`, `src/`, page registration, project metadata, and build
-  scripts.
-- **Explore:** Locate the Taro config and the starter page configuration.
-- **Try:** Change the app title and add a second route, then confirm the
-  route appears in the compiled configuration.
-- **Check your progress:** The app opens on the configured initial route.
+- **Learn:** How the app finds the screen it opens first.
+- **Explore:** Find the list of pages and the file for the first screen.
+- **Try:** Add a practice page and add its name to the page list.
+- **Check your progress:** The build finishes without a missing-page error.
 
-### Day 5 — Build your first Macle screen
+### Day 5 — Make your first Macle screen
 
-- **Learn:** The Macle source-to-view path using this starter's supported
-  components. Confirm each component with the installed Macle plugin/runtime.
-- **Explore:** Add a welcome panel to the starter.
-- **Try:** Create a profile summary with a name, short
-  description, and reusable information row.
-- **Check your progress:** The profile page compiles and renders in the simulator.
+- **Learn:** How to change text and see it in the Macle simulator.
+- **Explore:** Change the welcome text in the starter.
+- **Try:** Replace the welcome screen with a sample product name,
+  description, and price.
+- **Check your progress:** Your new text appears in the simulator.
 
 ### Day 6 — Layout and styling in the Macle view
 

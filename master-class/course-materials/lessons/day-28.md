@@ -4,6 +4,12 @@
 **Goal:** You report device evidence without assuming simulator parity.
 **Source:** [device matrix template](./code/day-22-to-28/day-28/device-matrix.csv)
 
+## In simple words
+
+An app can look different on a phone than in a simulator. Test the important
+screens in each available place and write down what you actually checked.
+Do not claim a device test you did not run.
+
 ## Key concepts
 
 A simulator is a fast test environment, not a complete device. Differences

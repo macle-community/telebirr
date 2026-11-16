@@ -4,6 +4,12 @@
 **Goal:** You persist a small local list using a documented storage API.
 **Source:** [Day 14 to-do example](./code/day-10-to-14/day-14/todo-page.tsx)
 
+## In simple words
+
+You will save a to-do list on the device so it may still be there after the
+app closes. Saving can fail, so show a message if the list was not saved.
+Never use this practice storage for passwords or payment details.
+
 ## Key concepts
 
 Local storage is useful for preferences and small pieces of state, but it

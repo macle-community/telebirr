@@ -5,6 +5,12 @@
 **Source:** [Day 12 list example](./code/day-10-to-14/day-12/filterable-list.tsx) ·
 [capstone catalog](../../final-project/frontend/src/pages/index/index.tsx)
 
+## In simple words
+
+You will show several products in a list and let someone narrow the list.
+If nothing matches, show a friendly “no items found” message instead of a
+blank area.
+
 ## Key concepts
 
 A catalog is a collection of records, not a row of copy-pasted cards. In

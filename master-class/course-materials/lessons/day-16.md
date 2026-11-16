@@ -5,6 +5,12 @@
 **Source:** [backend implementation](../../final-project/backend/server.mjs) ·
 [backend tests](../../final-project/backend/server.test.mjs)
 
+## In simple words
+
+The server—not the app screen—checks the products and adds up the price.
+This keeps a changed number on the phone from changing the real price.
+Today’s server creates only sample orders.
+
 ## Key concepts
 
 A browser or Mini App can send any amount it wants. The server must not

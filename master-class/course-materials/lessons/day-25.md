@@ -4,6 +4,12 @@
 **Goal:** You produce a repeatable diagnosis instead of guessing.
 **Source:** [debugging record template](./code/day-22-to-28/day-25/debugging-checklist.md)
 
+## In simple words
+
+When something breaks, write down exactly what you did and what happened.
+Then check the first error message and change one thing at a time. This is
+usually faster than guessing at several fixes.
+
 ## Key concepts
 
 Debugging starts by making a failure reproducible. Record the route, steps,

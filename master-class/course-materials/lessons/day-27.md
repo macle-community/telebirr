@@ -5,6 +5,12 @@
 platform submission.
 **Source:** [release artifact checklist](./code/day-22-to-28/day-27/release-checklist.md)
 
+## In simple words
+
+You will make a clean Macle build and check what files it produced. A
+successful build only means it compiled; it does not mean the app was
+approved or is ready to accept real payments.
+
 ## Key concepts
 
 A compiled folder is not automatically a publishable Mini App. Packaging

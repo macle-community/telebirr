@@ -5,6 +5,12 @@
 **Source:** [Day 10 request state example](./code/day-10-to-14/day-10/catalog-loader.tsx) ·
 [EthioShop backend](../../final-project/backend/server.mjs)
 
+## In simple words
+
+Instead of typing products into the screen, the app asks a server for them.
+While it waits, it should say so. If the server cannot answer, it should show
+an error and let the person try again.
+
 ## Key concepts
 
 An API call crosses a trust and failure boundary. The app may have no

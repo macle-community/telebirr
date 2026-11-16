@@ -5,6 +5,11 @@
 **Source:** [request state component](./code/day-22-to-28/day-26/request-state.tsx) ·
 [capstone request handling](../../final-project/frontend/src/pages/index/index.tsx)
 
+## In simple words
+
+Tell people what the app is doing: waiting, showing results, finding
+nothing, or having a problem. Do not leave them staring at an empty screen.
+
 ## Key concepts
 
 A polished screen is not just a successful screenshot. It explains what is

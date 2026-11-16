@@ -1,106 +1,43 @@
-# Day 1 — The Macle Mini App and course project
+# Day 1 — Your first look at a Macle Mini App
 
-**Estimated time:** 5–10 minute reading, then a short repository tour  
-**Goal:** You can explain what you will build and distinguish a
-course demo from a production financial service.
+**Time:** About 15 minutes
+**You will:** Find the course projects and learn what the demo checkout does.
 
-## Key concepts
+## In simple words
 
-Over the next 30 days, you will learn how a Macle Mini App is configured,
-compiled, rendered, and connected to host capabilities. The course starter
-uses React and Taro as its source and build tools; the learning target is the
-Macle runtime. You will finish with an EthioShop catalog, a cart, and a
-backend-created demo order.
+A **Mini App** is a small app that opens inside a larger app. **Macle** is
+the platform this course targets. You will edit the starter project, build
+it for Macle, and check the result in a simulator.
 
-A Mini App runs inside a host application and uses the host platform's
-runtime and capabilities. That makes the host's supported APIs, component
-catalog, permissions, and release process important. One rule is:
-measure and verify the exact environment instead of assuming it behaves like
-a browser or another Mini App platform.
+The course also includes EthioShop, a small shop example. Its checkout is a
+**mock**: it pretends to create a sample order, but it does not charge a
+wallet or contact a payment provider. Never enter a real payment PIN in a
+course exercise.
 
-The course project is an EthioShop catalog and checkout demonstration. Its
-frontend shows products and sends a cart to a sample backend. The backend
-creates a simulated order so you can practice client/server data flow without
-starting a payment. This narrow scope makes the course useful even when live
-merchant access is unavailable.
+## Step by step
 
-You will also be precise about money. EthioShop's checkout is deliberately a
-mock. It helps you learn the shape of an order request and response; it does
-not charge a wallet, contact a payment provider, or prove that money moved.
-A real payment needs approved merchant access, a trusted backend, current
-provider documentation, and server-side verification. The app must never ask
-for or store a payment PIN.
+1. Open the `master-class/` folder in the repository.
+2. Open `starter-template/README.md`. This is the small project you will
+   change during the first lessons.
+3. Open `final-project/README.md` and read the bold sentence that starts
+   “No real payment is processed.”
+4. Return to this lesson. In one sentence, write what the sample checkout
+   does—and what it does not do.
 
-By graduation, you should be able to build a useful interface, diagnose a
-runtime issue, and explain what remains before a production release.
+## Words you will see
 
-## Example: recognize a demo result
+- **Source code:** the files you edit.
+- **Build:** turning source code into files the Macle simulator can run.
+- **Simulator:** a test environment for opening the built app.
+- **Backend:** a separate server that can store data or make decisions.
+- **Mock:** a pretend result used for practice, not a real transaction.
 
-The capstone marks its response explicitly:
+## Check your understanding
 
-```json
-{
-  "id": "sample-order-id",
-  "totalCents": 18500,
-  "status": "DEMO_PAID",
-  "simulated": true
-}
-```
+Does a “success” message on a screen prove that real money moved? **No.**
+This course's shop returns a sample result only.
 
-`totalCents` is a sample amount, and `simulated: true` means the backend did
-not contact a payment provider. The ID and amount are illustrative; the
-running demo generates its own order ID and calculates the amount from its
-catalog. Never describe this response as proof that funds moved.
+## Before Day 2
 
-## Step-by-step tutorial
-
-1. Open the course root README and review the 30-day sequence.
-2. Open the starter README and note that it is intentionally small.
-3. Open EthioShop in the simulator, add a coffee, and place a demo order.
-4. Inspect the response's `simulated` marker and the backend test. Remember
-   that this is not a real payment.
-
-## Practice
-
-Clone or open the course repository and locate `starter-template/`,
-`final-project/`, and `course-materials/`. Then write down one question about
-Macle that you can answer by running an experiment and one that requires
-official documentation.
-
-## Review questions
-
-**Question:** If the app displays “success” after a button tap, does that
-prove the backend received money? No. Client UI is not a settlement
-authority. Where can you find the server-verified order status?
-
-## Apply it
-
-Read both project READMEs. Draw a one-page map of the starter, the shop
-frontend, and the demo backend. Mark which part owns product pricing and
-which part owns the mock order status.
-
-## Macle project tour: step by step
-
-Use this order to explore the repository and locate where
-future work belongs:
-
-1. **Course root:** find the syllabus and the two project entry points.
-2. **Starter:** note that this is a small practice app used for isolated
-   exercises, not a second production project.
-3. **Capstone frontend:** identify the catalog page, its state, and the
-   request to the backend.
-4. **Capstone backend:** identify the server-owned catalog/pricing and mock
-   order response.
-5. **Course materials:** find where the manuscripts and daily code examples
-   are indexed.
-
-Write one claim you can verify by running code and one claim that needs
-official Macle or Telebirr documentation. The simulator demonstrates
-observed behavior; account eligibility, live payment support, and publishing
-requirements need authoritative platform evidence.
-
-## Completion evidence
-
-You can locate the starter, capstone, backend, and lesson source index;
-explain why checkout is mock-only; and identify which part owns price
-calculation and order state.
+Make sure you can find `starter-template/` and `final-project/`. You do not
+need to understand their code yet.

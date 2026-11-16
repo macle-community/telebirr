@@ -1,6 +1,6 @@
 # Macle Telebirr Mini App Masterclass
 
-A practical, Macle-first 30-day course for building Telebirr Mini Apps. The starter uses React and Taro as source/build tools; the lessons focus on the Macle runtime, its supported capabilities, and verifying behavior in the target environment.
+A beginner-friendly, step-by-step 30-day course for building Telebirr Mini Apps for Macle. You do not need prior Macle, React, or Taro experience. The course explains those words as they come up and shows you what to do and how to check your work.
 
 > **Before publishing:** verify current platform audience figures, SDK names, API signatures, simulator requirements, and developer-portal steps against current official sources. This repository avoids promising unverified user counts or production payment access.
 
@@ -15,23 +15,30 @@ A practical, Macle-first 30-day course for building Telebirr Mini Apps. The star
 - [EthioShop capstone](./final-project/README.md)
 - [Course materials](./course-materials/README.md)
 
-## Prerequisites
+## What you need
 
 - Node.js 18 or later
 - npm
-- Familiarity with JavaScript and basic React
-- A supported Macle development/simulator environment; see the starter guide
+- A computer where you can install software and type commands in a terminal
+- Access to a supported Macle development/simulator environment; see the starter guide
 
-## Quick start
+You do not need to know Macle, React, or Taro before starting. Some basic
+coding experience will help, but the first lessons explain the starter
+project and walk you through it step by step. This is not a course on
+programming fundamentals from zero.
+
+## Start the first lesson
 
 ```sh
-cd starter-template
-npm install
+cd master-class/starter-template
+npm ci
+npm run typecheck
 npm run build:macle
 npm run sim:macle
 ```
 
-The simulator command serves the compiled output on port `30005`. Open `http://localhost:30005`.
+Open `http://localhost:30005` in your browser. If a command fails, keep the
+first error message and use the Day 2 guide to troubleshoot it.
 
 ## 30-day syllabus
 
@@ -41,11 +48,11 @@ Each lesson is designed for a short lecture followed by a hands-on exercise. Day
 
 | Day | Lesson | Practice |
 | --- | --- | --- |
-| 1 | The Macle Mini App and course project | Explore the finished EthioShop demo and identify runtime boundaries |
-| 2 | The Macle build toolchain and simulator | Build, launch, and record target versions |
-| 3 | Macle logic, view, MAML, and data updates | Trace one rendered page through the runtime |
-| 4 | Macle app setup and configuration | Trace a registered route into the Macle build |
-| 5 | Build your first Macle screen | Change a label and verify it in the simulator |
+| 1 | Your first look at a Macle Mini App | See what you will build and learn what the shop demo does |
+| 2 | Open the starter in the Macle simulator | Follow setup steps and open your first screen |
+| 3 | How a Macle screen gets from code to simulator | Change one line and see the result |
+| 4 | Find the Macle app's first screen | Find the page list and the screen file |
+| 5 | Make your first Macle screen | Change the sample screen one step at a time |
 | 6 | Layout and styling in the Macle view | Build and test a responsive product card |
 | 7 | Macle mini-project: Telebirr profile | Build and verify a profile screen |
 

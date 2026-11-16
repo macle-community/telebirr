@@ -4,6 +4,11 @@
 **Goal:** You measure before optimizing.
 **Source:** [derived filter example](./code/day-22-to-28/day-24/derived-filter.tsx)
 
+## In simple words
+
+Make the screen work first. Then measure what feels slow or makes the app
+too large. Change one thing and measure again to see if it helped.
+
 ## Key concepts
 
 Performance work begins with a measurement and a user-visible symptom.

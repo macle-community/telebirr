@@ -1,92 +1,76 @@
-# Day 2 — The Macle build toolchain and simulator
+# Day 2 — Open the starter in the Macle simulator
 
-**Estimated time:** 5–10 minute reading, 20–30 minute setup lab  
-**Goal:** You can build for Macle, open the target in its simulator, and
-identify which tool produced each result.
+**Time:** About 20–30 minutes
+**You will:** Build the starter and see its first screen.
 
-## Key concepts
+## In simple words
 
-A successful Mini App build depends on several tools working together.
-Node.js runs the build tools; npm installs the project dependencies; Taro
-transforms React application code; the Macle platform plugin teaches Taro
-about the target; and the simulator loads the compiled output. These are
-separate layers. When something fails, identify which layer reported the
-error before changing configuration.
+You will run four commands. Installing downloads the project's tools.
+Checking looks for code mistakes. Building prepares the app for Macle.
+Starting the simulator opens that built app so you can see it.
 
-You will use the starter's lockfile to keep dependency versions repeatable.
-Do not begin by installing a second global Taro version. Use the project's
-scripts so the compiler selected by this repository is the one that runs.
-The simulator is useful for fast feedback, but it does not prove that every
-device feature or production flow works on a real phone.
+The starter uses React and Taro behind the scenes. You do not need to learn
+those tools today; follow the commands and check that the Macle screen opens.
 
-A useful diagnostic habit is to record versions and retain the first useful
-error message. A blank screen is a symptom; the console, build log, route
-configuration, and runtime logs help you locate the cause.
+## Before you start
 
-The local npm scripts deliberately separate the checks:
+You need Node.js 18 or newer, npm, and access to a Macle simulator. From the
+repository's top folder, open a terminal (a place to type commands) and run:
 
-```text
-npm run typecheck  -> TypeScript check
-npm run build:macle -> compile for the Macle target
-npm run sim:macle   -> build, then launch the web simulator
+```sh
+cd master-class/starter-template
+node --version
+npm --version
 ```
 
-A passing typecheck does not prove that the Macle compiler or simulator can
-run the app. Each command answers a different question, so keep its result
-separate in your setup notes.
+If either version command says it cannot find the program, install Node.js
+before continuing.
 
-## Step-by-step tutorial
+## Step by step
 
-From `starter-template/`, run:
+Run one command at a time in the `starter-template/` folder:
 
 ```sh
 npm ci
+```
+
+Wait for it to finish. It downloads the exact tools listed for this project.
+If it reports an error, keep the first error message; do not delete files.
+
+```sh
 npm run typecheck
+```
+
+This checks the code for common mistakes. It does not open the app.
+
+```sh
 npm run build:macle
+```
+
+This prepares the app for Macle. Continue when it says the build completed.
+
+```sh
 npm run sim:macle
 ```
 
-Open the simulator address printed or documented by the script. Confirm
-the compiler success line and inspect the page. If a command fails, read the
-first meaningful error before retrying.
+This starts the web simulator. Open `http://localhost:30005` if it does not
+open automatically. You should see “Hello, Telebirr” and a button.
 
-## Practice
+## What to do if it does not work
 
-Repeat the same sequence. Record the Node version with `node --version`,
-the npm version with `npm --version`, the Taro version shown during build, and
-the plugin version from the lockfile. Change the greeting in the starter,
-rebuild, and confirm the simulator displays the change.
+- If `cd` fails, check that you started from the repository's top folder.
+- If `npm ci` fails, check that Node.js is installed and save the first
+  error message.
+- If the build fails, copy the first red error line. A later error may just
+  be a consequence of the first one.
+- If the page is blank, check the build output and simulator console.
 
-## Review questions
+## Check your understanding
 
-Match each symptom to a layer: dependency installation failure, Taro
-compile error, simulator cannot find a page, or unsupported native API.
-Identify the first log or file you would inspect for each.
+Which command opens the app in the simulator? `npm run sim:macle`. Which
+command prepares the Macle build? `npm run build:macle`.
 
-## Apply it
+## Save your progress
 
-Write a short “clean setup” note that includes the commands you ran, versions,
-simulator URL, and one issue encountered or one detail that was easy to miss.
-Do not include credentials, personal tokens, or private device data.
-
-## Macle build verification: step by step
-
-Run setup from the starter directory and keep the output for each command:
-
-1. `node --version` and `npm --version` establish the local toolchain.
-2. `npm ci` installs the exact dependency graph from the lockfile. If it
-   fails, record the first dependency error before changing Node versions or
-   deleting files.
-3. `npm run typecheck` checks the TypeScript source but does not compile a
-   Macle package.
-4. `npm run build:macle` exercises Taro and the Macle plugin. Record the
-   actual output directory and first compiler warning/error.
-5. `npm run sim:macle` rebuilds and starts the web simulator. Confirm that
-   the visible page came from the latest build by changing the greeting and
-   repeating the command.
-
-Record the Taro version only to identify the source compiler; the outcome to
-verify is the Macle-targeted build and its behavior in the Macle simulator.
-Do not install a global CLI to fix a project-local version mismatch. The
-report should separate installation, typecheck, Macle compilation, and
-simulator results.
+Write down whether each of the four commands worked. If something failed,
+save the first error message. You will use this working starter in Day 3.

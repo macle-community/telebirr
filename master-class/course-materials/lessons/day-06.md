@@ -6,6 +6,12 @@ layout in the simulator at more than one viewport.
 **Source:** [Day 6 page TSX](./code/day-06-to-09/day-06/index.tsx) ·
 [stylesheet](./code/day-06-to-09/day-06/index.css)
 
+## In simple words
+
+You will change how the sample screen looks. A responsive layout adjusts to
+fit a small or large screen. You will build it, then check that the text and
+product card still fit.
+
 ## Key concepts
 
 A Mini App is used in a constrained viewport, often with touch input.

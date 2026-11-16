@@ -6,6 +6,12 @@ runtime compatibility are verified.
 **Source:** [core component fallback](./code/day-10-to-14/day-11/core-button.tsx) ·
 [component compatibility notes](../cheatsheets/components.md)
 
+## In simple words
+
+A component is one piece of a screen, such as a button. Some extra button
+packages may not work in every Macle version. First check whether the
+component is supported; if you cannot confirm that, use the simple example.
+
 ## Key concepts
 
 A component library can speed up product work, but a package being

@@ -1,16 +1,28 @@
 # Full lesson manuscripts
 
-These chapters are Macle-first, step-by-step tutorials for self-paced
-practice. Each day explains one part of building, running, or validating a
-Macle Mini App, then guides you through a focused task and asks you to verify
-the result in the target build or simulator.
+These are step-by-step lessons for people who are new to Macle. Each lesson
+tells you what you will do, explains new words, and gives small steps to
+follow. You do not need to know Macle before you start.
 
-The starter currently uses React and Taro as its source and build tooling.
-Those are implementation details, not the subject of the course: the focus
-is what the Macle-targeted app does, what the runtime supports, and how to
-verify that behavior. Treat generated artifacts as diagnostic evidence, not
-stable APIs. Confirm version-sensitive components and native APIs against
-current Macle documentation for the environment you are using.
+The starter uses React and Taro behind the scenes to create an app for Macle.
+You can follow the lessons without knowing those tools in advance. When a
+lesson uses a technical word, use the “Common words” box at the top of the
+lesson. Some Macle features change between versions; those lessons show how
+to check whether a feature works in your simulator.
+
+## New to app development?
+
+You can start with Day 1. Read a lesson in order and do one numbered step at
+a time. When it gives you a command, run it from the folder named in the
+lesson. When it gives you code, copy the whole example before trying to
+change it. If your screen does not match the lesson, stop and check the
+“If it does not work” section instead of guessing.
+
+The first four lessons help you open the project and see how it runs. The
+later lessons add one idea at a time. Some later topics, such as payments,
+permissions, and server security, are more advanced; you can still follow
+them by using the examples and glossary without already knowing those
+subjects.
 
 Find matching examples in the
 [lesson source code index](./code/README.md). Code examples begin at Day 6;
@@ -18,10 +30,10 @@ earlier lessons use the starter project.
 
 ## Phase 1 — Foundations
 
-1. [The opportunity and the course project](./day-01.md)
-2. [Toolchain and simulator](./day-02.md)
-3. [How a Macle app renders](./day-03.md)
-4. [Project setup and configuration](./day-04.md)
+1. [Your first look at a Macle Mini App](./day-01.md)
+2. [Open the starter in the Macle simulator](./day-02.md)
+3. [How a Macle screen gets from code to simulator](./day-03.md)
+4. [Find the Macle app's first screen](./day-04.md)
 5. [Build your first Macle screen](./day-05.md)
 6. [Layout and styling in the Macle view](./day-06.md)
 7. [Macle mini-project: Telebirr profile](./day-07.md)
@@ -61,6 +73,6 @@ earlier lessons use the starter project.
 29. [Macle EthioShop end-to-end tutorial](./day-29.md)
 30. [Presenting and validating your Macle app](./day-30.md)
 
-For version-sensitive subjects, verify names, signatures, permissions,
-availability, and submission steps against the official documentation for
-the exact compiler, plugin, simulator, runtime, and account you use.
+Some Macle features depend on the version you use. When a lesson asks you
+to check a feature, compare it with the official documentation for your
+Macle environment before relying on it.

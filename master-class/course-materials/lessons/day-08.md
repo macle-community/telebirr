@@ -6,6 +6,11 @@ the next visible frame.
 **Source:** [Day 8 page TSX](./code/day-06-to-09/day-08/index.tsx) ·
 [stylesheet](./code/day-06-to-09/day-08/index.css)
 
+## In simple words
+
+The app remembers a number. When you tap a button, the number changes and
+the screen shows the new number. That remembered number is called **state**.
+
 ## Key concepts
 
 The view needs a state model for values that change while a page is open.

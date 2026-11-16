@@ -6,6 +6,12 @@ claiming unsupported success.
 **Source:** [checkout request and UI states](../../final-project/frontend/src/pages/index/index.tsx) ·
 [backend order behavior](../../final-project/backend/server.mjs)
 
+## In simple words
+
+Sometimes the app sends a request but does not get the answer back. For a
+product list, you can usually try again. For an order, check whether it
+already happened before sending it again, so you do not create two.
+
 ## Key concepts
 
 Failures are normal behavior, not exceptional surprises. A user can lose

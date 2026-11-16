@@ -6,6 +6,12 @@ shipped in a client.
 **Source:** [server-only config validation example](./code/day-15-to-21/day-19/server-config.example.mjs) ·
 [EthioShop frontend](../../final-project/frontend/src/pages/index/index.tsx)
 
+## In simple words
+
+Anything included in the app on a phone can potentially be inspected. Keep
+passwords and private service keys on the server, not in the app files. The
+example uses fake settings only.
+
 ## Key concepts
 
 A compiled Mini App is still client-side code. Minification does not make
