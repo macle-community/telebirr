@@ -7,6 +7,7 @@ on:
       - course/macle-telebirr-masterclass
     paths:
       - "master-class/README.md"
+      - "master-class/course-materials/lessons/**"
       - "master-class/site/**"
       - ".github/workflows/deploy-course.yml"
   workflow_dispatch:
@@ -33,6 +34,10 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+      - name: Include lesson manuscripts
+        run: |
+          mkdir -p master-class/site/lessons
+          cp master-class/course-materials/lessons/day-*.md master-class/site/lessons/
       - name: Upload website artifact
         uses: actions/upload-pages-artifact@v3
         with:

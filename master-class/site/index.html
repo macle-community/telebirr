@@ -466,6 +466,158 @@
         font-size: 0.9rem;
       }
 
+      .lesson-view {
+        max-width: 860px;
+        min-height: 70vh;
+        padding-block: 36px 80px;
+      }
+
+      .lesson-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+
+      .lesson-toolbar a {
+        color: var(--blue);
+        font-size: 0.9rem;
+        font-weight: 750;
+        text-decoration: none;
+      }
+
+      .lesson-article {
+        padding: clamp(22px, 5vw, 48px);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--white);
+        box-shadow: 0 12px 36px rgb(16 36 58 / 6%);
+      }
+
+      .lesson-article h1 {
+        max-width: none;
+        margin: 0 0 26px;
+        font-size: clamp(2rem, 5vw, 3rem);
+      }
+
+      .lesson-article h2 {
+        margin: 36px 0 14px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--line);
+        font-size: 1.45rem;
+        letter-spacing: -0.025em;
+      }
+
+      .lesson-article h3 {
+        margin: 28px 0 10px;
+        font-size: 1.15rem;
+      }
+
+      .lesson-article p,
+      .lesson-article li {
+        color: #34495e;
+      }
+
+      .lesson-article a {
+        color: var(--blue);
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+      }
+
+      .lesson-article blockquote {
+        margin: 20px 0;
+        padding: 14px 18px;
+        border-left: 4px solid var(--blue);
+        border-radius: 0 10px 10px 0;
+        background: #eef6fb;
+      }
+
+      .lesson-article blockquote p:last-child {
+        margin-bottom: 0;
+      }
+
+      .lesson-article pre {
+        overflow-x: auto;
+        margin: 20px 0;
+        padding: 18px;
+        border-radius: 12px;
+        background: #0c2036;
+        color: #e4eef8;
+        font-size: 0.87rem;
+        line-height: 1.65;
+        tab-size: 2;
+      }
+
+      .lesson-article :not(pre) > code {
+        padding: 0.12em 0.35em;
+        border-radius: 5px;
+        background: #edf2f6;
+        color: #20394f;
+        font-size: 0.9em;
+      }
+
+      .lesson-article table {
+        width: 100%;
+        margin: 20px 0;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+
+      .table-scroll {
+        overflow-x: auto;
+      }
+
+      .lesson-article th,
+      .lesson-article td {
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .lesson-article th {
+        background: #f0f5f8;
+      }
+
+      .lesson-navigation {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 20px;
+      }
+
+      .lesson-navigation a {
+        display: inline-flex;
+        min-height: 46px;
+        align-items: center;
+        padding: 10px 14px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--white);
+        color: var(--blue);
+        font-weight: 750;
+        text-decoration: none;
+      }
+
+      .lesson-navigation a[aria-disabled="true"] {
+        color: #8190a0;
+        pointer-events: none;
+      }
+
+      #lesson-status {
+        padding: 18px;
+        border-radius: 10px;
+        background: #fff3e5;
+        color: #724300;
+      }
+
+      .lesson-view[hidden],
+      #home-content[hidden] {
+        display: none;
+      }
+
       footer {
         padding-block: 30px;
         background: var(--navy);
@@ -593,6 +745,7 @@
       </div>
     </header>
 
+    <div id="home-content">
     <section class="hero" id="top">
       <div class="shell hero-inner">
         <div>
@@ -629,8 +782,8 @@
             <h2 id="curriculum-title">A guided path from first page to capstone</h2>
             <p>Choose a lesson to open its full guide and practice exercise.</p>
           </div>
-          <a class="resource-link" href="https://github.com/macle-community/telebirr/blob/main/master-class/course-materials/lesson-guides.md">
-            View all lesson guides <span aria-hidden="true">↗</span>
+          <a class="resource-link" href="#curriculum">
+            Browse all 30 lessons <span aria-hidden="true">↓</span>
           </a>
         </div>
         <div class="phases" id="phases"></div>
@@ -676,10 +829,22 @@
         <p><a href="https://github.com/macle-community/telebirr">View the course on GitHub ↗</a></p>
       </div>
     </footer>
+    </div>
+
+    <main class="shell lesson-view" id="lesson-view" hidden>
+      <div class="lesson-toolbar">
+        <a href="#curriculum">← Back to curriculum</a>
+        <span id="lesson-position"></span>
+      </div>
+      <p id="lesson-status" role="status" hidden></p>
+      <article class="lesson-article" id="lesson-content" aria-live="polite"></article>
+      <nav class="lesson-navigation" aria-label="Lesson navigation">
+        <a id="previous-lesson" href="#" aria-disabled="true">← Previous lesson</a>
+        <a id="next-lesson" href="#" aria-disabled="true">Next lesson →</a>
+      </nav>
+    </main>
 
     <script>
-      const lessonRoot =
-        "https://github.com/macle-community/telebirr/blob/main/master-class/course-materials/lessons";
       const phases = [
         {
           name: "Foundations",
@@ -766,12 +931,12 @@
           const day = firstDay + lessonIndex + 1;
           const lesson = document.createElement("a");
           lesson.className = "lesson";
-          lesson.href = `${lessonRoot}/day-${String(day).padStart(2, "0")}.md`;
+          lesson.href = `#lesson/day-${String(day).padStart(2, "0")}`;
           lesson.setAttribute("aria-label", `Day ${day}: ${title}. ${practice}`);
           lesson.innerHTML =
             `<span class="day">DAY ${String(day).padStart(2, "0")}</span>` +
             `<span><strong>${title}</strong><small>${practice}</small></span>` +
-            `<span class="arrow" aria-hidden="true">↗</span>`;
+            `<span class="arrow" aria-hidden="true">→</span>`;
           grid.append(lesson);
         });
 
@@ -779,5 +944,6 @@
         phaseContainer.append(section);
       });
     </script>
+    <script src="./lesson-reader.js"></script>
   </body>
 </html>
